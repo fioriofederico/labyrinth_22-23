@@ -16,7 +16,7 @@ deve anche fornire la somma dei punti incontrati lungo
 di esso. Nel caso esistano più percorsi possibili 
 da un determinato punto di partenza,
 il programma deve fornire il percorso con il punteggio 
-maggiore.
+minore.
 
 Il labirinto e i punti di partenza e di arrivo possono
 essere forniti attraverso un file in formato JSON o un'immagine. 
