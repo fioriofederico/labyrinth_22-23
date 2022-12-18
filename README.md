@@ -20,8 +20,8 @@ minore.
 
 Il labirinto e i punti di partenza e di arrivo possono
 essere forniti attraverso un file in formato JSON o un'immagine. 
-Per ogni formato 
-possibile viene fornita di seguito la specifica 
+Di seguito, per ogni formato 
+possibile, viene fornita la specifica 
 delle convenzioni 
 usate per rappresentare il layout del labirino, 
 le posizioni a cui è associato un punteggio, e 
@@ -92,3 +92,4 @@ I livelli di grigio possibili sono:
 - 48 che assegna 3 punti
 - 64 che assegna 4 punti
 - 96 che assegna 5 punti
+
