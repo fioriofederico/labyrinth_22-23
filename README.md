@@ -9,13 +9,14 @@ di arrivo o, in alternativa, se non esiste alcun
 percorso possibile.
 
 Nel labirinto sono presenti posizioni a cui è 
-associato un punteggio. Nel caso esista un percorso
+associato un costo. Nel caso esista un percorso
 che permette di raggingere da un punto di partenza 
 il punto di arrivo, oltre al percorso, il programma
-deve anche fornire la somma dei punti incontrati lungo
-di esso. Nel caso esistano più percorsi possibili 
+deve anche fornire il suo costo totale che è la somma dei costi incontrati lungo
+di esso più la lunghezza del percorso in pixel. 
+Nel caso esistano più percorsi possibili 
 da un determinato punto di partenza,
-il programma deve fornire il percorso con il punteggio 
+il programma deve fornire il percorso con il costo 
 minore.
 
 Il labirinto e i punti di partenza e di arrivo possono
@@ -62,12 +63,9 @@ segmento costituito da un dizionario con chiavi:
 indicano ciascuno una posizione di partenza;
 - "finale": una coppia di indici che indica la 
 posizione di arrivo;
-- "punti": una lista di *posizioni con punteggio*,
-ogni posizione costituita da un dizionario con 
-chiavi:
-    - "posizione": un coppia di indici che indicano 
-    una posizione;
-    - "punteggio": un valore da 1 a 5. 
+- "costi": una lista di *posizioni con costo*,
+che sono triple costituite da una coppia di indici che indicano 
+    una posizione e un valore intero da 1 a 15 che indica il costo. 
 
 ## Labirinto fornito come immagine
 
@@ -83,13 +81,23 @@ di arrivo.
 
 I pixel bianchi sono posizioni che non assegnano 
 punti, i pixel grigi indicano caselle che assegnano
-punti, i pixel verdi indicano le posizioni di partenza,
+costi, i pixel verdi indicano le posizioni di partenza,
 il pixel rosso indica la posizione di arrivo.
 
 I livelli di grigio possibili sono:
-- 16 che assegna 1 punto
-- 32 che assegna 2 punti
-- 48 che assegna 3 punti
-- 64 che assegna 4 punti
-- 96 che assegna 5 punti
+- 16 che assegna un costo pari a 1
+- 32 che assegna un costo pari a 2
+- 48 che assegna un costo pari a 3
+- 64 che assegna un costo pari a 4
+- 80 che assegna un costo pari a 5
+- 96 che assegna un costo pari a 6
+- 112 che assegna un costo pari a 7
+- 128 che assegna un costo pari a 8
+- 144 che assegna un costo pari a 9
+- 160 che assegna un costo pari a 10
+- 176 che assegna un costo pari a 11
+- 192 che assegna un costo pari a 12
+- 208 che assegna un costo pari a 13
+- 124 che assegna un costo pari a 14
+- 240 che assegna un costo pari a 15
 
