@@ -1,0 +1,2212 @@
+{
+   "larghezza": 61,
+   "altezza": 41,
+   "pareti": [
+      {
+         "orientamento": "H",
+         "posizione": [
+            0,
+            0
+         ],
+         "lunghezza": 29
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            0,
+            30
+         ],
+         "lunghezza": 31
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            1,
+            0
+         ],
+         "lunghezza": 40
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            1,
+            4
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            1,
+            12
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            1,
+            18
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            1,
+            22
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            1,
+            26
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            1,
+            34
+         ],
+         "lunghezza": 8
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            1,
+            44
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            1,
+            50
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            1,
+            58
+         ],
+         "lunghezza": 6
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            1,
+            60
+         ],
+         "lunghezza": 12
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            2,
+            2
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            2,
+            5
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            2,
+            8
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            2,
+            14
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            2,
+            20
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            2,
+            24
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            2,
+            28
+         ],
+         "lunghezza": 5
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            2,
+            36
+         ],
+         "lunghezza": 5
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            2,
+            42
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            2,
+            46
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            2,
+            52
+         ],
+         "lunghezza": 5
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            3,
+            8
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            3,
+            10
+         ],
+         "lunghezza": 12
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            3,
+            16
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            3,
+            28
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            3,
+            32
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            3,
+            40
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            3,
+            46
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            3,
+            56
+         ],
+         "lunghezza": 12
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            4,
+            3
+         ],
+         "lunghezza": 6
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            4,
+            12
+         ],
+         "lunghezza": 13
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            4,
+            26
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            4,
+            30
+         ],
+         "lunghezza": 5
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            4,
+            33
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            4,
+            36
+         ],
+         "lunghezza": 11
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            4,
+            48
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            4,
+            51
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            5,
+            20
+         ],
+         "lunghezza": 6
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            5,
+            26
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            5,
+            36
+         ],
+         "lunghezza": 6
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            5,
+            54
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            6,
+            1
+         ],
+         "lunghezza": 6
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            6,
+            11
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            6,
+            18
+         ],
+         "lunghezza": 7
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            6,
+            22
+         ],
+         "lunghezza": 5
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            6,
+            28
+         ],
+         "lunghezza": 17
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            6,
+            31
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            6,
+            38
+         ],
+         "lunghezza": 5
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            6,
+            40
+         ],
+         "lunghezza": 9
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            6,
+            50
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            6,
+            55
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            7,
+            6
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            7,
+            14
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            7,
+            42
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            7,
+            50
+         ],
+         "lunghezza": 8
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            7,
+            52
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            8,
+            2
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            8,
+            7
+         ],
+         "lunghezza": 6
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            8,
+            16
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            8,
+            22
+         ],
+         "lunghezza": 7
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            8,
+            31
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            8,
+            39
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            8,
+            43
+         ],
+         "lunghezza": 8
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            8,
+            53
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            8,
+            58
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            9,
+            2
+         ],
+         "lunghezza": 10
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            9,
+            4
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            9,
+            32
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            9,
+            40
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            9,
+            46
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            9,
+            54
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            10,
+            8
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            10,
+            12
+         ],
+         "lunghezza": 7
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            10,
+            15
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            10,
+            19
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            10,
+            22
+         ],
+         "lunghezza": 9
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            10,
+            33
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            10,
+            41
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            10,
+            48
+         ],
+         "lunghezza": 5
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            10,
+            57
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            11,
+            44
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            12,
+            4
+         ],
+         "lunghezza": 5
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            12,
+            13
+         ],
+         "lunghezza": 6
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            12,
+            20
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            12,
+            24
+         ],
+         "lunghezza": 5
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            12,
+            26
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            12,
+            30
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            12,
+            34
+         ],
+         "lunghezza": 7
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            12,
+            42
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            12,
+            45
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            12,
+            52
+         ],
+         "lunghezza": 19
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            12,
+            58
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            13,
+            4
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            13,
+            20
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            13,
+            30
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            13,
+            36
+         ],
+         "lunghezza": 12
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            14,
+            5
+         ],
+         "lunghezza": 6
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            14,
+            14
+         ],
+         "lunghezza": 13
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            14,
+            32
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            14,
+            38
+         ],
+         "lunghezza": 7
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            14,
+            46
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            14,
+            51
+         ],
+         "lunghezza": 6
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            14,
+            58
+         ],
+         "lunghezza": 7
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            14,
+            60
+         ],
+         "lunghezza": 5
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            15,
+            8
+         ],
+         "lunghezza": 6
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            15,
+            16
+         ],
+         "lunghezza": 6
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            15,
+            18
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            15,
+            22
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            15,
+            34
+         ],
+         "lunghezza": 8
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            15,
+            38
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            15,
+            44
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            16,
+            6
+         ],
+         "lunghezza": 9
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            16,
+            10
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            16,
+            14
+         ],
+         "lunghezza": 7
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            16,
+            20
+         ],
+         "lunghezza": 5
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            16,
+            26
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            16,
+            31
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            16,
+            40
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            16,
+            45
+         ],
+         "lunghezza": 6
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            16,
+            54
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            16,
+            56
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            17,
+            10
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            17,
+            40
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            17,
+            48
+         ],
+         "lunghezza": 10
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            18,
+            3
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            18,
+            11
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            18,
+            24
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            18,
+            29
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            18,
+            37
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            18,
+            42
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            18,
+            46
+         ],
+         "lunghezza": 7
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            18,
+            50
+         ],
+         "lunghezza": 7
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            19,
+            4
+         ],
+         "lunghezza": 6
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            19,
+            12
+         ],
+         "lunghezza": 8
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            19,
+            24
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            19,
+            32
+         ],
+         "lunghezza": 10
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            20,
+            1
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            20,
+            9
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            20,
+            17
+         ],
+         "lunghezza": 8
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            20,
+            26
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            20,
+            38
+         ],
+         "lunghezza": 7
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            20,
+            41
+         ],
+         "lunghezza": 6
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            20,
+            49
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            20,
+            54
+         ],
+         "lunghezza": 7
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            21,
+            2
+         ],
+         "lunghezza": 6
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            21,
+            22
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            21,
+            54
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            21,
+            56
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            21,
+            60
+         ],
+         "lunghezza": 20
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            22,
+            7
+         ],
+         "lunghezza": 6
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            22,
+            15
+         ],
+         "lunghezza": 6
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            22,
+            24
+         ],
+         "lunghezza": 7
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            22,
+            33
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            22,
+            40
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            22,
+            42
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            22,
+            50
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            22,
+            58
+         ],
+         "lunghezza": 9
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            23,
+            20
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            23,
+            30
+         ],
+         "lunghezza": 6
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            23,
+            44
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            24,
+            5
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            24,
+            8
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            24,
+            14
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            24,
+            18
+         ],
+         "lunghezza": 7
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            24,
+            23
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            24,
+            26
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            24,
+            34
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            24,
+            39
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            24,
+            45
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            24,
+            51
+         ],
+         "lunghezza": 8
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            25,
+            8
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            25,
+            16
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            25,
+            24
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            25,
+            28
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            25,
+            42
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            26,
+            3
+         ],
+         "lunghezza": 6
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            26,
+            10
+         ],
+         "lunghezza": 7
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            26,
+            19
+         ],
+         "lunghezza": 10
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            26,
+            33
+         ],
+         "lunghezza": 6
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            26,
+            40
+         ],
+         "lunghezza": 7
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            26,
+            43
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            26,
+            46
+         ],
+         "lunghezza": 5
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            26,
+            54
+         ],
+         "lunghezza": 5
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            27,
+            10
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            27,
+            14
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            27,
+            36
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            27,
+            46
+         ],
+         "lunghezza": 6
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            28,
+            1
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            28,
+            6
+         ],
+         "lunghezza": 5
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            28,
+            12
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            28,
+            16
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            28,
+            20
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            28,
+            26
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            28,
+            34
+         ],
+         "lunghezza": 7
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            28,
+            38
+         ],
+         "lunghezza": 9
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            28,
+            48
+         ],
+         "lunghezza": 5
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            28,
+            54
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            29,
+            6
+         ],
+         "lunghezza": 8
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            29,
+            22
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            29,
+            38
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            29,
+            48
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            29,
+            54
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            30,
+            2
+         ],
+         "lunghezza": 5
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            30,
+            8
+         ],
+         "lunghezza": 31
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            30,
+            42
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            30,
+            50
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            30,
+            56
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            31,
+            2
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            31,
+            8
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            31,
+            24
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            31,
+            28
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            31,
+            42
+         ],
+         "lunghezza": 6
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            32,
+            4
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            32,
+            10
+         ],
+         "lunghezza": 13
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            32,
+            26
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            32,
+            30
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            32,
+            36
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            32,
+            41
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            32,
+            44
+         ],
+         "lunghezza": 17
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            33,
+            10
+         ],
+         "lunghezza": 6
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            33,
+            22
+         ],
+         "lunghezza": 6
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            33,
+            30
+         ],
+         "lunghezza": 8
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            33,
+            38
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            33,
+            44
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            33,
+            52
+         ],
+         "lunghezza": 6
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            34,
+            2
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            34,
+            9
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            34,
+            12
+         ],
+         "lunghezza": 5
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            34,
+            18
+         ],
+         "lunghezza": 7
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            34,
+            20
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            34,
+            24
+         ],
+         "lunghezza": 7
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            34,
+            32
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            34,
+            36
+         ],
+         "lunghezza": 5
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            34,
+            46
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            34,
+            50
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            34,
+            54
+         ],
+         "lunghezza": 5
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            35,
+            2
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            35,
+            12
+         ],
+         "lunghezza": 6
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            35,
+            16
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            35,
+            32
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            35,
+            36
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            35,
+            46
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            35,
+            54
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            36,
+            3
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            36,
+            8
+         ],
+         "lunghezza": 5
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            36,
+            13
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            36,
+            19
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            36,
+            24
+         ],
+         "lunghezza": 5
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            36,
+            33
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            36,
+            38
+         ],
+         "lunghezza": 9
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            36,
+            48
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            36,
+            55
+         ],
+         "lunghezza": 6
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            37,
+            4
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            37,
+            24
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            37,
+            28
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            37,
+            40
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            37,
+            44
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            37,
+            48
+         ],
+         "lunghezza": 4
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            38,
+            1
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            38,
+            5
+         ],
+         "lunghezza": 2
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            38,
+            14
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            38,
+            20
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            38,
+            26
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            38,
+            34
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            38,
+            38
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "V",
+         "posizione": [
+            38,
+            42
+         ],
+         "lunghezza": 3
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            38,
+            50
+         ],
+         "lunghezza": 9
+      },
+      {
+         "orientamento": "H",
+         "posizione": [
+            40,
+            1
+         ],
+         "lunghezza": 60
+      }
+   ],
+   "iniziali": [
+      [
+         0,
+         29
+      ],
+      [
+         19,
+         60
+      ]
+   ],
+   "finale": [
+      [
+         21,
+         31
+      ]
+   ],
+   "costi": [
+      [
+         17,
+         47,
+         10
+      ],
+      [
+         18,
+         47,
+         12
+      ],
+      [
+         20,
+         47,
+         10
+      ],
+      [
+         22,
+         47,
+         8
+      ]
+   ]
+}
