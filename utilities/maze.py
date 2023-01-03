@@ -8,9 +8,21 @@ class Maze:
   __walls = []
   __breadcrumbs = []
 
-  def __init__(self, height: int, width:int,):
+  def __init__(self, height: int, width:int, startpoint=[], endpoint=[], breadcrumb=[[]]):
     self.__height = height
     self.__width = width
+
+    if len(startpoint)==2 and len(endpoint)==2:
+      if (startpoint[0]<height and startpoint[1]< width):
+        self.startpoint = startpoint
+      elif (endpoint[0]<height and endpoint[1]<width):
+        self.endpoint = endpoint
+      else:
+        self.startpoint = []
+        self.endpoint = []
+    else:
+      self.startpoint = []
+      self.endpoint = []
 
   def getMaze(self) -> np.ndarray:
     return np.asarray(self.__maze)
@@ -128,8 +140,13 @@ class Maze:
     # Generate a random point inside the list of list (matrix)
     # The starting point must not be in the corner of the matrix
     # so range over 1 to width-2 and 1 to height-2
-    starting_height = randint(1,(self.__height-2))
-    starting_width = randint(1,(self.__width-2))
+
+    if len(self.startpoint)==2:
+      starting_height=self.startpoint[0]
+      starting_width=self.startpoint[1]
+    else:
+      starting_height = randint(1,(self.__height-2))
+      starting_width = randint(1,(self.__width-2))
 
     # Mark it as cell and add surrounding walls to the list
     self.__maze[starting_height][starting_width] = 'c'
@@ -204,7 +221,6 @@ class Maze:
 
           # Delete wall
           self.__deleteWall(rand_wall)
-
 
           continue
 
