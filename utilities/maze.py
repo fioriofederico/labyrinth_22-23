@@ -4,18 +4,16 @@ from PIL import Image
 import numpy as np
 
 class Maze:
-  __cell = 'c'
-  __unvisited = 'u'
   __maze = []
   __walls = []
+  __breadcrumbs = []
 
-  def __init__(self, height: int, width:int):
+  def __init__(self, height: int, width:int,):
     self.__height = height
     self.__width = width
-    self.__generate()
 
-  def getMaze(self) -> list:
-    return self.__maze
+  def getMaze(self) -> np.ndarray:
+    return np.asarray(self.__maze)
   
   def printMaze(self):
     for i in range(0, self.__height):
@@ -24,12 +22,14 @@ class Maze:
           print(Fore.WHITE + str(self.__maze[i][j]), end=" ")
         elif (self.__maze[i][j] == 'c'):
           print(Fore.GREEN + str(self.__maze[i][j]), end=" ")
+        elif (self.__maze[i][j] == 'bc'):
+          print(Fore.YELLOW + str(self.__maze[i][j]), end=" ")
         else:
           print(Fore.RED + str(self.__maze[i][j]), end=" ")
         
       print('\n')
   
-  def getTiff(self):
+  def getMazeImage(self):
 
     a = np.zeros((self.__height,self.__width,3), dtype=np.int8)
 
@@ -37,13 +37,36 @@ class Maze:
       for j in range(0, self.__width):
         if (self.__maze[i][j] == 'c'):
           a[i,j]=[255,255,255]
+        elif (self.__maze[i][j] == 'bc'):
+          a[i,j]=[255,140,0]
         else:
           a[i,j]=[0,0,0]
 
     im = Image.fromarray(a,mode="RGB")
-    im.save("./prova.tiff")
-    print(a.shape)
-    print(im.info)
+    im.save("./maze.tiff")
+
+  def readMazeImage(self,path: str):
+    
+    im = Image.open(path)
+    a = np.asarray(im)
+
+    (height, width, rgb_dim) = a.shape
+
+    self.__height = height
+    self.__width = width
+    self.__maze = [[None for j in range(width)] for i in range(height)]
+
+    for i in range(0, self.__height):
+      for j in range(0, self.__width):
+        if (a[i,j]==[255,255,255]).all():
+          self.__maze[i][j] = 'c'
+        elif (a[i,j]==[0,0,0]).all():
+          self.__maze[i][j] = 'w'
+        else:
+          self.__breadcrumbs.append([i,j])
+          self.__maze[i][j] = 'bc'
+
+    return self.getMaze()
 
   # Find number of surrounding cells
   def __surroundingCells(self, rand_wall):
@@ -92,15 +115,13 @@ class Maze:
       if (wall[0] == rand_wall[0] and wall[1] == rand_wall[1]):
         self.__walls.remove(wall)
 
-  
-  
-  def __generate(self):
+  def generate(self):
     # Denote all cells as unvisited
     # Create an empty list of list (matrix) with height x width dimension
     for i in range(0, self.__height):
       line = []
       for j in range(0, self.__width):
-        line.append(self.__unvisited)
+        line.append('u')
       self.__maze.append(line)
 
     # Randomize starting point and set it a cell
@@ -111,7 +132,7 @@ class Maze:
     starting_width = randint(1,(self.__width-2))
 
     # Mark it as cell and add surrounding walls to the list
-    self.__maze[starting_height][starting_width] = self.__cell
+    self.__maze[starting_height][starting_width] = 'c'
     self.__walls.append([starting_height - 1, starting_width])
     self.__walls.append([starting_height, starting_width - 1])
     self.__walls.append([starting_height, starting_width + 1])
