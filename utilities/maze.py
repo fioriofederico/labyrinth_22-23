@@ -2,7 +2,7 @@ from random import random, randint
 from colorama import Fore
 from PIL import Image
 import numpy as np
-from time import sleep
+import json
 
 class Maze:
   __maze = []
@@ -43,6 +43,95 @@ class Maze:
           self.endpoint[1]=(endpoint[1]-1)
     else:
       pass
+  
+  def getMazeJson(self):
+
+    maze_obj = {
+      "larghezza" : 0,
+      "altezza" : 0,
+      "pareti" : []
+    }
+
+    wall = {
+      "orientamento": "",
+      "posizione": [],
+      "lunghezza": 0
+    }
+
+    i = 0
+    j = 0
+
+    walls_list = []
+    
+    while i < self.__height:
+      while j < self.__width:
+        if (j+1 != self.__width):
+          if (self.__maze[i][j] == 'w' and self.__maze[i][j+1] == 'w'):
+            wall["orientamento"] = "H"
+            wall["posizione"] = [i,j] 
+            wall_length = 0
+            while (j < self.__width and self.__maze[i][j] == 'w'):
+              wall_length+=1
+              j+=1
+
+            wall["lunghezza"] = wall_length
+            walls_list.append(wall.copy())
+          else:
+            j+=1
+        else:
+          j+=1 
+
+      j=0
+      i+=1
+
+    i = 0
+    j = 0
+
+    while i < self.__width:
+      while j < self.__height: 
+        if (j+1 != self.__height):
+          if (self.__maze[j][i] == 'w' and self.__maze[j+1][i] == 'w'):
+            wall["orientamento"] = "v"
+            wall["posizione"] = [j,i] 
+            wall_length = 0
+            while (j < self.__height and self.__maze[j][i] == 'w'):
+              wall_length+=1
+              j+=1
+
+            wall["lunghezza"] = wall_length
+            walls_list.append(wall.copy())
+          else:
+            j+=1
+        else:
+          j+=1 
+
+      j=0
+      i+=1
+
+    maze_obj['altezza'] = self.__height
+    maze_obj['larghezza'] = self.__width
+    maze_obj['pareti'] = walls_list
+
+    with open("maze.json", "w") as outfile:
+      json.dump(maze_obj, outfile)
+
+  def readMazeJson(self,path:str):
+    with open(path) as json_file:
+      data = json.load(json_file)
+      print(data)
+    
+    self.__height = data['altezza']
+    self.__width = data['larghezza']
+    self.__maze = [["c" for j in range(self.__height)] for i in range(self.__width)]
+
+    for wall in data["pareti"]:
+      if wall["orientamento"] == "H":
+        for i in range(0,wall["lunghezza"]):
+          self.__maze[wall["posizione"][0]][wall["posizione"][1]+i] = "w"
+      else:
+        for i in range(0,wall["lunghezza"]):
+          self.__maze[wall["posizione"][0]+i][wall["posizione"][1]] = "w"
+
 
 
   def getMaze(self) -> np.ndarray:
@@ -79,6 +168,15 @@ class Maze:
           
     im = Image.fromarray(a,mode="RGB")
     im.save("./maze.tiff")
+
+  def resizeMazeImg(self,path: str):
+    im = Image.open(path)
+    base_width = 1400
+    width_percent = (base_width / float(im.size[0]))
+    hsize = int((float(im.size[1]) * float(width_percent)))
+    im = im.resize((base_width, hsize), Image.ANTIALIAS)
+    im.save("./maze.tiff")
+
 
   def readMazeImage(self,path: str):
     
@@ -305,6 +403,7 @@ class Maze:
     # Set exit
     if len(self.endpoint)==2:
       self.__maze[self.endpoint[0]][self.endpoint[1]] = 'c'
+      self.__maze[self.endpoint[0]-1][self.endpoint[1]] = 'c' 
     else:
       for i in range(self.__width-1, 0, -1):
         if (self.__maze[self.__height-2][i] == 'c'):
