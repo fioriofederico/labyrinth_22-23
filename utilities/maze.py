@@ -5,46 +5,155 @@ import numpy as np
 import json
 
 class Maze:
+  '''
+  Maze Object, It's defined by:
+  - Height (int): First dimension of the maze
+  - Width (int): Second dimension of the maze
+  - Startpoint ([int,int]): The ingress of the maze
+  - Endpoint ([int, int]): The exit point of the maze
+  - Breadcrumbs([[int, int],[...],[...]]):  The positions of breadcrumbs
+
+  >>> m = Maze()
+
+  >>> m = Maze(1,0)
+  Traceback (most recent call last):
+  ValueError: Value provided for height is invalid, should be greater than 3: 1
+
+  >>> m = Maze(1,1)
+  Traceback (most recent call last):
+  ValueError: Value provided for height is invalid, should be greater than 3: 1
+
+  >>> m = Maze(1,2)
+  Traceback (most recent call last):
+  ValueError: Value provided for height is invalid, should be greater than 3: 1
+
+  >>> m = Maze(1,3)
+  Traceback (most recent call last):
+  ValueError: Value provided for height is invalid, should be greater than 3: 1
+
+  >>> m = Maze(1,4)
+  Traceback (most recent call last):
+  ValueError: Value provided for height is invalid, should be greater than 3: 1
+
+  >>> m = Maze(2,1)
+  Traceback (most recent call last):
+  ValueError: Value provided for height is invalid, should be greater than 3: 2
+
+  >>> m = Maze(3,1)
+  Traceback (most recent call last):
+  ValueError: Value provided for height is invalid, should be greater than 3: 3
+
+  >>> m = Maze(4,1)
+  Traceback (most recent call last):
+  ValueError: Value provided for width is invalid, should be greater than 3: 1
+
+  >>> m = Maze(4,1)
+  Traceback (most recent call last):
+  ValueError: Value provided for width is invalid, should be greater than 3: 1
+
+  >>> m = Maze(4,3)
+  Traceback (most recent call last):
+  ValueError: Value provided for width is invalid, should be greater than 3: 3
+
+  >>> m = Maze(4,4)
+
+  >>> m = Maze(4,4,[0,0])
+  Traceback (most recent call last):
+  ValueError: Start point [x,y] invalid, x must be eq. to 1; provided: 0
+
+  >>> m = Maze(4,4,[3,0])
+  Traceback (most recent call last):
+  ValueError: Start point [x,y] invalid, x must be eq. to 1; provided: 3
+
+  >>> m = Maze(4,4,[1,1])
+  Traceback (most recent call last):
+  ValueError: Start point cant be in a edge; provided: 1-1
+
+  >>> m = Maze(4,4,[1,4])
+  Traceback (most recent call last):
+  ValueError: Start point cant be in a edge; provided: 1-4
+
+  >>> m = Maze(4,4,endpoint=[4,2])
+
+  >>> m = Maze(4,4,endpoint=[4,1])
+  Traceback (most recent call last):
+  ValueError: End point cant be in a edge; provided: 4-1
+
+  >>> m = Maze(4,4,endpoint=[4,4])
+  Traceback (most recent call last):
+  ValueError: End point cant be in a edge; provided: 4-4
+
+  '''
   __maze = []
   __walls = []
   __breadcrumbs = []
   startpoint = []
   endpoint = []
 
-  def __init__(self, height: int, width:int, startpoint=[], endpoint=[], breadcrumb=[[]]):
-    
-    self.__height = height
-    self.__width = width
+  def __init__(self, height=0, width=0, startpoint=[], endpoint=[], breadcrumbs=[[]]):
+    '''Initialize a Maze object. 
 
-    if len(startpoint)==2:
-      if (startpoint[0]!=1 and startpoint[0]!=height):
-        raise ValueError(f"Start point [x,y] invalid, x must be eq. to 1 or {height}; provided: {startpoint[0]}")
-      elif (startpoint[1]<1 | startpoint[1]>width):
+    Parameters:
+    - height (int): First dimension of the maze, should be greater than 3
+    - width (int): Second dimension of the maze, should be greater than 3
+    - startpoint ([int,int]): The ingress of the maze, should be on the top of the maze.
+    - endpoint ([int, int]): The exit point of the maze, should be on the bottom of the maze.
+    - breadcrumbs([[int, int],[...],[...]]):  The positions of breadcrumbs
+
+    Returns:
+    maze (Maze): A new maze object with params setted
+    '''
+
+    if (height != 0 and height > 3):
+      self.__height = height
+    elif (height == 0):
+      self.__height = 0
+    else:
+      raise ValueError(f"Value provided for height is invalid, should be greater than 3: {height}")
+
+
+    if (width != 0 and width > 3):
+      self.__width = width
+    elif (width == 0):
+      self.__width = 0
+    else:
+      raise ValueError(f"Value provided for width is invalid, should be greater than 3: {width}")
+
+
+    if (height > 0 and len(startpoint)==2):
+      if (startpoint[0]!=1):
+        raise ValueError(f"Start point [x,y] invalid, x must be eq. to 1; provided: {startpoint[0]}")
+      elif (startpoint[1]<1 or startpoint[1]>(width)):
         raise ValueError(f"Start point [x,y] invalid, y must be greater than 0 and less than {width+1}; provided: {startpoint[1]}")
-      elif ((startpoint[0]==1 | startpoint[0]==height) and (startpoint[1]==width | startpoint[1]==1)):
+      elif (startpoint[0]==1 and (startpoint[1]==1 or startpoint[1]==width)):
         raise ValueError(f"Start point cant be in a edge; provided: {startpoint[0]}-{startpoint[1]}")
       else:
-          self.startpoint = [None for i in range(2)]
-          self.startpoint[0]=(startpoint[0]-1)
-          self.startpoint[1]=(startpoint[1]-1)
-    else:
-      pass
+        self.startpoint = [None for i in range(2)]
+        self.startpoint[0]=(startpoint[0]-1)
+        self.startpoint[1]=(startpoint[1]-1)
+    elif (height == 0 and len(startpoint)==2):
+      raise ValueError(f"Start point cant be expressed when height eq. 0 or not expressed")
     
-    if len(endpoint)==2:
-      if (endpoint[0]!=1 and endpoint[0]!=height):
-        raise ValueError(f"End point [x,y] invalid, x must be eq. to 1 or {height}; provided: {endpoint[0]}")
-      elif (endpoint[1]<1 | endpoint[1]>width):
+    if (width > 0 and len(endpoint)==2):
+      if (endpoint[0]!=height):
+        raise ValueError(f"End point [x,y] invalid, x must be eq. to {height}; provided: {endpoint[0]}")
+      elif (endpoint[1]<1 or endpoint[1]>width):
         raise ValueError(f"End point [x,y] invalid, y must be greater than 0 and less than {width+1}; provided: {endpoint[1]}")
-      elif ((endpoint[0]==1 | endpoint[0]==height) and (endpoint[1]==width | endpoint[1]==1)):
+      elif (endpoint[0]==height and (endpoint[1]==width or endpoint[1]==1)):
         raise ValueError(f"End point cant be in a edge; provided: {endpoint[0]}-{endpoint[1]}")
       else:
           self.endpoint = [None for i in range(2)]
           self.endpoint[0]=(endpoint[0]-1)
           self.endpoint[1]=(endpoint[1]-1)
-    else:
-      pass
+    elif (width == 0 and len(endpoint)==2):
+      raise ValueError(f"End point cant be expressed when height eq. 0 or not expressed")
   
   def getMazeJson(self):
+    '''
+    Create a json description of the maze.
+    '''
+    if not(bool(self.__maze)):
+      return
 
     maze_obj = {
       "larghezza" : 0,
@@ -411,5 +520,8 @@ class Maze:
           break
 
 
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
 
     

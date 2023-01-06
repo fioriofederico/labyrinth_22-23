@@ -4,3 +4,7 @@ __pycache__
 outdata
 indata/labirinto2_def.tiff
 indata/labirinto3_def.tiff
+out/*.jpg
+out/*.json
+*.json
+ex.py
