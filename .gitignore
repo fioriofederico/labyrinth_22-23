@@ -7,3 +7,7 @@ indata/labirinto3_def.tiff
 *.json
 ex.py
 out/*.jpg
+out/*.jpg
+out/*.json
+*.json
+ex.py
