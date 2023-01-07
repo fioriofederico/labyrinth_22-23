@@ -1,6 +1,9 @@
 import sys
+import os
+
 # Search modules and pack in the folder above 
-sys.path.append('../')
+parent_dir=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(parent_dir)
 
 import doctest
 import unittest

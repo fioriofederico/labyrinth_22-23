@@ -8,3 +8,4 @@ out/*.jpg
 out/*.json
 *.json
 ex.py
+*.tiff
