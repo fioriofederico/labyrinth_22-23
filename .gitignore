@@ -12,3 +12,4 @@ out/*.json
 *.json
 ex.py
 *.tiff
+pro.py

@@ -4,6 +4,7 @@ from PIL import Image
 import numpy as np
 import os
 import json
+import jsonschema
 
 class Maze:
   '''
@@ -84,12 +85,60 @@ class Maze:
   Traceback (most recent call last):
   ValueError: End point cant be in a edge; provided: 4-4
 
+  >>> m = Maze()
+  >>> m.readMazeImage("tests/testcase/maze.tiff")
+  array([['w', 'sp', 'w', 'w'],
+         ['w', 'c', 'c', 'w'],
+         ['w', 'w', 'bc', 'w'],
+         ['w', 'w', 'ep', 'w']], dtype='<U2')
+
+  >>> m.readMazeJson("tests/testcase/maze.json")
+  array([['w', 'sp', 'w', 'w'],
+         ['w', 'c', 'c', 'w'],
+         ['w', 'w', 'bc', 'w'],
+         ['w', 'w', 'ep', 'w']], dtype='<U2')
   '''
   __maze = []
   __walls = []
   __breadcrumbs = []
   startpoint = []
   endpoint = []
+  __mazeSchema = {
+    "type": "object",
+    "properties": {
+      "larghezza": {"type": "number"},
+      "altezza": {"type": "number"},
+      "pareti": {
+        "type" : "array",
+        "items": {
+          "type" : "object",
+          "properties" : {
+            "orientamento": {"type":"string"},
+            "posizione": {
+              "type":"array",
+              "items":{"type": "number"}
+            },
+            "lunghezza":{"type": "number"}
+          }
+        },
+        "iniziali": {
+          "type":"array",
+          "items": {
+            "type":"array",
+            "items":{"type": "number"}
+          },
+        },
+        "finale":  {
+          "type":"array",
+          "items":{"type": "number"}
+        },
+        "costi":  {
+          "type":"array",
+          "items":{"type": "number"}
+        }
+      }
+    }
+  }
 
   def __init__(self, height=0, width=0, startpoint=[], endpoint=[], breadcrumbs=[[]]):
     '''Initialize a Maze object. 
@@ -161,7 +210,10 @@ class Maze:
     maze_obj = {
       "larghezza" : 0,
       "altezza" : 0,
-      "pareti" : []
+      "pareti" : [],
+      "iniziali" : [],
+      "finale": [],
+      "costi": [] 
     }
 
     wall = {
@@ -228,7 +280,10 @@ class Maze:
       json.dump(maze_obj, outfile)
       outfile.close()
 
-  def readMazeJson(self,path:str):
+  def __validateJson(self,json):
+    jsonschema.validate(json,schema=self.__mazeSchema)
+
+  def readMazeJson(self,path:str) -> np.ndarray:
     '''
     Read a json description of a maze with the following structure and populate the maze object.
     e.g
@@ -247,6 +302,18 @@ class Maze:
           "lunghezza": 19
         },
         ...
+      ],
+      "iniziali":
+      [
+        [0, 3] [...]
+      ],
+      "finale":
+      [
+        20, 12
+      ],
+      "costi":
+      [
+        [1, 1, 10], [...]
       ]
     }
     
@@ -266,12 +333,20 @@ class Maze:
     # Open the file
     with open(path) as json_file:
       data = json.load(json_file)
-      print(data)
+      self.__validateJson(data)
+      
     
     # Set maze attribute
     self.__height = data['altezza']
     self.__width = data['larghezza']
-    self.__maze = [["c" for j in range(self.__height)] for i in range(self.__width)]
+
+    if data["iniziali"] != []:
+      self.startpoint = data["iniziali"][0]
+
+    self.endpoint = data["finale"]
+    self.__breadcrumbs = data["costi"]
+
+    self.__maze = [["c" for j in range(self.__width)] for i in range(self.__height)]
 
     # Build walls 
     for wall in data["pareti"]:
@@ -281,6 +356,21 @@ class Maze:
       else:
         for i in range(0,wall["lunghezza"]):
           self.__maze[wall["posizione"][0]+i][wall["posizione"][1]] = "w"
+
+    if self.startpoint != []:
+      self.__maze[self.startpoint[0]][self.startpoint[1]] = "sp"
+    
+    if self.endpoint != []:
+      self.__maze[self.endpoint[0]][self.endpoint[1]] = "ep"
+
+    if self.__breadcrumbs != []:
+      for bc in self.__breadcrumbs:
+        self.__maze[bc[0]][bc[1]] = "bc"
+    
+    return self.getMaze()
+
+    
+    
 
 
 
@@ -342,9 +432,17 @@ class Maze:
         if (self.__maze[i][j] == 'c'):
           a[i,j]=[255,255,255]
         elif (self.__maze[i][j] == 'bc'):
-          a[i,j]=[255,140,0]
+          # Search the breadcrumb
+          for bc in self.__breadcrumbs:
+            if (bc[0] == i and bc[1] == j):
+              # Set the breadcrumb color
+               a[i,j]=[bc[2],bc[2],bc[2]]
         elif(self.__maze[i][j] == 'u'):
           a[i,j]=[124,252,0]
+        elif(self.__maze[i][j] == 'sp'):
+          a[i,j]=[0,255,0]
+        elif(self.__maze[i][j] == 'ep'):
+          a[i,j]=[255,0,0]
         else:
           a[i,j]=[0,0,0]
     
@@ -360,16 +458,161 @@ class Maze:
     Nothing
     '''
 
-    # Check if the path and the file exist
-    if not(bool(os.path.exists(path))):
-      raise OSError(2,"The provided file doesnt exitst.",path)
+    a = self.readMazeImage(path)
 
-    im = Image.open(path)
-    base_width = 1400
-    width_percent = (base_width / float(im.size[0]))
-    hsize = int((float(im.size[1]) * float(width_percent)))
-    im = im.resize((base_width, hsize), Image.ANTIALIAS)
+    (height, width) = a.shape
 
+    new_height = height*3
+    new_width = width*3
+
+    # Create a numpy array that represent the maze
+    a = np.zeros((new_height,new_width,3), dtype=np.int8)
+
+    # Value the fields
+    for i in range(0, self.__height):
+      for j in range(0, self.__width):
+        if (self.__maze[i][j] == 'c'):
+          #Sopra
+          a[i*3,j*3+1]=[255,255,255]
+          #Sotto
+          a[i*3+2,j*3+1]=[255,255,255]
+
+          # Dx
+          a[i*3+1,j*3+2]=[255,255,255]
+          # Sx
+          a[i*3+1,j*3]=[255,255,255]
+
+          # SD
+          a[i*3,j*3+2]=[255,255,255]
+          # SS
+          a[i*3,j*3]=[255,255,255]
+
+          # GD
+          a[i*3+2,j*3+2]=[255,255,255]
+          # GS
+          a[i*3+2,j*3]=[255,255,255]
+
+          # Al centro
+          a[i*3+1,j*3+1]=[255,255,255]
+        elif (self.__maze[i][j] == 'bc'):
+          # Search the breadcrumb
+          for bc in self.__breadcrumbs:
+            if (bc[0] == i and bc[1] == j):
+              # Set the breadcrumb color
+              #Sopra
+              a[i*3,j*3+1]=[bc[2],bc[2],bc[2]]
+              #Sotto
+              a[i*3+2,j*3+1]=[bc[2],bc[2],bc[2]]
+
+              # Dx
+              a[i*3+1,j*3+2]=[bc[2],bc[2],bc[2]]
+              # Sx
+              a[i*3+1,j*3]=[bc[2],bc[2],bc[2]]
+
+              # SD
+              a[i*3,j*3+2]=[bc[2],bc[2],bc[2]]
+              # SS
+              a[i*3,j*3]=[bc[2],bc[2],bc[2]]
+
+              # GD
+              a[i*3+2,j*3+2]=[bc[2],bc[2],bc[2]]
+              # GS
+              a[i*3+2,j*3]=[bc[2],bc[2],bc[2]]
+
+              a[i*3+1,j*3+1]=[bc[2],bc[2],bc[2]]
+        elif(self.__maze[i][j] == 'u'):
+          #Sopra
+          a[i*3,j*3+1]=[124,252,0]
+          #Sotto
+          a[i*3+2,j*3+1]=[124,252,0]
+
+          # Dx
+          a[i*3+1,j*3+2]=[124,252,0]
+          # Sx
+          a[i*3+1,j*3]=[124,252,0]
+
+          # SD
+          a[i*3,j*3+2]=[124,252,0]
+          # SS
+          a[i*3,j*3]=[124,252,0]
+
+          # GD
+          a[i*3+2,j*3+2]=[124,252,0]
+          # GS
+          a[i*3+2,j*3]=[124,252,0]
+
+          a[i*3+1,j*3+1]=[124,252,0]
+        elif(self.__maze[i][j] == 'sp'):
+          #Sopra
+          a[i*3,j*3+1]=[0,255,0]
+          #Sotto
+          a[i*3+2,j*3+1]=[0,255,0]
+
+          # Dx
+          a[i*3+1,j*3+2]=[0,255,0]
+          # Sx
+          a[i*3+1,j*3]=[0,255,0]
+
+          # SD
+          a[i*3,j*3+2]=[0,255,0]
+          # SS
+          a[i*3,j*3]=[0,255,0]
+
+          # GD
+          a[i*3+2,j*3+2]=[0,255,0]
+          # GS
+          a[i*3+2,j*3]=[0,255,0]
+
+          a[i*3+1,j*3+1]=[0,255,0]
+        elif(self.__maze[i][j] == 'ep'):
+          #Sopra
+          a[i*3,j*3+1]=[255,0,0]
+          #Sotto
+          a[i*3+2,j*3+1]=[255,0,0]
+
+          # Dx
+          a[i*3+1,j*3+2]=[255,0,0]
+          # Sx
+          a[i*3+1,j*3]=[255,0,0]
+
+          # SD
+          a[i*3,j*3+2]=[255,0,0]
+          # SS
+          a[i*3,j*3]=[255,0,0]
+
+          # GD
+          a[i*3+2,j*3+2]=[255,0,0]
+          # GS
+          a[i*3+2,j*3]=[255,0,0]
+
+          a[i*3+1,j*3+1]=[255,0,0]
+        else:
+          #Sopra
+          a[i*3,j*3+1]=[0,0,0]
+          #Sotto
+          a[i*3+2,j*3+1]=[0,0,0]
+
+          # Dx
+          a[i*3+1,j*3+2]=[0,0,0]
+          # Sx
+          a[i*3+1,j*3]=[0,0,0]
+
+          # SD
+          a[i*3,j*3+2]=[0,0,0]
+          # SS
+          a[i*3,j*3]=[0,0,0]
+
+          # GD
+          a[i*3+2,j*3+2]=[0,0,0]
+          # GS
+          a[i*3+2,j*3]=[0,0,0]
+
+          a[i*3+1,j*3+1]=[0,0,0]
+
+    # creating image object of
+    # above array
+    # Save the tiff in the current main folder
+    im = Image.fromarray(a,mode="RGB")
     im.save("./large_maze.tiff")
 
 
@@ -404,8 +647,14 @@ class Maze:
           self.__maze[i][j] = 'c'
         elif (a[i,j]==[0,0,0]).all():
           self.__maze[i][j] = 'w'
+        elif (a[i,j] == [255,0,0]).all():
+          self.endpoint.append([i,j])
+          self.__maze[i][j] = 'ep'
+        elif (a[i,j] == [0,255,0]).all():
+          self.startpoint.append([i,j])
+          self.__maze[i][j] = 'sp'
         else:
-          self.__breadcrumbs.append([i,j])
+          self.__breadcrumbs.append([i,j,a[i,j][0]])
           self.__maze[i][j] = 'bc'
 
     return self.getMaze()
@@ -661,9 +910,6 @@ class Maze:
           # Delete wall
           self.__deleteWall(rand_wall)
           continue
-      
-      # if (self.__surroundingWalls(rand_wall)>3):
-      #   self.__deleteWall(rand_wall)
       
       self.__deleteWall(rand_wall)
       
