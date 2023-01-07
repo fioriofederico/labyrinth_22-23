@@ -4,6 +4,7 @@ from PIL import Image
 import numpy as np
 import os
 import json
+import jsonschema
 
 class Maze:
   '''
@@ -84,12 +85,60 @@ class Maze:
   Traceback (most recent call last):
   ValueError: End point cant be in a edge; provided: 4-4
 
+  >>> m = Maze()
+  >>> m.readMazeImage("tests/testcase/maze.tiff")
+  array([['w', 'sp', 'w', 'w'],
+         ['w', 'c', 'c', 'w'],
+         ['w', 'w', 'bc', 'w'],
+         ['w', 'w', 'ep', 'w']], dtype='<U2')
+
+  >>> m.readMazeJson("tests/testcase/maze.json")
+  array([['w', 'sp', 'w', 'w'],
+         ['w', 'c', 'c', 'w'],
+         ['w', 'w', 'bc', 'w'],
+         ['w', 'w', 'ep', 'w']], dtype='<U2')
   '''
   __maze = []
   __walls = []
   __breadcrumbs = []
   startpoint = []
   endpoint = []
+  __mazeSchema = {
+    "type": "object",
+    "properties": {
+      "larghezza": {"type": "number"},
+      "altezza": {"type": "number"},
+      "pareti": {
+        "type" : "array",
+        "items": {
+          "type" : "object",
+          "properties" : {
+            "orientamento": {"type":"string"},
+            "posizione": {
+              "type":"array",
+              "items":{"type": "number"}
+            },
+            "lunghezza":{"type": "number"}
+          }
+        },
+        "iniziali": {
+          "type":"array",
+          "items": {
+            "type":"array",
+            "items":{"type": "number"}
+          },
+        },
+        "finale":  {
+          "type":"array",
+          "items":{"type": "number"}
+        },
+        "costi":  {
+          "type":"array",
+          "items":{"type": "number"}
+        }
+      }
+    }
+  }
 
   def __init__(self, height=0, width=0, startpoint=[], endpoint=[], breadcrumbs=[[]]):
     '''Initialize a Maze object. 
@@ -161,7 +210,10 @@ class Maze:
     maze_obj = {
       "larghezza" : 0,
       "altezza" : 0,
-      "pareti" : []
+      "pareti" : [],
+      "iniziali" : [],
+      "finale": [],
+      "costi": [] 
     }
 
     wall = {
@@ -228,7 +280,10 @@ class Maze:
       json.dump(maze_obj, outfile)
       outfile.close()
 
-  def readMazeJson(self,path:str):
+  def __validateJson(self,json):
+    jsonschema.validate(json,schema=self.__mazeSchema)
+
+  def readMazeJson(self,path:str) -> np.ndarray:
     '''
     Read a json description of a maze with the following structure and populate the maze object.
     e.g
@@ -278,6 +333,8 @@ class Maze:
     # Open the file
     with open(path) as json_file:
       data = json.load(json_file)
+      self.__validateJson(data)
+      
     
     # Set maze attribute
     self.__height = data['altezza']
@@ -299,6 +356,21 @@ class Maze:
       else:
         for i in range(0,wall["lunghezza"]):
           self.__maze[wall["posizione"][0]+i][wall["posizione"][1]] = "w"
+
+    if self.startpoint != []:
+      self.__maze[self.startpoint[0]][self.startpoint[1]] = "sp"
+    
+    if self.endpoint != []:
+      self.__maze[self.endpoint[0]][self.endpoint[1]] = "ep"
+
+    if self.__breadcrumbs != []:
+      for bc in self.__breadcrumbs:
+        self.__maze[bc[0]][bc[1]] = "bc"
+    
+    return self.getMaze()
+
+    
+    
 
 
 
@@ -385,26 +457,6 @@ class Maze:
     Return:
     Nothing
     '''
-
-    # Check if the path and the file exist
-    # if not(bool(os.path.exists(path))):
-    #   raise OSError(2,"The provided file doesnt exitst.",path)
-
-    # im = Image.open(path)
-    # base_width = 1400
-    # width_percent = (base_width / float(im.size[0]))
-    # hsize = int((float(im.size[1]) * float(width_percent)))
-    # im = im.resize((base_width, hsize), Image.ANTIALIAS)
-
-    # im.save("./large_maze.tiff")
-
-    # create a numpy array from scratch
-    # using arange function.
-    # 1024x720 = 737280 is the amount 
-    # of pixels.
-    # np.uint8 is a data type containing
-    # numbers ranging from 0 to 255 
-    # and no non-negative integers
 
     a = self.readMazeImage(path)
 
@@ -858,9 +910,6 @@ class Maze:
           # Delete wall
           self.__deleteWall(rand_wall)
           continue
-      
-      # if (self.__surroundingWalls(rand_wall)>3):
-      #   self.__deleteWall(rand_wall)
       
       self.__deleteWall(rand_wall)
       
