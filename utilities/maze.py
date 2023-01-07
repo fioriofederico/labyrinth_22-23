@@ -2,6 +2,7 @@ from random import random, randint
 from colorama import Fore
 from PIL import Image
 import numpy as np
+import os
 import json
 
 class Maze:
@@ -150,10 +151,12 @@ class Maze:
   
   def getMazeJson(self):
     '''
-    Create a json description of the maze.
+    Create a json description of the maze if a maze was created or setted.
+    It raises a generic Exception if the maze obj doesnt have a maze loaded or generated.
     '''
+
     if not(bool(self.__maze)):
-      return
+      raise Exception("Maze not initialized.")
 
     maze_obj = {
       "larghezza" : 0,
@@ -223,16 +226,54 @@ class Maze:
 
     with open("maze.json", "w") as outfile:
       json.dump(maze_obj, outfile)
+      outfile.close()
 
   def readMazeJson(self,path:str):
+    '''
+    Read a json description of a maze with the following structure and populate the maze object.
+    e.g
+    {
+      "larghezza": 41,
+      "altezza": 21,
+      "pareti": 
+      [
+        {
+          "orientamento": "H",
+          "posizione": 
+          [
+            0,
+            0
+          ],
+          "lunghezza": 19
+        },
+        ...
+      ]
+    }
+    
+    This method raise a OSError if the provided path doesnt exist.
+
+    Parameters:
+    - path (str): The path to the specified json maze description
+
+    Returns:
+    Nothing
+    '''
+
+    # Check if the path and the file exist
+    if not(bool(os.path.exists(path))):
+      raise OSError(2,"The provided file doesnt exitst.",path)
+
+    # Open the file
     with open(path) as json_file:
       data = json.load(json_file)
       print(data)
     
+    # Set maze attribute
     self.__height = data['altezza']
     self.__width = data['larghezza']
     self.__maze = [["c" for j in range(self.__height)] for i in range(self.__width)]
 
+    # Build walls 
     for wall in data["pareti"]:
       if wall["orientamento"] == "H":
         for i in range(0,wall["lunghezza"]):
@@ -244,9 +285,28 @@ class Maze:
 
 
   def getMaze(self) -> np.ndarray:
+    '''
+    Return a NumPy array description of the maze.
+
+    e.g
+    [[w, c, w, w],
+     [w, c, c, w],
+     [w, w, c, w],
+     [w, w, c, w]]
+    
+    Return:
+    Nothing
+    '''
     return np.asarray(self.__maze)
   
   def printMaze(self):
+    '''
+    Print via console stdout the maze array description.
+
+    Return:
+    Nothing
+    '''
+
     for i in range(0, self.__height):
       for j in range(0, self.__width):
         if (self.__maze[i][j] == 'u'):
@@ -261,9 +321,22 @@ class Maze:
       print('\n')
   
   def getMazeImage(self):
+    '''
+    Generate a tiff image rapresent the current maze obj, the generated file will be named 'maze.tiff'
+    It raises a generic Exception if the maze obj doesnt have a maze loaded or generated.
 
+    Return:
+    Nothing
+    '''
+
+    # Check if a maze was loaded or generated
+    if not(bool(self.__maze)):
+      raise Exception("Maze not initialized.")
+
+    # Create a numpy array that represent the maze
     a = np.zeros((self.__height,self.__width,3), dtype=np.int8)
 
+    # Value the fields
     for i in range(0, self.__height):
       for j in range(0, self.__width):
         if (self.__maze[i][j] == 'c'):
@@ -274,20 +347,47 @@ class Maze:
           a[i,j]=[124,252,0]
         else:
           a[i,j]=[0,0,0]
-          
+    
+    # Save the tiff in the current main folder
     im = Image.fromarray(a,mode="RGB")
     im.save("./maze.tiff")
 
-  def resizeMazeImg(self,path: str):
+  def resizeMazeImg(self,path="maze.tiff"):
+    '''
+    Resize maze img. Create a large version of the maze tiff.
+    This method raise a OSError if the provided path doesnt exist.
+    Return:
+    Nothing
+    '''
+
+    # Check if the path and the file exist
+    if not(bool(os.path.exists(path))):
+      raise OSError(2,"The provided file doesnt exitst.",path)
+
     im = Image.open(path)
     base_width = 1400
     width_percent = (base_width / float(im.size[0]))
     hsize = int((float(im.size[1]) * float(width_percent)))
     im = im.resize((base_width, hsize), Image.ANTIALIAS)
-    im.save("./maze.tiff")
+
+    im.save("./large_maze.tiff")
 
 
-  def readMazeImage(self,path: str):
+  def readMazeImage(self,path: str) -> np.ndarray:
+    '''
+    Read maze img and create a maze obj rappresentation.
+    This method raise a OSError if the provided path doesnt exist.
+    
+    Parameters:
+    - path (str): The path to the specified maze img.
+
+    Return:
+    Nothing
+    '''
+
+    # Check if the path and the file exist
+    if not(bool(os.path.exists(path))):
+      raise OSError(2,"The provided file doesnt exitst.",path)
     
     im = Image.open(path)
     a = np.asarray(im)
@@ -310,54 +410,127 @@ class Maze:
 
     return self.getMaze()
 
-  # Find number of surrounding cells
-  def __surroundingCells(self, rand_wall):
+  def __surroundingCells(self, rand_wall: list):
+    '''
+    Find number of surrounding cells.
+
+    Parameters:
+    - rand_wall ([int, int]): The position of the wall.
+    '''
+
+    # Number of surrounding cells
     s_cells = 0
+    
+    #Check up
     if (self.__maze[rand_wall[0]-1][rand_wall[1]] == 'c'):
       s_cells += 1
+    #Check down
     if (self.__maze[rand_wall[0]+1][rand_wall[1]] == 'c'):
       s_cells += 1
+    #Check left
     if (self.__maze[rand_wall[0]][rand_wall[1]-1] == 'c'):
       s_cells +=1
+    #Check right
     if (self.__maze[rand_wall[0]][rand_wall[1]+1] == 'c'):
       s_cells += 1
       
     return s_cells
 
   def __markUpperAsWall(self,rand_wall):
+    '''
+    Mark Upper cell as Wall Border
+
+    Parameters:
+    - rand_wall ([int, int]): The position of the wall.
+
+    Return:
+    Nothing
+    '''
+
+    # Check if it is the upper bound
     if (rand_wall[0] != 0):
+      # If the upper block is not a cell already mark it as wall border
       if (self.__maze[rand_wall[0]-1][rand_wall[1]] != 'c'):
-        self.__maze[rand_wall[0]-1][rand_wall[1]] = 'wb'
+        self.__maze[rand_wall[0]-1][rand_wall[1]] = 'w'
+      
+      # Add the block to the list of walls if is not present
       if ([rand_wall[0]-1, rand_wall[1]] not in self.__walls):
         self.__walls.append([rand_wall[0]-1, rand_wall[1]])
 
   def __markLeftAsWall(self,rand_wall):
+    '''
+    Mark Left cell as Wall Border
+
+    Return:
+    Nothing
+    '''
+
+    # Check if it is the left bound
     if (rand_wall[1] != 0):
+      # If the left block is not a cell already mark it as wall border
       if (self.__maze[rand_wall[0]][rand_wall[1]-1] != 'c'):
-        self.__maze[rand_wall[0]][rand_wall[1]-1] = 'wb'
+        self.__maze[rand_wall[0]][rand_wall[1]-1] = 'w'
+
+      # Add the block to the list of walls if is not present
       if ([rand_wall[0], rand_wall[1]-1] not in self.__walls):
         self.__walls.append([rand_wall[0], rand_wall[1]-1])
 
   def __markRightAsWall(self,rand_wall):
+    '''
+    Mark Right cell as Wall Border
+
+    Return:
+    Nothing
+    '''
+
+    # Check if it is the right bound
     if (rand_wall[1] != self.__width-1):
+      # If the right block is not a cell already mark it as wall border
       if (self.__maze[rand_wall[0]][rand_wall[1]+1] != 'c'):
-        self.__maze[rand_wall[0]][rand_wall[1]+1] = 'wb'
+        self.__maze[rand_wall[0]][rand_wall[1]+1] = 'w'
+
+      # Add the block to the list of walls if is not present
       if ([rand_wall[0], rand_wall[1]+1] not in self.__walls):
         self.__walls.append([rand_wall[0], rand_wall[1]+1])
 
   def __markBottomAsWall(self,rand_wall):
+    '''
+    Mark Bottom cell as Wall Border
+
+    Return:
+    Nothing
+    '''
+
+    # Check if it is the lower bound
     if (rand_wall[0] != self.__height-1):
+      # If the lower block is not a cell already mark it as wall border
       if (self.__maze[rand_wall[0]+1][rand_wall[1]] != 'c'):
-        self.__maze[rand_wall[0]+1][rand_wall[1]] = 'wb'
+        self.__maze[rand_wall[0]+1][rand_wall[1]] = 'w'
+
+      # Add the block to the list of walls if is not present
       if ([rand_wall[0]+1, rand_wall[1]] not in self.__walls):
         self.__walls.append([rand_wall[0]+1, rand_wall[1]])
   
   def __deleteWall(self, rand_wall):
+    '''
+    Delete the wall from walls border list.
+
+    Return:
+    Nothing
+    '''
+
     for wall in self.__walls:
       if (wall[0] == rand_wall[0] and wall[1] == rand_wall[1]):
         self.__walls.remove(wall)
 
-  def generate(self):
+  def generate(self) -> np.ndarray:
+    '''
+    Generate a random maze of specified dimensions.
+
+    Return:
+    maze (numpy.ndarray): The random maze generated.
+    '''
+
     # Denote all cells as unvisited
     # Create an empty list of list (matrix) with height x width dimension
     for i in range(0, self.__height):
@@ -518,6 +691,8 @@ class Maze:
         if (self.__maze[self.__height-2][i] == 'c'):
           self.__maze[self.__height-1][i] = 'c'
           break
+    
+    return self.getMaze()
 
 
 if __name__ == "__main__":
