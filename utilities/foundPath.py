@@ -32,6 +32,19 @@ def find_path_dfs(maze):
             stack.append((path + direction, neighbour))
     return "NO WAY!"
 
+"""
+A* is a widely used pathfinding algorithm and an extension of Edsger Dijkstra's 1959 algorithm.
+A* uses a greedy search and finds a least-cost path from the given initial node to one goal node out of one or more possibilities.
+As A* traverses the graph, it follows a path of the lowest expected total cost or distance,
+keeping a sorted priority queue of alternate path segments along the way.
+It uses a heuristic cost function of node to determine the order in which the search visits nodes in the graph.
+For A* we take the first node which has the lowest sum path cost and expected remaining cost.
+But heuristics must be admissible, that is, it must not overestimate the distance to the goal.
+The time complexity of A* depends on the heuristic.
+
+For Python, we can use "heapq" module for priority queuing and add the cost part of each element.
+For a maze, one of the most simple heuristics can be "Manhattan distance".
+"""
 
 def heuristic(cell, goal):
     return abs(cell[0] - goal[0]) + abs(cell[1] - goal[1])
