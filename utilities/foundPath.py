@@ -37,8 +37,9 @@ def heuristic(cell, goal):
     return abs(cell[0] - goal[0]) + abs(cell[1] - goal[1])
 
 
-def find_path_astar(maze):
-    start, goal = (0, 0), (14, 8)
+def find_path_astar(maze, start, goal):
+    start = start
+    goal = goal
     pr_queue = []
     heappush(pr_queue, (0 + heuristic(start, goal), 0, "", start))
     visited = set()
@@ -74,4 +75,20 @@ MAZE = [
     [0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1],
     [0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1],
 ]
-print(find_path_astar(MAZE))
+
+MAZETwo = [
+    [0, 0, 0, 1, 1, 1],
+    [0, 1, 0, 1, 1, 0],
+    [0, 1, 1, 0, 0, 0],
+    [0, 0, 0, 0, 1, 0]
+]
+
+MAZETree = [
+    [0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1],
+    [0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1],
+    [0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1],
+    [0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0]
+]
+print(find_path_astar(MAZE, (0, 0), (12, 8)))
+print(find_path_astar(MAZETwo, (0, 0), (3, 5)))
+print(find_path_astar(MAZETree, (0, 0), (3, 11)))
