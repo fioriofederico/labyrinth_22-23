@@ -1,3 +1,7 @@
+"""
+Convert the matrix in graph for found path
+"""
+
 def maze2graph(maze):
     height = len(maze)
     width = len(maze[0]) if height else 0
@@ -12,25 +16,6 @@ def maze2graph(maze):
     return graph
 
 from heapq import heappop, heappush
-from collections import deque
-
-
-def find_path_dfs(maze):
-    #start, goal = (1, 0), (len(maze) - 2, len(maze[0]) - 2)
-    start, goal = (0, 0), (11, 1)
-    stack = deque([("", start)])
-    visited = set()
-    graph = maze2graph(maze)
-    while stack:
-        path, current = stack.pop()
-        if current == goal:
-            return path
-        if current in visited:
-            continue
-        visited.add(current)
-        for direction, neighbour in graph[current]:
-            stack.append((path + direction, neighbour))
-    return "NO WAY!"
 
 """
 A* is a widely used pathfinding algorithm and an extension of Edsger Dijkstra's 1959 algorithm.
@@ -49,7 +34,16 @@ For a maze, one of the most simple heuristics can be "Manhattan distance".
 def heuristic(cell, goal):
     return abs(cell[0] - goal[0]) + abs(cell[1] - goal[1])
 
-
+"""
+Input: 
+    Maze is all matrix with position wall and course
+    Start Just with 2 parameter (row, column)
+    Goal Just with 2 parameter (row, column)
+    
+Output: 
+    Movement wih North East South West
+    And Cost for moviment
+"""
 def find_path_astar(maze, start, goal):
     start = start
     goal = goal
@@ -60,7 +54,7 @@ def find_path_astar(maze, start, goal):
     while pr_queue:
         _, cost, path, current = heappop(pr_queue)
         if current == goal:
-            return path
+            return path, cost
         if current in visited:
             continue
         visited.add(current)
