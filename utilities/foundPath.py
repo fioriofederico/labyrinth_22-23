@@ -98,10 +98,10 @@ MAZETwo = [
 
 MAZETree = [
     [0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1],
-    [0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1],
-    [0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1],
-    [0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0]
+    [0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1],
+    [0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]
 ]
-print(find_path_astar(MAZE, (0, 0), (12, 8)))
-print(find_path_astar(MAZETwo, (0, 0), (3, 5)))
-print(find_path_astar(MAZETree, (0, 0), (3, 11)))
+print(find_path_astar(MAZE, (3, 0), (12, 8)))
+print(find_path_astar(MAZETwo, (1, 2), (3, 5)))
+print(find_path_astar(MAZETree, (1, 3), (3, 11)))
