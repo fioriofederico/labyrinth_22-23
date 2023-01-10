@@ -1,12 +1,10 @@
 import json
-#import posixpath
-from turtle import pos
 from maze import Maze
-#import png
 import random
 import math
 from colorama import Fore
 from PIL import Image
+import numpy as np
 
 
 ##Apro il file json
@@ -14,15 +12,8 @@ from PIL import Image
 with open('../indata/20-10_marked.json', 'r') as input_data:
     #read_json = json.load(input_data)
     read_json = input_data.read()
-    print(read_json)
+#    print(read_json)
 
-##restituisco in output un json con i costi valorizzati
-with open('../indata/20-10_marked_NEW.json', 'w') as output_data:
-
-    # write contents to output_data file
-    output_data.write(read_json) #scrive nel json di output il json letto in input
-    # da qui in poi implementiamo il codice per modificare il file di input il calcolo dei costi dei vari percorsi e la ricerca del percorso ottimo.
-    #output_data.write('costi valorizzati')
 
 #def read_maze(input_data):
 #    mz = []
@@ -32,17 +23,20 @@ with open('../indata/20-10_marked_NEW.json', 'w') as output_data:
 #        return mz
 #
 #mz = read_maze('../indata/20-10_marked.json')
-#for r in mz:
-#    print .join(r)
+##for r in mz:
+##    print .join(r)
+#
+#maze = Maze(7,10)
+#maze.getTiff()
+#maze.printMaze()
+if __name__ == '__main__':
+    mz = Maze(7,10)
+    mz.printMaze()
 
-mz = Maze(7,10)
-mz.getTiff()
-mz.printMaze()
-
-#Creo un dizionario che memorizza i passaggi nel labirinto tramite opportuni caratteri
+##Creo un dizionario che memorizza i passaggi nel labirinto tramite opportuni caratteri
 MOVES = {(-1, 0):'^', (1, 0):'.', (0, -1):'<', (0, 1): '>'}
 
-#risolviamo il labirinto
+##risolviamo il labirinto
 def solve(mz) :
     nr, nc = len(mz), len(mz[0])
     ex = (nr - 2, nc - 2)   #blocco d'uscita
@@ -58,6 +52,7 @@ def solve(mz) :
                     if mz[rr + dr][cc + dc] == ' ':
                         mz[rr][cc] = ch
                         mz[rr + dr][cc + dc] = '*'
+                        pos = (rr + dr, cc + dc)
                         newblk.append((rr + dr, cc + dc))
         blk = newblk
 
@@ -76,8 +71,21 @@ def find_path(mz) :
                 break
     return path
 
-path = find_path(mz)
+#Stampo in output il percorso ottimo in un altro file json
+#Stampo un immagine con il percorso ottimo
+
+path = mz.find_path
 mz.getTiff()
 Maze.draw_path (mz, path)
 mz.save('maze1_sol.tiff', mz)
 
+
+####restituisco in output un json con i costi valorizzati
+##with open('../indata/20-10_marked_NEW.json', 'w') as output_data:
+##
+##    # write contents to output_data file
+##    output_data.write(read_json) #scrive nel json di output il json letto in input
+##    # da qui in poi implementiamo il codice per modificare il file di input il calcolo dei costi dei vari percorsi e la ricerca del percorso ottimo.
+##    #output_data.write('costi valorizzati')
+#
+#
