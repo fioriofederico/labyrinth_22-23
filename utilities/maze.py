@@ -5,6 +5,8 @@ import numpy as np
 import os
 import json
 import jsonschema
+from jsonschema import exceptions
+import  sys
 
 class Maze:
   '''
@@ -97,6 +99,25 @@ class Maze:
          ['w', 'c', 'c', 'w'],
          ['w', 'w', 'bc', 'w'],
          ['w', 'w', 'ep', 'w']], dtype='<U2')
+  >>> m.readMazeJson("tests/testcase/maze_1.json")
+  Traceback (most recent call last):
+  jsonschema.exceptions.ValidationError: 'larghezza' is a required property
+  <BLANKLINE>
+  Failed validating 'required' in schema:
+  <BLANKLINE>
+  On instance:
+
+  >>> m.readMazeJson("tests/testcase/maze_2.json")
+  Traceback (most recent call last):
+  jsonschema.exceptions.ValidationError: [] is too short
+  <BLANKLINE>
+  Failed validating 'minItems' in schema['properties']['iniziali']:
+      {'items': {'items': {'type': 'number'}, 'minItems': 2, 'type': 'array'},
+       'minItems': 2,
+       'type': 'array'}
+  <BLANKLINE>
+  On instance['iniziali']:
+      []
   '''
   __maze = []
   __walls = []
@@ -105,36 +126,63 @@ class Maze:
   endpoint = []
   __mazeSchema = {
     "type": "object",
+    "required": [ "larghezza", "altezza", "pareti"],
     "properties": {
-      "larghezza": {"type": "number"},
-      "altezza": {"type": "number"},
+      "larghezza": {
+        "type": "number",
+        "minimum" : 4
+      },
+      "altezza": {
+        "type": "number",
+        "minimum" : 4
+      },
       "pareti": {
         "type" : "array",
         "items": {
           "type" : "object",
+          "required": [ "orientamento", "posizione", "lunghezza" ],
           "properties" : {
-            "orientamento": {"type":"string"},
+            "orientamento": { 
+              "type":"string",
+            },
             "posizione": {
               "type":"array",
-              "items":{"type": "number"}
+              "items": { 
+                "type": "number",
+                "minimum": 0
+              }
             },
-            "lunghezza":{"type": "number"}
+            "lunghezza": { 
+              "type": "number",
+              "minimum": 1
+            }
           }
-        },
-        "iniziali": {
+        }
+      },
+      "iniziali": {
+        "type":"array",
+        "items": {
           "type":"array",
+          "items":{"type": "number"},
+          "minItems": 2
+        },
+        "minItems": 2,
+      },
+      "finale":  {
+        "type":"array",
+        "items":{"type": "number"},
+        "minItems": 2,
+        "maxItems": 2,
+      },
+      "costi":  {
+        "type":"array",
+        "items": { 
+          "type": "array",
           "items": {
-            "type":"array",
-            "items":{"type": "number"}
+            "type": "number"
           },
-        },
-        "finale":  {
-          "type":"array",
-          "items":{"type": "number"}
-        },
-        "costi":  {
-          "type":"array",
-          "items":{"type": "number"}
+          "minItems": 3,
+          "maxItems": 3
         }
       }
     }
@@ -281,9 +329,13 @@ class Maze:
       outfile.close()
 
   def __validateJson(self,json):
-    jsonschema.validate(json,schema=self.__mazeSchema)
+    try:
+      sys.tracebacklimit = 0
+      jsonschema.validate(json,schema=self.__mazeSchema)
+    except exceptions.ValidationError as e:
+      raise e
 
-  def readMazeJson(self,path:str) -> np.ndarray:
+  def readMazeJson(self,path:str) -> np.ndarray: 
     '''
     Read a json description of a maze with the following structure and populate the maze object.
     e.g
