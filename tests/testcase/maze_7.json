@@ -1,0 +1,57 @@
+{
+    "larghezza": 4,
+    "altezza": 4,
+    "pareti": [
+        {
+            "orientamento": "H",
+            "posizione": [
+                0,
+                2
+            ],
+            "lunghezza": 2
+        },
+        {
+            "orientamento": "H",
+            "posizione": [
+                2,
+                0
+            ],
+            "lunghezza": 2
+        },
+        {
+            "orientamento": "H",
+            "posizione": [
+                3,
+                0
+            ],
+            "lunghezza": 2
+        },
+        {
+            "orientamento": "V",
+            "posizione": [
+                0,
+                0
+            ],
+            "lunghezza": 4
+        },
+        {
+            "orientamento": "V",
+            "posizione": [
+                2,
+                1
+            ],
+            "lunghezza": 2
+        },
+        {
+            "orientamento": "V",
+            "posizione": [
+                0,
+                3
+            ],
+            "lunghezza": 5
+        }
+    ],
+    "iniziali": [[0,1]],
+    "finale": [3,2],
+    "costi": [[2,2,96]]
+}

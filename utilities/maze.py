@@ -4,6 +4,7 @@ from PIL import Image
 import numpy as np
 import os
 import json
+from json.decoder import JSONDecodeError
 import jsonschema
 from jsonschema import exceptions
 import  sys
@@ -99,25 +100,38 @@ class Maze:
          ['w', 'c', 'c', 'w'],
          ['w', 'w', 'bc', 'w'],
          ['w', 'w', 'ep', 'w']], dtype='<U2')
+
   >>> m.readMazeJson("tests/testcase/maze_1.json")
   Traceback (most recent call last):
-  jsonschema.exceptions.ValidationError: 'larghezza' is a required property
-  <BLANKLINE>
-  Failed validating 'required' in schema:
-  <BLANKLINE>
-  On instance:
+  Exception: 'larghezza' is a required property
 
   >>> m.readMazeJson("tests/testcase/maze_2.json")
   Traceback (most recent call last):
-  jsonschema.exceptions.ValidationError: [] is too short
-  <BLANKLINE>
-  Failed validating 'minItems' in schema['properties']['iniziali']:
-      {'items': {'items': {'type': 'number'}, 'minItems': 2, 'type': 'array'},
-       'minItems': 2,
-       'type': 'array'}
-  <BLANKLINE>
-  On instance['iniziali']:
-      []
+  Exception: [] is too short
+
+  >>> m.readMazeJson("tests/testcase/maze_3.json")
+  Traceback (most recent call last):
+  KeyError: 'iniziali'
+
+  >>> m.readMazeJson("tests/testcase/maze_4.json")
+  Traceback (most recent call last):
+  Exception: 'lunghezza' is a required property
+
+  >>> m.readMazeJson("tests/testcase/maze_4.json")
+  Traceback (most recent call last):
+  Exception: 'lunghezza' is a required property
+
+  >>> m.readMazeJson("tests/testcase/maze_5.json")
+  Traceback (most recent call last):
+  json.decoder.JSONDecodeError: Expecting ',' delimiter: line 4 column 5 (char 43)
+
+  >>> m.readMazeJson("tests/testcase/maze_6.json")
+  Traceback (most recent call last):
+  ValueError: Invalid wall: [3, 0]
+
+  >>> m.readMazeJson("tests/testcase/maze_7.json")
+  Traceback (most recent call last):
+  ValueError: Invalid wall: [0, 3]
   '''
   __maze = []
   __walls = []
@@ -166,7 +180,7 @@ class Maze:
           "items":{"type": "number"},
           "minItems": 2
         },
-        "minItems": 2,
+        "minItems": 1,
       },
       "finale":  {
         "type":"array",
@@ -329,11 +343,32 @@ class Maze:
       outfile.close()
 
   def __validateJson(self,json):
+    '''
+    Validate the raeded json based on schema definitions.
+
+    Parameters:
+    - json : The json to validate
+
+    Returns:
+    Nothing
+    '''
+    # Check schema consistency
     try:
-      sys.tracebacklimit = 0
       jsonschema.validate(json,schema=self.__mazeSchema)
-    except exceptions.ValidationError as e:
-      raise e
+    except Exception as e:
+      raise Exception(e.message)
+
+    # Check walls consistency
+    for wall in json["pareti"]:
+      if wall["orientamento"] == "H":
+        if wall["posizione"][1]+wall["lunghezza"]>json["larghezza"]:
+          raise ValueError(f"Invalid wall: {wall['posizione']}")
+      elif wall["orientamento"] == "V":
+        if wall["posizione"][0]+wall["lunghezza"]>json["altezza"]:
+          raise ValueError(f"Invalid wall: {wall['posizione']}")
+      elif wall["orientamento"] == "":
+          raise ValueError(f"Invalid wall: {wall['posizione']}")
+
 
   def readMazeJson(self,path:str) -> np.ndarray: 
     '''
