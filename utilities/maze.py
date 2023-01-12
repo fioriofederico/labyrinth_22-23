@@ -8,6 +8,7 @@ from json.decoder import JSONDecodeError
 import jsonschema
 from jsonschema import exceptions
 import  sys
+from typing import List, Literal
 
 class Maze:
   '''
@@ -64,11 +65,11 @@ class Maze:
 
   >>> m = Maze(4,4,[0,0])
   Traceback (most recent call last):
-  ValueError: Start point [x,y] invalid, x must be eq. to 1; provided: 0
+  ValueError: Start point [x,y] invalid, x must be greater than 0 and less than 5; provided: 0
 
   >>> m = Maze(4,4,[3,0])
   Traceback (most recent call last):
-  ValueError: Start point [x,y] invalid, x must be eq. to 1; provided: 3
+  ValueError: Start point [x,y] invalid, y must be greater than 0 and less than 5; provided: 0
 
   >>> m = Maze(4,4,[1,1])
   Traceback (most recent call last):
@@ -87,6 +88,16 @@ class Maze:
   >>> m = Maze(4,4,endpoint=[4,4])
   Traceback (most recent call last):
   ValueError: End point cant be in a edge; provided: 4-4
+
+  >>> m = Maze(4,4,[2,1])
+
+  >>> m = Maze(4,4,[4,2])
+
+  >>> m = Maze(4,4,[3,4])
+
+  >>> m = Maze(4,4,[2,2])
+  Traceback (most recent call last):
+  ValueError: Start point [x,y] invalid; provided: [2, 2]
 
   >>> m = Maze()
   >>> m.readMazeImage("tests/testcase/maze.tiff")
@@ -132,6 +143,12 @@ class Maze:
   >>> m.readMazeJson("tests/testcase/maze_7.json")
   Traceback (most recent call last):
   ValueError: Invalid wall: [0, 3]
+
+  >>> m.readMazeJson("tests/testcase/maze_8.json")
+  array([['w', 'c', 'w', 'w'],
+         ['w', 'c', 'c', 'c'],
+         ['w', 'w', 'bc', 'c'],
+         ['w', 'sp', 'ep', 'c']], dtype='<U2')
   '''
   __maze = []
   __walls = []
@@ -223,7 +240,6 @@ class Maze:
     else:
       raise ValueError(f"Value provided for height is invalid, should be greater than 3: {height}")
 
-
     if (width != 0 and width > 3):
       self.__width = width
     elif (width == 0):
@@ -232,34 +248,29 @@ class Maze:
       raise ValueError(f"Value provided for width is invalid, should be greater than 3: {width}")
 
 
-    if (height > 0 and len(startpoint)==2):
-      if (startpoint[0]!=1):
-        raise ValueError(f"Start point [x,y] invalid, x must be eq. to 1; provided: {startpoint[0]}")
-      elif (startpoint[1]<1 or startpoint[1]>(width)):
-        raise ValueError(f"Start point [x,y] invalid, y must be greater than 0 and less than {width+1}; provided: {startpoint[1]}")
-      elif (startpoint[0]==1 and (startpoint[1]==1 or startpoint[1]==width)):
-        raise ValueError(f"Start point cant be in a edge; provided: {startpoint[0]}-{startpoint[1]}")
-      else:
-        self.startpoint = [None for i in range(2)]
-        self.startpoint[0]=(startpoint[0]-1)
-        self.startpoint[1]=(startpoint[1]-1)
-    elif (height == 0 and len(startpoint)==2):
-      raise ValueError(f"Start point cant be expressed when height eq. 0 or not expressed")
-    
-    if (width > 0 and len(endpoint)==2):
-      if (endpoint[0]!=height):
-        raise ValueError(f"End point [x,y] invalid, x must be eq. to {height}; provided: {endpoint[0]}")
-      elif (endpoint[1]<1 or endpoint[1]>width):
-        raise ValueError(f"End point [x,y] invalid, y must be greater than 0 and less than {width+1}; provided: {endpoint[1]}")
-      elif (endpoint[0]==height and (endpoint[1]==width or endpoint[1]==1)):
-        raise ValueError(f"End point cant be in a edge; provided: {endpoint[0]}-{endpoint[1]}")
-      else:
-          self.endpoint = [None for i in range(2)]
-          self.endpoint[0]=(endpoint[0]-1)
-          self.endpoint[1]=(endpoint[1]-1)
-    elif (width == 0 and len(endpoint)==2):
-      raise ValueError(f"End point cant be expressed when height eq. 0 or not expressed")
-  
+    if (height > 0 and width > 0 and len(startpoint)==2):
+      self.__checkPoint(startpoint,'S')
+    if (height > 0 and width > 0 and len(endpoint)==2):
+      self.__checkPoint(endpoint,'E')
+
+
+  def __checkPoint(self, point: List[int], point_type: Literal["S","E"]) -> None:
+    if (point[0]<1 or point[0]>(self.__width)):
+      raise ValueError(f"{'Start' if point_type=='S' else 'End'} point [x,y] invalid, x must be greater than 0 and less than {self.__width+1}; provided: {point[0]}")
+    elif (point[1]<1 or point[1]>(self.__width)):
+      raise ValueError(f"{'Start' if point_type=='S' else 'End'} point [x,y] invalid, y must be greater than 0 and less than {self.__width+1}; provided: {point[1]}")
+    elif (point[0]==1 and (point[1]==1 or point[1]==self.__width)):
+      raise ValueError(f"{'Start' if point_type=='S' else 'End'} point cant be in a edge; provided: {point[0]}-{point[1]}")
+    elif (point[0]==self.__height and (point[1]==1 or point[1]==self.__width)):
+      raise ValueError(f"{'Start' if point_type=='S' else 'End'} point cant be in a edge; provided: {point[0]}-{point[1]}")
+    elif((point[0]==1 or point[0]==self.__height) and point[1]>0 and point[1]<self.__width+1):
+      self.point = [i-1 for i in point]
+    elif ((point[1]==1 or point[1]==self.__width) and point[0]>0 and point[0]<self.__height+1):
+      self.point = [i-1 for i in point]
+    else:
+      raise ValueError(f"{'Start' if point_type=='S' else 'End'} point [x,y] invalid; provided: {point}")
+
+
   def getMazeJson(self):
     '''
     Create a json description of the maze if a maze was created or setted.
@@ -357,6 +368,13 @@ class Maze:
       jsonschema.validate(json,schema=self.__mazeSchema)
     except Exception as e:
       raise Exception(e.message)
+
+    for i in json["iniziali"]:
+      # Shifted by one cause its not an user input
+      self.__checkPoint([i[0]+1,i[1]+1],'S')
+    
+    # Shifted by one cause its not an user input
+    self.__checkPoint([json["finale"][0]+1,json["finale"][1]+1],'E')
 
     # Check walls consistency
     for wall in json["pareti"]:
