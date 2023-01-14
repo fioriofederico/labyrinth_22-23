@@ -4,10 +4,7 @@ from PIL import Image
 import numpy as np
 import os
 import json
-from json.decoder import JSONDecodeError
 import jsonschema
-from jsonschema import exceptions
-import  sys
 from typing import List, Literal
 
 class Maze:
@@ -91,6 +88,32 @@ class Maze:
 
   >>> m = Maze(4,4,[2,1])
 
+  >>> m = Maze(4,4,[2,1],[4,2],[[]])
+  Traceback (most recent call last):
+  ValueError: Invalid breadcrumb declaration, provided []
+
+  >>> m = Maze(4,4,[2,1],[4,2],[[2,2],[2,3],[3,3],[3,2]])
+
+  >>> m = Maze(4,4,[2,1],[4,2],[[2,2],[4,3],[3,3]])
+  Traceback (most recent call last):
+  ValueError: Invalid breadcrumb: out of maze bounds, provided [4, 3]
+
+  >>> m = Maze(4,4,[2,1],[4,2],[[2,2],[1,3],[3,3]])
+  Traceback (most recent call last):
+  ValueError: Invalid breadcrumb: out of maze bounds, provided [1, 3]
+
+  >>> m = Maze(4,4,[2,1],[4,2],[[2,2],[3,1],[3,3]])
+  Traceback (most recent call last):
+  ValueError: Invalid breadcrumb: out of maze bounds, provided [3, 1]
+
+  >>> m = Maze(4,4,[2,1],[4,2],[[2,2],[3,4],[3,3]])
+  Traceback (most recent call last):
+  ValueError: Invalid breadcrumb: out of maze bounds, provided [3, 4]
+
+  >>> m = Maze(4,4,[2,1],[4,2],[[2,2],[4,4],[3,3]])
+  Traceback (most recent call last):
+  ValueError: Invalid breadcrumb: out of maze bounds, provided [4, 4]
+
   >>> m = Maze(4,4,[4,2])
 
   >>> m = Maze(4,4,[3,4])
@@ -148,6 +171,12 @@ class Maze:
   array([['w', 'c', 'w', 'w'],
          ['w', 'c', 'c', 'c'],
          ['w', 'w', 'bc', 'c'],
+         ['w', 'sp', 'ep', 'c']], dtype='<U2')
+  
+  >>> m.readMazeJson("tests/testcase/maze_9.json")
+  array([['w', 'c', 'w', 'w'],
+         ['w', 'bc', 'bc', 'c'],
+         ['w', 'bc', 'bc', 'c'],
          ['w', 'sp', 'ep', 'c']], dtype='<U2')
   '''
   __maze = []
@@ -219,7 +248,7 @@ class Maze:
     }
   }
 
-  def __init__(self, height=0, width=0, startpoint=[], endpoint=[], breadcrumbs=[[]]):
+  def __init__(self, height:int=0, width:int=0, startpoint:List[int]=[], endpoint:List[int]=[], breadcrumbs:List[List[int]]=[]):
     '''Initialize a Maze object. 
 
     Parameters:
@@ -247,15 +276,49 @@ class Maze:
     else:
       raise ValueError(f"Value provided for width is invalid, should be greater than 3: {width}")
 
-
+    # Check start point and endpoint
     if (height > 0 and width > 0 and len(startpoint)==2):
       self.__checkPoint(startpoint,'S')
+      #Set start point if valid   
+      self.startpoint=[startpoint[0]-1,startpoint[1]-1]
     if (height > 0 and width > 0 and len(endpoint)==2):
       self.__checkPoint(endpoint,'E')
+      # Set end point if valid
+      self.endpoint = [endpoint[0]-1,endpoint[1]-1]
+    
+    # Checks breadcrumbs
+    if (len(breadcrumbs)>0):
+      # Checks breadcrumbs
+      for bc in breadcrumbs:
+        self.__checkBreadCrumbPoint(bc)
+      
+      # Set breadcrumb if they are valid
+      for bc in breadcrumbs:
+        self.__breadcrumbs.append([bc[0]-1,bc[1]-1])
+    else:
+      # Set a void list
+      self.__breadcrumbs = [[]]
 
+  def __checkBreadCrumbPoint(self, bc: List[int]) -> None :
+    '''Check if a breadcrumb point is inside the maze bounds.
+    Raise ValueError if the breadcrumb is not inside the maze bounds.
+    
+    Parameters:
+    - breadcrumbs([int, int]):  The positions of the breadcrumb
+
+    Returns:
+    Nothing
+    '''
+
+    if (len(bc)==2):
+      if not ((bc[0]>1 and bc[0]<self.__height)and(bc[1]>1 and bc[1]<self.__width)):
+        raise ValueError(f"Invalid breadcrumb: out of maze bounds, provided {bc}")
+    else:
+      raise ValueError(f"Invalid breadcrumb declaration, provided {bc}")
 
   def __checkPoint(self, point: List[int], point_type: Literal["S","E"]) -> None:
-    '''Verify that a point is along the maze corner. 
+    '''Verify that a point is along the maze corner.
+    Raise ValueError if a point is not along maze corners.
 
     Parameters:
     - point ([int,int]): A point in the maze.
@@ -395,6 +458,12 @@ class Maze:
           raise ValueError(f"Invalid wall: {wall['posizione']}")
       elif wall["orientamento"] == "":
           raise ValueError(f"Invalid wall: {wall['posizione']}")
+    
+    # Checks breadcrumbs
+    if (len(json["costi"])>0):
+      for bc in json["costi"]:
+        #Plus + 1 cause when read from json we start count from 0
+        self.__checkBreadCrumbPoint([bc[0]+1,bc[1]+1])
 
 
   def readMazeJson(self,path:str) -> np.ndarray: 
