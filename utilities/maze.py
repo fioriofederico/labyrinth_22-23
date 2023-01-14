@@ -92,27 +92,27 @@ class Maze:
   Traceback (most recent call last):
   ValueError: Invalid breadcrumb declaration, provided []
 
-  >>> m = Maze(4,4,[[2,1]],[4,2],[[2,2],[2,3],[3,3],[3,2]])
+  >>> m = Maze(4,4,[[2,1]],[4,2],[[2,2,96],[2,3,96],[3,3,96],[3,2,128]])
 
-  >>> m = Maze(4,4,[[2,1]],[4,2],[[2,2],[4,3],[3,3]])
+  >>> m = Maze(4,4,[[2,1]],[4,2],[[2,2,96],[4,3,96],[3,3,128]])
   Traceback (most recent call last):
-  ValueError: Invalid breadcrumb: out of maze bounds, provided [4, 3]
+  ValueError: Invalid breadcrumb: out of maze bounds, provided [4, 3, 96]
 
-  >>> m = Maze(4,4,[[2,1]],[4,2],[[2,2],[1,3],[3,3]])
+  >>> m = Maze(4,4,[[2,1]],[4,2],[[2,2,96],[1,3,96],[3,3,128]])
   Traceback (most recent call last):
-  ValueError: Invalid breadcrumb: out of maze bounds, provided [1, 3]
+  ValueError: Invalid breadcrumb: out of maze bounds, provided [1, 3, 96]
 
-  >>> m = Maze(4,4,[[2,1]],[4,2],[[2,2],[3,1],[3,3]])
+  >>> m = Maze(4,4,[[2,1]],[4,2],[[2,2,96],[3,1,96],[3,3,128]])
   Traceback (most recent call last):
-  ValueError: Invalid breadcrumb: out of maze bounds, provided [3, 1]
+  ValueError: Invalid breadcrumb: out of maze bounds, provided [3, 1, 96]
 
-  >>> m = Maze(4,4,[[2,1]],[4,2],[[2,2],[3,4],[3,3]])
+  >>> m = Maze(4,4,[[2,1]],[4,2],[[2,2,96],[3,4,96],[3,3,128]])
   Traceback (most recent call last):
-  ValueError: Invalid breadcrumb: out of maze bounds, provided [3, 4]
+  ValueError: Invalid breadcrumb: out of maze bounds, provided [3, 4, 96]
 
-  >>> m = Maze(4,4,[[2,1]],[4,2],[[2,2],[4,4],[3,3]])
+  >>> m = Maze(4,4,[[2,1]],[4,2],[[2,2, 128],[4,4,128],[3,3,96]])
   Traceback (most recent call last):
-  ValueError: Invalid breadcrumb: out of maze bounds, provided [4, 4]
+  ValueError: Invalid breadcrumb: out of maze bounds, provided [4, 4, 128]
 
   >>> m = Maze(4,4,[[4,2]])
 
@@ -471,7 +471,7 @@ class Maze:
     if (len(json["costi"])>0):
       for bc in json["costi"]:
         #Plus + 1 cause when read from json we start count from 0
-        self.__checkBreadCrumbPoint([bc[0]+1,bc[1]+1])
+        self.__checkBreadCrumbPoint([bc[0]+1,bc[1]+1,bc[2]])
 
 
   def readMazeJson(self,path:str) -> np.ndarray: 
