@@ -1,28 +1,13 @@
 from heapq import heappop, heappush
 
 class FoundPath:
-
-    __maze =  [
-        [0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1],
-        [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1],
-        [1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1],
-        [1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1],
-        [1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1],
-        [1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1],
-        [1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1],
-        [0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1],
-        [0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1],
-        [0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1],
-        [0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1],
-        [0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1],
+    __maze = [
+        [0, 1],
+        [1, 1]
     ]
-
-    __start = (3, 0)
-    __goal = (12, 8)
+    #Nota fondamentale il primo valore rappresenta la riga il secondo la colonna essendo un array si conta sempre a partite da 0
+    __start = (0, 1)
+    __goal = (1, 1)
     def __int__(self, start, goal):
         self.__start = start
         self.__goal = goal
@@ -33,14 +18,16 @@ class FoundPath:
     def maze2graph(self):
         height = len(self.__maze)
         width = len(self.__maze[0]) if height else 0
-        graph = {(i, j): [] for j in range(width) for i in range(height) if not self.__maze[i][j]}
+        graph = {(i, j): [] for j in range(width) for i in range(height) if self.__maze[i][j]}
+        print(graph)
         for row, col in graph.keys():
-            if row < height - 1 and not self.__maze[row + 1][col]:
+            if row < height - 1 and self.__maze[row + 1][col]:
                 graph[(row, col)].append(("S ", (row + 1, col)))
                 graph[(row + 1, col)].append(("N ", (row, col)))
-            if col < width - 1 and not self.__maze[row][col + 1]:
+            if col < width - 1 and self.__maze[row][col + 1]:
                 graph[(row, col)].append(("E ", (row, col + 1)))
                 graph[(row, col + 1)].append(("W ", (row, col)))
+        print(graph)
         return graph
 
 
