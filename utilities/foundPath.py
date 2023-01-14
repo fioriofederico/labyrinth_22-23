@@ -3,11 +3,11 @@ from heapq import heappop, heappush
 class FoundPath:
     __maze = [
         [0, 1],
-        [1, 1]
+        [1, 2]
     ]
     #Nota fondamentale il primo valore rappresenta la riga il secondo la colonna essendo un array si conta sempre a partite da 0
     __start = (0, 1)
-    __goal = (1, 0)
+    __goal = (1, 1)
     def __int__(self, start, goal):
         self.__start = start
         self.__goal = goal
@@ -21,15 +21,13 @@ class FoundPath:
         graph = {(i, j): [] for j in range(width) for i in range(height) if self.__maze[i][j]}
         for row, col in graph.keys():
             if row < height - 1 and self.__maze[row + 1][col]:
-                graph[(row, col)].append(("S ", (row + 1, col)))
-                graph[(row + 1, col)].append(("N ", (row, col)))
+                graph[(row, col)].append(("S", (row + 1, col), self.__maze[row][col]))
+                graph[(row + 1, col)].append(("N", (row, col), self.__maze[row][col]))
             if col < width - 1 and self.__maze[row][col + 1]:
-                graph[(row, col)].append(("E ", (row, col + 1)))
-                graph[(row, col + 1)].append(("W ", (row, col)))
+                graph[(row, col)].append(("E", (row, col + 1), self.__maze[row][col]))
+                graph[(row, col + 1)].append(("W", (row, col), self.__maze[row][col]))
         print(graph)
         return graph
-
-
 
     """
     A* is a widely used pathfinding algorithm and an extension of Edsger Dijkstra's 1959 algorithm.
@@ -72,8 +70,8 @@ class FoundPath:
             if current in visited:
                 continue
             visited.add(current)
-            for direction, neighbour in graph[current]:
-                heappush(pr_queue, (cost + self.heuristic(neighbour, goal), cost + 1,
+            for direction, neighbour, real_cost in graph[current]:
+                heappush(pr_queue, (cost + self.heuristic(neighbour, goal), cost + real_cost,
                                     path + direction, neighbour))
         return "NO WAY!"
 
