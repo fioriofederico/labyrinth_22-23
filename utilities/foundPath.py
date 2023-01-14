@@ -2,12 +2,12 @@ from heapq import heappop, heappush
 
 class FoundPath:
     __maze = [
-        [0, 1],
-        [1, 2]
+        [0, 11],
+        [10, 2]
     ]
     #Nota fondamentale il primo valore rappresenta la riga il secondo la colonna essendo un array si conta sempre a partite da 0
     __start = (0, 1)
-    __goal = (1, 1)
+    __goal = (1, 0)
     def __int__(self, start, goal):
         self.__start = start
         self.__goal = goal
@@ -71,7 +71,7 @@ class FoundPath:
                 continue
             visited.add(current)
             for direction, neighbour, real_cost in graph[current]:
-                heappush(pr_queue, (cost + self.heuristic(neighbour, goal), cost + real_cost,
+                heappush(pr_queue, (cost + self.heuristic(neighbour, goal), cost + 1 + real_cost,
                                     path + direction, neighbour))
         return "NO WAY!"
 
