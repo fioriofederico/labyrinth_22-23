@@ -255,6 +255,15 @@ class Maze:
 
 
   def __checkPoint(self, point: List[int], point_type: Literal["S","E"]) -> None:
+    '''Verify that a point is along the maze corner. 
+
+    Parameters:
+    - point ([int,int]): A point in the maze.
+    - point_type (Literal['S','E']): Indicate if the point is a Startpoint or an Endpoint
+
+    Returns:
+    Nothing
+    '''
     if (point[0]<1 or point[0]>(self.__width)):
       raise ValueError(f"{'Start' if point_type=='S' else 'End'} point [x,y] invalid, x must be greater than 0 and less than {self.__width+1}; provided: {point[0]}")
     elif (point[1]<1 or point[1]>(self.__width)):
