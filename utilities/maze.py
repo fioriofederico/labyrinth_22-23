@@ -225,8 +225,8 @@ class Maze:
     Parameters:
     - height (int): First dimension of the maze, should be greater than 3
     - width (int): Second dimension of the maze, should be greater than 3
-    - startpoint ([int,int]): The ingress of the maze, should be on the top of the maze.
-    - endpoint ([int, int]): The exit point of the maze, should be on the bottom of the maze.
+    - startpoint ([int,int]): The ingress of the maze, should along the corner of the maze.
+    - endpoint ([int, int]): The exit point of the maze, should be along the corner of the maze.
     - breadcrumbs([[int, int],[...],[...]]):  The positions of breadcrumbs
 
     Returns:
