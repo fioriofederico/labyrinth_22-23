@@ -2,12 +2,26 @@ from heapq import heappop, heappush
 
 class FoundPath:
     __maze = [
-        [0, 11],
-        [10, 2]
+        [0, 1, 1, 1, 1, 1, 2, 0, 1, 1, 1, 1],
+        [0, 0, 0, 2, 0, 0, 3, 0, 5, 0, 0, 1],
+        [0, 0, 1, 2, 1, 1, 1, 4, 0, 1, 1, 1],
+        [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 13, 0, 1, 14, 1, 1, 1, 1, 0, 1],
+        [1, 0, 1, 1, 1, 0, 0, 0, 0, 4, 0, 1],
+        [1, 0, 0, 0, 1, 16, 1, 1, 1, 1, 0, 1],
+        [1, 0, 1, 1, 3, 0, 0, 5, 0, 6, 1, 1],
+        [1, 0, 1, 1, 0, 1, 0, 4, 0, 0, 0, 1],
+        [1, 0, 8, 0, 0, 1, 1, 1, 1, 1, 0, 1],
+        [1, 0, 0, 0, 1, 15, 0, 1, 2, 0, 0, 1],
+        [0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 12],
+        [0, 0, 1, 1, 1, 1, 10, 0, 0, 1, 1, 1],
+        [0, 0, 1, 1, 1, 1, 11, 0, 0, 1, 1, 16],
+        [0, 0, 12, 1, 1, 1, 1, 0, 0, 1, 1, 1],
+        [0, 0, 1, 14, 1, 1, 15, 0, 0, 1, 1, 1],
     ]
     #Nota fondamentale il primo valore rappresenta la riga il secondo la colonna essendo un array si conta sempre a partite da 0
     __start = (0, 1)
-    __goal = (1, 0)
+    __goal = (9, 7)
     def __int__(self, start, goal):
         self.__start = start
         self.__goal = goal
@@ -26,7 +40,6 @@ class FoundPath:
             if col < width - 1 and self.__maze[row][col + 1]:
                 graph[(row, col)].append(("E", (row, col + 1), self.__maze[row][col]))
                 graph[(row, col + 1)].append(("W", (row, col), self.__maze[row][col]))
-        print(graph)
         return graph
 
     """
@@ -60,13 +73,14 @@ class FoundPath:
         start = self.__start
         goal = self.__goal
         pr_queue = []
-        heappush(pr_queue, (0 + self.heuristic(start, goal), 0, "", start))
+        costSum = 0
+        heappush(pr_queue, (0 + self.heuristic(start, goal), 0, "", start, ""))
         visited = set()
         graph: dict = self.maze2graph()
         while pr_queue:
-            _, cost, path, current = heappop(pr_queue)
+            _, cost, costSum, path, current = heappop(pr_queue)
             if current == goal:
-                return path, cost
+                return path, cost, costSum
             if current in visited:
                 continue
             visited.add(current)
