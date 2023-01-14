@@ -299,7 +299,7 @@ class Maze:
       
       # Set breadcrumb if they are valid
       for bc in breadcrumbs:
-        self.__breadcrumbs.append([bc[0]-1,bc[1]-1])
+        self.__breadcrumbs.append([bc[0]-1,bc[1]-1,bc[2]])
     else:
       # Set a void list
       self.__breadcrumbs = [[]]
@@ -318,7 +318,7 @@ class Maze:
     Nothing
     '''
 
-    if (len(bc)==2):
+    if (len(bc)==3):
       if not ((bc[0]>1 and bc[0]<self.__height)and(bc[1]>1 and bc[1]<self.__width)):
         raise ValueError(f"Invalid breadcrumb: out of maze bounds, provided {bc}")
     else:
@@ -626,9 +626,14 @@ class Maze:
         elif (self.__maze[i][j] == 'bc'):
           # Search the breadcrumb
           for bc in self.__breadcrumbs:
+            print(bc)
             if (bc[0] == i and bc[1] == j):
               # Set the breadcrumb color
-               a[i,j]=[bc[2],bc[2],bc[2]]
+              for bc in self.__breadcrumbs:
+                if bc[0]==i and bc[1]==j:
+                  color = bc[2]
+                  break
+              a[i,j]=[color,color,color]
         elif(self.__maze[i][j] == 'u'):
           a[i,j]=[124,252,0]
         elif(self.__maze[i][j] == 'sp'):
@@ -1115,23 +1120,41 @@ class Maze:
     if len(self.startpoints)>0:
       for startpoint in self.startpoints:
         if len(startpoint)==2:
-          self.__maze[startpoint[0]][startpoint[1]] = 'c'
-        else:
-          for i in range(0, self.__width):
-            if (self.__maze[1][i] == 'c'):
-              self.__maze[0][i] = 'c'
-              break
+          self.__maze[startpoint[0]][startpoint[1]] = 'sp'
+          if startpoint[0]==0:
+            self.__maze[startpoint[0]+1][startpoint[1]] = 'c'
+          elif startpoint[0]==self.__height-1:
+            self.__maze[startpoint[0]-1][startpoint[1]] = 'c'
+          elif startpoint[1]==0:
+            self.__maze[startpoint[0]][startpoint[1]+1] = 'c'
+          elif startpoint[1]==self.__width-1:
+            self.__maze[startpoint[0]][startpoint[1]-1] = 'c'
+    else:
+      for i in range(0, self.__width):
+        if (self.__maze[1][i] == 'c'):
+          self.__maze[0][i] = 'sp'
+          break
 
     # Set exit
     if len(self.endpoint)==2:
-      self.__maze[self.endpoint[0]][self.endpoint[1]] = 'c'
-      self.__maze[self.endpoint[0]-1][self.endpoint[1]] = 'c' 
+      self.__maze[self.endpoint[0]][self.endpoint[1]] = 'ep'
+      if self.endpoint[0]==0:
+        self.__maze[self.endpoint[0]+1][self.endpoint[1]] = 'c'
+      elif self.endpoint[0]==self.__height-1:
+        self.__maze[self.endpoint[0]-1][self.endpoint[1]] = 'c'
+      elif self.endpoint[1]==0:
+        self.__maze[self.endpoint[0]][self.endpoint[1]+1] = 'c'
+      elif self.endpoint[1]==self.__width-1:
+        self.__maze[self.endpoint[0]][self.endpoint[1]-1] = 'c' 
     else:
       for i in range(self.__width-1, 0, -1):
         if (self.__maze[self.__height-2][i] == 'c'):
-          self.__maze[self.__height-1][i] = 'c'
+          self.__maze[self.__height-1][i] = 'ep'
           break
-    
+
+    if len(self.__breadcrumbs) > 0:
+      for bc in self.__breadcrumbs:
+        self.__maze[bc[0]][bc[1]] = "bc"
     return self.getMaze()
 
 
