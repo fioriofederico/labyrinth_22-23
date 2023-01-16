@@ -20,7 +20,7 @@ class FoundPath:
         [0, 0, 1, 14, 1, 1, 15, 0, 0, 1, 1, 1],
     ]
     #Nota fondamentale il primo valore rappresenta la riga il secondo la colonna essendo un array si conta sempre a partite da 0
-    __start = (0, 1)
+    __start = [(0, 1), (0, 6), (15, 3)]
     __goal = (9, 7)
     def __int__(self, start, goal):
         self.__start = start
@@ -70,22 +70,28 @@ class FoundPath:
         And Cost for moviment
     """
     def find_path_astar(self):
-        start = self.__start
+        startInput = self.__start
         goal = self.__goal
-        pr_queue = []
-        costSum = 0
-        heappush(pr_queue, (0 + self.heuristic(start, goal), 0, "", start, ""))
-        visited = set()
-        graph: dict = self.maze2graph()
-        while pr_queue:
-            _, cost, costSum, path, current = heappop(pr_queue)
-            if current == goal:
-                return path, cost, costSum
-            if current in visited:
-                continue
-            visited.add(current)
-            for direction, neighbour, real_cost in graph[current]:
-                heappush(pr_queue, (cost + self.heuristic(neighbour, goal), cost + 1 + real_cost,
-                                    path + direction, neighbour))
-        return "NO WAY!"
+        print(len(startInput))
+        for i in range(len(startInput)):
+            print(i)
+            start = startInput[i]
+            print(start)
+            print(goal)
+            pr_queue = []
+            costSum = 0
+            heappush(pr_queue, (0 + self.heuristic(start, goal), 0, "", start))
+            visited = set()
+            graph: dict = self.maze2graph()
+            while pr_queue:
+                _, cost, path, current = heappop(pr_queue)
+                if current == goal:
+                    print(path, cost)
+                if current in visited:
+                    continue
+                visited.add(current)
+                for direction, neighbour, real_cost in graph[current]:
+                    heappush(pr_queue, (cost + self.heuristic(neighbour, goal), cost + 1 + real_cost,
+                                        path + direction, neighbour))
+            print("NO WAY!")
 
