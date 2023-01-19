@@ -1,35 +1,65 @@
 from heapq import heappop, heappush
+import numpy as np
+
 
 class FoundPath:
-    __maze = [
-        [0, 1, 1, 1, 1, 1, 2, 0, 1, 1, 1, 1],
-        [0, 0, 0, 2, 0, 0, 3, 0, 5, 0, 0, 1],
-        [0, 0, 1, 2, 1, 1, 1, 4, 0, 1, 1, 1],
-        [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 13, 0, 1, 14, 1, 1, 1, 1, 0, 1],
-        [1, 0, 1, 1, 1, 0, 0, 0, 0, 4, 0, 1],
-        [1, 0, 0, 0, 1, 16, 1, 1, 1, 1, 0, 1],
-        [1, 0, 1, 1, 3, 0, 0, 5, 0, 6, 1, 1],
-        [1, 0, 1, 1, 0, 1, 0, 4, 0, 0, 0, 1],
-        [1, 0, 8, 0, 0, 1, 1, 1, 1, 1, 0, 1],
-        [1, 0, 0, 0, 1, 15, 0, 1, 2, 0, 0, 1],
-        [0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 12],
-        [0, 0, 1, 1, 1, 1, 10, 0, 0, 1, 1, 1],
-        [0, 0, 1, 1, 1, 1, 11, 0, 0, 1, 1, 16],
-        [0, 0, 12, 1, 1, 1, 1, 0, 0, 1, 1, 1],
-        [0, 0, 1, 14, 1, 1, 15, 0, 0, 1, 1, 1],
-    ]
-    #Nota fondamentale il primo valore rappresenta la riga il secondo la colonna essendo un array si conta sempre a partite da 0
-    __start = [(0, 1), (0, 6), (15, 3)]
-    __goal = (9, 7)
-    def __int__(self, start, goal):
-        self.__start = start
-        self.__goal = goal
+    # Nota fondamentale il primo valore rappresenta la riga il secondo la colonna essendo un array si conta sempre a partite da 0
+    __start = [(1, 1), (3, 4), (15, 30)]
+    __goal = (15, 1)
+    __maze = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+              [0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+              [0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0],
+              [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+              [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0],
+              [0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0],
+              [0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0],
+              [0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0],
+              [0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+              [0, 1, 0, 0, 0, 1, 1, 0, 1, 4, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+              [0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0],
+              [0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0],
+              [0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0],
+              [0, 1, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0],
+              [0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 4, 1, 0, 0, 1, 1, 1, 1],
+              [0, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0],
+              [0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0],
+              [0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0],
+              [0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0],
+              [0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0],
+              [0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0],
+              [0, 1, 1, 1, 0, 0, 0, 1, 1, 4, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0],
+              [0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0],
+              [0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0],
+              [0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0],
+              [0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0],
+              [0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0],
+              [0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0],
+              [0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0],
+              [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+    pass
+
+    def __init__(self, maze):
+        self.__mazeGenerator = maze
+        # self.__start = start
+        # self.__goal = goal
+
     pass
     """
     Convert the matrix in graph for found path
     """
+
     def maze2graph(self):
+        """self.__maze = np.zeros((len(self.__mazeGenerator), len(self.__mazeGenerator)), dtype=int)
+        for i in range(len(self.__mazeGenerator)):
+            for j in range(len(self.__mazeGenerator)):
+                if self.__mazeGenerator[i][j] == 'w':
+                    self.__maze[i][j] = 0
+                elif self.__mazeGenerator[i][j] == 'sp':
+                    self.__maze[i][j] = 1
+                elif self.__mazeGenerator[i][j] == 'c':
+                    self.__maze[i][j] = 1
+                elif self.__mazeGenerator[i][j] == 'bc':
+                    self.__maze[i][j] = 4"""
         height = len(self.__maze)
         width = len(self.__maze[0]) if height else 0
         graph = {(i, j): [] for j in range(width) for i in range(height) if self.__maze[i][j]}
@@ -69,17 +99,13 @@ class FoundPath:
         Movement wih North East South West
         And Cost for moviment
     """
+
     def find_path_astar(self):
-        startInput = self.__start
+        start_input = self.__start
         goal = self.__goal
-        print(len(startInput))
-        for i in range(len(startInput)):
-            print(i)
-            start = startInput[i]
-            print(start)
-            print(goal)
+        for i in range(len(start_input)):
+            start = start_input[i]
             pr_queue = []
-            costSum = 0
             heappush(pr_queue, (0 + self.heuristic(start, goal), 0, "", start))
             visited = set()
             graph: dict = self.maze2graph()
@@ -94,4 +120,3 @@ class FoundPath:
                     heappush(pr_queue, (cost + self.heuristic(neighbour, goal), cost + 1 + real_cost,
                                         path + direction, neighbour))
             print("NO WAY!")
-
