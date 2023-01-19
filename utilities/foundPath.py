@@ -4,8 +4,8 @@ import numpy as np
 
 class FoundPath:
     # Nota fondamentale il primo valore rappresenta la riga il secondo la colonna essendo un array si conta sempre a partite da 0
-    __start = [(1, 1), (3, 4), (15, 30)]
-    __goal = (15, 1)
+    # __start = [(1, 1), (3, 4), (15, 28)]
+    # __goal = (15, 1)
     __maze = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
               [0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
               [0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0],
@@ -38,10 +38,10 @@ class FoundPath:
               [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
     pass
 
-    def __init__(self, maze):
+    def __init__(self, maze, start, goal):
         self.__mazeGenerator = maze
-        # self.__start = start
-        # self.__goal = goal
+        self.__start = start
+        self.__goal = goal
 
     pass
     """
@@ -103,6 +103,7 @@ class FoundPath:
     def find_path_astar(self):
         start_input = self.__start
         goal = self.__goal
+        path_return = []
         for i in range(len(start_input)):
             start = start_input[i]
             pr_queue = []
@@ -112,11 +113,13 @@ class FoundPath:
             while pr_queue:
                 _, cost, path, current = heappop(pr_queue)
                 if current == goal:
-                    print(path, cost)
+                    path_return.append((path, cost))
                 if current in visited:
                     continue
                 visited.add(current)
                 for direction, neighbour, real_cost in graph[current]:
                     heappush(pr_queue, (cost + self.heuristic(neighbour, goal), cost + 1 + real_cost,
                                         path + direction, neighbour))
-            print("NO WAY!")
+            path_return.append("NO WAY!")
+
+        return path_return

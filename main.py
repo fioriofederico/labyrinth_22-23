@@ -8,5 +8,6 @@ if __name__ == "__main__":
     p.startpoints
     p.endpoint
     maze = p.getMaze()
-    foundPath = FoundPath(maze)
+    foundPath = FoundPath(maze, [(1, 1), (3, 4), (15, 28)], (15, 1))
     path = foundPath.find_path_astar()
+    print(path)
