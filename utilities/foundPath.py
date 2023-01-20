@@ -4,13 +4,6 @@ import numpy as np
 
 class FoundPath:
     # Nota fondamentale il primo valore rappresenta la riga il secondo la colonna essendo un array si conta sempre a partite da 0
-    # __start = [(1, 1), (3, 4), (15, 28)]
-    # __goal = (15, 1)
-    __maze = [[0, 0, 1, 0, 0],
-              [0, 1, 1, 0, 0],
-              [0, 0, 1, 1, 0],
-              [0, 0, 1, 1, 0],
-              [0, 0, 0, 1, 0]]
     """__maze = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
               [0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
               [0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0],
@@ -44,8 +37,7 @@ class FoundPath:
     pass
 
     def __init__(self, maze, start, goal):
-        if not maze == []:
-            self.__maze = maze
+        self.__maze = maze
         self.__start = start
         self.__goal = goal
 
