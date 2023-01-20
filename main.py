@@ -1,13 +1,20 @@
+import numpy as np
+
 from utilities.maze import Maze
 from utilities.foundPath import FoundPath
 
 if __name__ == "__main__":
-    p = Maze(30,30,[[1,10],[30,4],[15,30]],[15,1],[[22,10,96], [10,10,200], [15,23,128]])
+    p = Maze(10, 10, [[1, 3]], [10, 4], [[2, 2, 2], [2, 3, 200], [4, 3, 128]])
     p.generate()
     p.getMazeImage()
-    p.startpoints
-    p.endpoint
+    start = [(x[0], x[1]) for x in p.startpoints]
+    goal = tuple(p.endpoint)
     maze = p.getMaze()
-    foundPath = FoundPath(maze, [(1, 1), (3, 4), (15, 28)], (15, 1))
+    maze = np.where(np.array(maze) == 'w', 0, 1)
+    maze = (np.array2string(maze, separator=", "))
+    print(maze)
+    print(start)
+    print(goal)
+    foundPath = FoundPath(maze, start, goal)
     path = foundPath.find_path_astar()
     print(path)

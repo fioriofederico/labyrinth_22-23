@@ -6,7 +6,12 @@ class FoundPath:
     # Nota fondamentale il primo valore rappresenta la riga il secondo la colonna essendo un array si conta sempre a partite da 0
     # __start = [(1, 1), (3, 4), (15, 28)]
     # __goal = (15, 1)
-    __maze = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    __maze = [[0, 0, 1, 0, 0],
+              [0, 1, 1, 0, 0],
+              [0, 0, 1, 1, 0],
+              [0, 0, 1, 1, 0],
+              [0, 0, 0, 1, 0]]
+    """__maze = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
               [0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
               [0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0],
               [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
@@ -35,11 +40,12 @@ class FoundPath:
               [0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0],
               [0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0],
               [0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0],
-              [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+              [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]"""
     pass
 
     def __init__(self, maze, start, goal):
-        self.__mazeGenerator = maze
+        if not maze == []:
+            self.__maze = maze
         self.__start = start
         self.__goal = goal
 
@@ -49,17 +55,6 @@ class FoundPath:
     """
 
     def maze2graph(self):
-        """self.__maze = np.zeros((len(self.__mazeGenerator), len(self.__mazeGenerator)), dtype=int)
-        for i in range(len(self.__mazeGenerator)):
-            for j in range(len(self.__mazeGenerator)):
-                if self.__mazeGenerator[i][j] == 'w':
-                    self.__maze[i][j] = 0
-                elif self.__mazeGenerator[i][j] == 'sp':
-                    self.__maze[i][j] = 1
-                elif self.__mazeGenerator[i][j] == 'c':
-                    self.__maze[i][j] = 1
-                elif self.__mazeGenerator[i][j] == 'bc':
-                    self.__maze[i][j] = 4"""
         height = len(self.__maze)
         width = len(self.__maze[0]) if height else 0
         graph = {(i, j): [] for j in range(width) for i in range(height) if self.__maze[i][j]}
