@@ -1158,6 +1158,9 @@ class Maze:
     return self.getMaze()
 
 
+  def getBreadcrumbs(self):
+    return self.__breadcrumbs
+
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
