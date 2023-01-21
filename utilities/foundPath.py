@@ -1,6 +1,8 @@
 from heapq import heappop, heappush
 import numpy as np
 import json
+import os
+import time
 
 
 class FoundPath:
@@ -147,6 +149,18 @@ class FoundPath:
     def getPathRetunrJson(self):
         return self.__path_returned_json
 
+    def ensure_path_exists(self, file_path):
+        directory = os.path.dirname(file_path)
+        if not os.path.exists(directory):
+            os.makedirs(directory)
 
+    def unique_file_name(self, file_name):
+        timestamp = int(time.time())
+        unique_name = f"{file_name}_{timestamp}"+'.json'
+        return unique_name
 
-
+    def write_json_file(self, data, file_path, file_name):
+        self.ensure_path_exists(file_path)
+        name = self.unique_file_name(file_name)
+        with open(file_path+name, "w") as json_file:
+            json.dump(data, json_file)
