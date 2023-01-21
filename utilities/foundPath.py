@@ -1,34 +1,26 @@
 from heapq import heappop, heappush
+import numpy as np
+import json
+
 
 class FoundPath:
-    __maze = [
-        [0, 1, 1, 1, 1, 1, 2, 0, 1, 1, 1, 1],
-        [0, 0, 0, 2, 0, 0, 3, 0, 5, 0, 0, 1],
-        [0, 0, 1, 2, 1, 1, 1, 4, 0, 1, 1, 1],
-        [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 13, 0, 1, 14, 1, 1, 1, 1, 0, 1],
-        [1, 0, 1, 1, 1, 0, 0, 0, 0, 4, 0, 1],
-        [1, 0, 0, 0, 1, 16, 1, 1, 1, 1, 0, 1],
-        [1, 0, 1, 1, 3, 0, 0, 5, 0, 6, 1, 1],
-        [1, 0, 1, 1, 0, 1, 0, 4, 0, 0, 0, 1],
-        [1, 0, 8, 0, 0, 1, 1, 1, 1, 1, 0, 1],
-        [1, 0, 0, 0, 1, 15, 0, 1, 2, 0, 0, 1],
-        [0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 12],
-        [0, 0, 1, 1, 1, 1, 10, 0, 0, 1, 1, 1],
-        [0, 0, 1, 1, 1, 1, 11, 0, 0, 1, 1, 16],
-        [0, 0, 12, 1, 1, 1, 1, 0, 0, 1, 1, 1],
-        [0, 0, 1, 14, 1, 1, 15, 0, 0, 1, 1, 1],
-    ]
-    #Nota fondamentale il primo valore rappresenta la riga il secondo la colonna essendo un array si conta sempre a partite da 0
-    __start = [(0, 1), (0, 6), (15, 3)]
-    __goal = (9, 7)
-    def __int__(self, start, goal):
+    # Nota fondamentale il primo valore rappresenta la riga il secondo la colonna essendo un array si conta sempre a partite da 0
+    __visited = {}
+    __path_return = []
+    __mydict = {}
+    pass
+
+    def __init__(self, maze, start, goal):
+        self.__path_returned_json = None
+        self.__maze = maze
         self.__start = start
         self.__goal = goal
+
     pass
     """
     Convert the matrix in graph for found path
     """
+
     def maze2graph(self):
         height = len(self.__maze)
         width = len(self.__maze[0]) if height else 0
@@ -69,29 +61,92 @@ class FoundPath:
         Movement wih North East South West
         And Cost for moviment
     """
+    # Versione lasciata da rimuove
     def find_path_astar(self):
-        startInput = self.__start
+        start_input = self.__start
         goal = self.__goal
-        print(len(startInput))
-        for i in range(len(startInput)):
-            print(i)
-            start = startInput[i]
-            print(start)
-            print(goal)
+        path_return = []
+        for i in range(len(start_input)):
+            start = start_input[i]
             pr_queue = []
-            costSum = 0
             heappush(pr_queue, (0 + self.heuristic(start, goal), 0, "", start))
             visited = set()
             graph: dict = self.maze2graph()
             while pr_queue:
                 _, cost, path, current = heappop(pr_queue)
                 if current == goal:
-                    print(path, cost)
+                    path_return.append((path, cost))
                 if current in visited:
                     continue
                 visited.add(current)
                 for direction, neighbour, real_cost in graph[current]:
-                    heappush(pr_queue, (cost + self.heuristic(neighbour, goal), cost + 1 + real_cost,
+                    heappush(pr_queue, (cost + self.heuristic(neighbour, goal), cost + real_cost,
                                         path + direction, neighbour))
-            print("NO WAY!")
+            path_return.append("NO WAY!")
+
+        return path_return
+
+    #Versione lasciata da rimuovere
+    def find_multi_path_astar(self, num_paths = 3):
+        goal = self.__goal
+        path_return = []
+        for start in self.__start:
+            pr_queue = []
+            heappush(pr_queue, (0 + self.heuristic(start, goal), 0, "", start))
+            visited = set()
+            graph: dict = self.maze2graph()
+            while len(path_return) < num_paths*len(self.__start) and pr_queue:
+                _, cost, path, current = heappop(pr_queue)
+                if current == goal:
+                    path_return.append((start, goal, path, cost))
+                if current in visited:
+                    continue
+                visited.add(current)
+                for direction, neighbour, real_cost in graph[current]:
+                    heappush(pr_queue, (cost + self.heuristic(neighbour, goal), cost + real_cost,
+                                        path + direction, neighbour))
+        if len(path_return) < num_paths*len(self.__start):
+            path_return.append("NO WAY!")
+
+        return path_return
+
+    #Ultima opzione di codice
+    def find_multi_path_astar_return_visited(self, num_paths=3):
+        goal = self.__goal
+        for start in self.__start:
+            pr_queue = []
+            heappush(pr_queue, (0 + self.heuristic(start, goal), 0, "", start))
+            visited = [start]
+            graph: dict = self.maze2graph()
+            while len(self.__path_return) < num_paths * len(self.__start) and pr_queue:
+                _, cost, path, current = heappop(pr_queue)
+                if current == goal:
+                    self.__path_return.append((start, goal, path, cost))
+                    new_element = "percorso" + str(start)
+                    if new_element not in self.__mydict:
+                        self.__mydict[f"{new_element}"] = {}
+                    self.__mydict[f"{new_element}"]["start"] = start
+                    self.__mydict[f"{new_element}"]["goal"] = goal
+                    self.__mydict[f"{new_element}"]["cost"] = cost
+                    self.__mydict[f"{new_element}"]["path"] = path
+                    self.__mydict[f"{new_element}"]["pathVisited"] = visited
+                    self.__path_returned_json = json.dumps(self.__mydict)
+                    self.__visited[start] = visited
+                for direction, neighbour, real_cost in graph[current]:
+                    if neighbour not in visited:
+                        visited.append(neighbour)
+                        heappush(pr_queue, (cost + self.heuristic(neighbour, goal), cost + real_cost,
+                                            path + direction, neighbour))
+        if len(self.__path_return) < num_paths * len(self.__start):
+            self.__path_return.append("NO WAY!")
+        return self.__path_return
+
+    def getPathVisited(self):
+        return self.__visited
+
+    def getPathRetunrJson(self):
+        return self.__path_returned_json
+
+
+
 
