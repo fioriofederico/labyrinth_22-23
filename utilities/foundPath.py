@@ -63,55 +63,6 @@ class FoundPath:
         Movement wih North East South West
         And Cost for moviment
     """
-    # Versione lasciata da rimuove
-    def find_path_astar(self):
-        start_input = self.__start
-        goal = self.__goal
-        path_return = []
-        for i in range(len(start_input)):
-            start = start_input[i]
-            pr_queue = []
-            heappush(pr_queue, (0 + self.heuristic(start, goal), 0, "", start))
-            visited = set()
-            graph: dict = self.maze2graph()
-            while pr_queue:
-                _, cost, path, current = heappop(pr_queue)
-                if current == goal:
-                    path_return.append((path, cost))
-                if current in visited:
-                    continue
-                visited.add(current)
-                for direction, neighbour, real_cost in graph[current]:
-                    heappush(pr_queue, (cost + self.heuristic(neighbour, goal), cost + real_cost,
-                                        path + direction, neighbour))
-            path_return.append("NO WAY!")
-
-        return path_return
-
-    #Versione lasciata da rimuovere
-    def find_multi_path_astar(self, num_paths = 3):
-        goal = self.__goal
-        path_return = []
-        for start in self.__start:
-            pr_queue = []
-            heappush(pr_queue, (0 + self.heuristic(start, goal), 0, "", start))
-            visited = set()
-            graph: dict = self.maze2graph()
-            while len(path_return) < num_paths*len(self.__start) and pr_queue:
-                _, cost, path, current = heappop(pr_queue)
-                if current == goal:
-                    path_return.append((start, goal, path, cost))
-                if current in visited:
-                    continue
-                visited.add(current)
-                for direction, neighbour, real_cost in graph[current]:
-                    heappush(pr_queue, (cost + self.heuristic(neighbour, goal), cost + real_cost,
-                                        path + direction, neighbour))
-        if len(path_return) < num_paths*len(self.__start):
-            path_return.append("NO WAY!")
-
-        return path_return
-
     #Ultima opzione di codice
     def find_multi_path_astar_return_visited(self, num_paths=3):
         goal = self.__goal
