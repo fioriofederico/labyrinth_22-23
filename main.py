@@ -1,6 +1,5 @@
 import numpy as np
 
-
 from utilities.maze import Maze
 from utilities.foundPath import FoundPath
 
