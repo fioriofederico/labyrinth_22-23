@@ -626,7 +626,6 @@ class Maze:
         elif (self.__maze[i][j] == 'bc'):
           # Search the breadcrumb
           for bc in self.__breadcrumbs:
-            print(bc)
             if (bc[0] == i and bc[1] == j):
               # Set the breadcrumb color
               for bc in self.__breadcrumbs:
