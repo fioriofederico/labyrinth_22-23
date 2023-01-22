@@ -590,8 +590,6 @@ class Maze:
     if self.__breadcrumbs != []:
       for bc in self.__breadcrumbs:
         self.__maze[bc[0]][bc[1]] = "bc"
-    
-    return self.getMaze()
 
   def getMaze(self) -> np.ndarray:
     '''
@@ -882,8 +880,6 @@ class Maze:
         else:
           self.__breadcrumbs.append([i,j,a[i,j][0]])
           self.__maze[i][j] = 'bc'
-
-    return self.getMaze()
 
   def __surroundingCells(self, rand_wall: list):
     '''
