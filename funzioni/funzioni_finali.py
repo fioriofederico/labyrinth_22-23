@@ -3,7 +3,7 @@ from random import random, randint
 from colorama import Fore
 from PIL import Image, ImageDraw
 import numpy as np
-from maze import Maze 
+from utilities.maze import Maze 
 
 """
 Funzione che 
