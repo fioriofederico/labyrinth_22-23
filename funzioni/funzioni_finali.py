@@ -3,31 +3,15 @@ from random import random, randint
 from colorama import Fore
 from PIL import Image, ImageDraw
 import numpy as np
-from utilities.maze import Maze 
+#from utilities.maze import Maze 
+
 
 """
-Funzione che 
-- prende in input un file json con tutti i percorsi possibili e restituisce un file json con il percorso ottimo rispetto ai costi
-- prende in input questo file json e restituisce un immagine in formato tiff o png
-"""
+Funzione che prende in input uno o più ingressi per poi restituire un immagine in formati gif con il percorso ottimo
 
-#Funzione che legge il file json in input e ricerca il percorso migliore
-#def CalcoloCostoPercorso():
-#    with open('../indata/20-10_marked.json', 'r') as input_data:
-#    #read_json = json.load(input_data)
-#        read_json = input_data.read()
-#        print(read_json)
+"""
 
 images = []
-#sostituire 0 e 255 con 1 e 0 ??? 
-###img = Image.open('prova.jpeg')
-###img.show()
-###arr = np.array(img)
-#c = np.zeros(0) 
-#b = np.ones(255)
-#a = arr + c + b
-###print(arr)
-
 
 a = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -43,7 +27,10 @@ a = [
 ]
 zoom = 20
 borders = 6
-start = 1,1
+#Do in input 2 ingressi...
+start1 = 1,1
+start2 = 4,6
+#...e un'uscita
 end = 5,19
 
 def make_step(k):
@@ -66,19 +53,22 @@ def print_m(m):
         print()
 
 def draw_matrix(a,m, the_path = []):
-    im = Image.new('RGB', (zoom * len(a[0]), zoom * len(a)), (255, 255, 255))
+    im = Image.new('RGB', (zoom * len(a[0]), zoom * len(a)), (0, 0, 255)) #rettangolino blu intorno ai punti di partenza e arrivo
     draw = ImageDraw.Draw(im)
     for i in range(len(a)):
         for j in range(len(a[i])):
             color = (255, 255, 255)
             r = 0
             if a[i][j] == 1:
-                color = (0, 0, 0)
-            if i == start[0] and j == start[1]:
+                color = (0, 0, 0)   #era 0,0,0
+            if i == start1[0] and j == start1[1]:
+                color = (0, 255, 0)   #era 0,255,0
+                r = borders
+            if i == start2[0] and j == start2[1]:
                 color = (0, 255, 0)
                 r = borders
             if i == end[0] and j == end[1]:
-                color = (0, 255, 0)
+                color = (0, 255, 0)   #era 0,255,0
                 r = borders
             draw.rectangle((j*zoom+r, i*zoom+r, j*zoom+zoom-r-1, i*zoom+zoom-r-1), fill=color)
             if m[i][j] > 0:
@@ -100,8 +90,16 @@ for i in range(len(a)):
     m.append([])
     for j in range(len(a[i])):
         m[-1].append(0)
-i,j = start
+i,j = start1
 m[i][j] = 1
+
+for i in range(len(a)):
+    m.append([])
+    for j in range(len(a[i])):
+        m[-1].append(0)
+i,j = start2
+m[i][j] = 1
+
 
 k = 0
 while m[end[0]][end[1]] == 0:
