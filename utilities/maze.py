@@ -887,6 +887,9 @@ class Maze:
 
     Parameters:
     - rand_wall ([int, int]): The position of the wall.
+
+    Returns:
+    s_cells (int): n. of surrainding cells
     '''
 
     # Number of surrounding cells
