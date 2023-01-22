@@ -51,6 +51,6 @@
             "lunghezza": 4
         }
     ],
-    "finale": [3,2],
+    "finale": [[3,2]],
     "costi": [[2,2,96]]
 }

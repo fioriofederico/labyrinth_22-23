@@ -230,9 +230,12 @@ class Maze:
       },
       "finale":  {
         "type":"array",
-        "items":{"type": "number"},
-        "minItems": 2,
-        "maxItems": 2,
+        "items": {
+          "type":"array",
+          "items":{"type": "number"},
+          "minItems": 2
+        },
+        "minItems": 1,
       },
       "costi":  {
         "type":"array",
@@ -280,14 +283,14 @@ class Maze:
       for startpoint in startpoints:
         # Check start point and endpoint
         if (height > 0 and width > 0 and len(startpoint)==2):
-          self.__checkPoint(startpoint,'S')
+          self.__checkPoint(startpoint,'S',height,width)
       
       for startpoint in startpoints:
         #Set start point if valid   
         self.startpoints.append([startpoint[0]-1,startpoint[1]-1])
     
     if (height > 0 and width > 0 and len(endpoint)==2):
-      self.__checkPoint(endpoint,'E')
+      self.__checkPoint(endpoint,'E',height,width)
       # Set end point if valid
       self.endpoint = [endpoint[0]-1,endpoint[1]-1]
     
@@ -295,7 +298,7 @@ class Maze:
     if (len(breadcrumbs)>0):
       # Checks breadcrumbs
       for bc in breadcrumbs:
-        self.__checkBreadCrumbPoint(bc)
+        self.__checkBreadCrumbPoint(bc,height,width)
       
       # Set breadcrumb if they are valid
       for bc in breadcrumbs:
@@ -307,7 +310,7 @@ class Maze:
   def resetMaze():
     pass
 
-  def __checkBreadCrumbPoint(self, bc: List[int]) -> None :
+  def __checkBreadCrumbPoint(self, bc: List[int], height: int, width: int) -> None :
     '''Check if a breadcrumb point is inside the maze bounds.
     Raise ValueError if the breadcrumb is not inside the maze bounds.
     
@@ -319,12 +322,12 @@ class Maze:
     '''
 
     if (len(bc)==3):
-      if not ((bc[0]>1 and bc[0]<self.__height)and(bc[1]>1 and bc[1]<self.__width)):
+      if not ((bc[0]>1 and bc[0]<height)and(bc[1]>1 and bc[1]<width)):
         raise ValueError(f"Invalid breadcrumb: out of maze bounds, provided {bc}")
     else:
       raise ValueError(f"Invalid breadcrumb declaration, provided {bc}")
 
-  def __checkPoint(self, point: List[int], point_type: Literal["S","E"]) -> None:
+  def __checkPoint(self, point: List[int], point_type: Literal["S","E"],height:int,width:int) -> None:
     '''Verify that a point is along the maze corner.
     Raise ValueError if a point is not along maze corners.
 
@@ -335,18 +338,20 @@ class Maze:
     Returns:
     Nothing
     '''
-    if (point[0]<1 or point[0]>(self.__width)):
-      raise ValueError(f"{'Start' if point_type=='S' else 'End'} point [x,y] invalid, x must be greater than 0 and less than {self.__width+1}; provided: {point[0]}")
-    elif (point[1]<1 or point[1]>(self.__width)):
-      raise ValueError(f"{'Start' if point_type=='S' else 'End'} point [x,y] invalid, y must be greater than 0 and less than {self.__width+1}; provided: {point[1]}")
-    elif (point[0]==1 and (point[1]==1 or point[1]==self.__width)):
+    if (point[0]<1 or point[0]>(width)):
+      raise ValueError(f"{'Start' if point_type=='S' else 'End'} point [x,y] invalid, x must be greater than 0 and less than {width+1}; provided: {point[0]}")
+    elif (point[1]<1 or point[1]>(width)):
+      raise ValueError(f"{'Start' if point_type=='S' else 'End'} point [x,y] invalid, y must be greater than 0 and less than {width+1}; provided: {point[1]}")
+    elif (point[0]==1 and (point[1]==1 or point[1]==width)):
       raise ValueError(f"{'Start' if point_type=='S' else 'End'} point cant be in a edge; provided: {point[0]}-{point[1]}")
-    elif (point[0]==self.__height and (point[1]==1 or point[1]==self.__width)):
+    elif (point[0]==height and (point[1]==1 or point[1]==width)):
       raise ValueError(f"{'Start' if point_type=='S' else 'End'} point cant be in a edge; provided: {point[0]}-{point[1]}")
-    elif((point[0]==1 or point[0]==self.__height) and point[1]>0 and point[1]<self.__width+1):
-      self.point = [i-1 for i in point]
-    elif ((point[1]==1 or point[1]==self.__width) and point[0]>0 and point[0]<self.__height+1):
-      self.point = [i-1 for i in point]
+    elif((point[0]==1 or point[0]==height) and point[1]>0 and point[1]<width+1 and point_type!="E"):
+      pass
+    elif ((point[1]==1 or point[1]==width) and point[0]>0 and point[0]<height+1 and point_type!="E" ):
+      pass
+    elif (point_type=="E"):
+      pass
     else:
       raise ValueError(f"{'Start' if point_type=='S' else 'End'} point [x,y] invalid; provided: {point}")
 
@@ -428,6 +433,9 @@ class Maze:
     maze_obj['altezza'] = self.__height
     maze_obj['larghezza'] = self.__width
     maze_obj['pareti'] = walls_list
+    maze_obj['iniziali'] = [[a,b] for a, b in self.startpoints]
+    maze_obj['finale'] = [[a,b] for a, b in self.endpoint]
+    maze_obj["costi"] = [[int(a),int(b),int(c)] for a, b, c in self.__breadcrumbs]
 
     with open("maze.json", "w") as outfile:
       json.dump(maze_obj, outfile)
@@ -451,10 +459,11 @@ class Maze:
 
     for i in json["iniziali"]:
       # Shifted by one cause its not an user input
-      self.__checkPoint([i[0]+1,i[1]+1],'S')
+      self.__checkPoint([i[0]+1,i[1]+1],'S',json["altezza"],json["larghezza"])
     
     # Shifted by one cause its not an user input
-    self.__checkPoint([json["finale"][0]+1,json["finale"][1]+1],'E')
+    for i in json["finale"]:
+      self.__checkPoint([i[0]+1,i[1]+1],'E',json["altezza"],json["larghezza"])
 
     # Check walls consistency
     for wall in json["pareti"]:
@@ -471,7 +480,7 @@ class Maze:
     if (len(json["costi"])>0):
       for bc in json["costi"]:
         #Plus + 1 cause when read from json we start count from 0
-        self.__checkBreadCrumbPoint([bc[0]+1,bc[1]+1,bc[2]])
+        self.__checkBreadCrumbPoint([bc[0]+1,bc[1]+1,bc[2]],json["altezza"],json["larghezza"])
 
 
   def readMazeJson(self,path:str) -> np.ndarray: 
@@ -553,7 +562,8 @@ class Maze:
         self.__maze[startpoint[0]][startpoint[1]] = "sp"
     
     if self.endpoint != []:
-      self.__maze[self.endpoint[0]][self.endpoint[1]] = "ep"
+      for endpoint in self.endpoint:
+        self.__maze[endpoint[0]][endpoint[1]] = "ep"
 
     if self.__breadcrumbs != []:
       for bc in self.__breadcrumbs:
