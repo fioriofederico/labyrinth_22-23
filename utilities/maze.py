@@ -1192,7 +1192,10 @@ class Maze:
 
   def getBreadcrumbs(self) -> List:
     '''
-    Return breadcrumbs list
+    Return breadcrumbs list.
+
+    Returns:
+    breadcrumbs(list): The list of posix of breadcrumbs and their values
     '''
     return self.__breadcrumbs
 
