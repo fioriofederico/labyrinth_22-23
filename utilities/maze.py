@@ -881,7 +881,7 @@ class Maze:
           self.__breadcrumbs.append([i,j,a[i,j][0]])
           self.__maze[i][j] = 'bc'
 
-  def __surroundingCells(self, rand_wall: list):
+  def __surroundingCells(self, rand_wall: list) -> int:
     '''
     Find number of surrounding cells.
 
