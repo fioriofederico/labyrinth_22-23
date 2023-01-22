@@ -302,7 +302,7 @@ class Maze:
         self.__breadcrumbs.append([bc[0]-1,bc[1]-1,bc[2]])
     else:
       # Set a void list
-      self.__breadcrumbs = [[]]
+      self.__breadcrumbs = []
 
   def resetMaze():
     pass
