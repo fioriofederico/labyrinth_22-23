@@ -6,9 +6,8 @@ import numpy as np
 #from utilities.maze import Maze 
 
 """
-Funzione che 
-- prende in input un file json con tutti i percorsi possibili e restituisce un file json con il percorso ottimo rispetto ai costi
-- prende in input questo file json e restituisce un immagine in formato tiff o png
+Funzione che prende in input uno o più ingressi per poi restituire un immagine in formati gif con il percorso ottimo
+
 """
 
 images = []
