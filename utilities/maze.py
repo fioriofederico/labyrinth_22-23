@@ -307,8 +307,15 @@ class Maze:
       # Set a void list
       self.__breadcrumbs = []
 
-  def resetMaze():
-    pass
+    # Clean maze
+    self.resetMaze()
+
+  def resetMaze(self):
+    self.__maze = []
+    self.__walls = []
+    self._breadcrumbs = []
+    self.startpoints = []
+    self.endpoint = []
 
   def __checkBreadCrumbPoint(self, bc: List[int], height: int, width: int) -> None :
     '''Check if a breadcrumb point is inside the maze bounds.
@@ -534,7 +541,9 @@ class Maze:
     with open(path) as json_file:
       data = json.load(json_file)
       self.__validateJson(data)
-      
+
+    # Clean maze
+    self.resetMaze()
     
     # Set maze attribute
     self.__height = data['altezza']
@@ -543,8 +552,11 @@ class Maze:
     if data["iniziali"] != []:
       self.startpoints=data["iniziali"]
 
-    self.endpoint = data["finale"]
-    self.__breadcrumbs = data["costi"]
+    if data["finale"] != []:
+      self.endpoint = data["finale"]
+
+    if data["costi"] != []:
+      self.__breadcrumbs = data["costi"]
 
     self.__maze = [["c" for j in range(self.__width)] for i in range(self.__height)]
 
@@ -570,11 +582,6 @@ class Maze:
         self.__maze[bc[0]][bc[1]] = "bc"
     
     return self.getMaze()
-
-    
-    
-
-
 
   def getMaze(self) -> np.ndarray:
     '''
@@ -843,6 +850,9 @@ class Maze:
 
     (height, width, rgb_dim) = a.shape
 
+    # Clean maze
+    self.resetMaze()
+
     self.__height = height
     self.__width = width
     self.__maze = [[None for j in range(width)] for i in range(height)]
@@ -985,6 +995,9 @@ class Maze:
     Return:
     maze (numpy.ndarray): The random maze generated.
     '''
+
+    # Clean maze
+    self.resetMaze()
 
     # Denote all cells as unvisited
     # Create an empty list of list (matrix) with height x width dimension
