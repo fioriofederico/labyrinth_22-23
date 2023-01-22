@@ -910,7 +910,7 @@ class Maze:
       
     return s_cells
 
-  def __markUpperAsWall(self,rand_wall):
+  def __markUpperAsWall(self,rand_wall) -> None:
     '''
     Mark Upper cell as Wall Border
 
