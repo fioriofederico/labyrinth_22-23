@@ -457,16 +457,17 @@ class Maze:
       json.dump(maze_obj, outfile)
       outfile.close()
 
-  def __validateJson(self,json):
+  def __validateJson(self,json:dict) -> None:
     '''
     Validate the raeded json based on schema definitions.
 
     Parameters:
-    - json : The json to validate
+    - json(dict): The json to validate
 
     Returns:
     Nothing
     '''
+
     # Check schema consistency
     try:
       jsonschema.validate(json,schema=self.__mazeSchema)
@@ -499,7 +500,7 @@ class Maze:
         self.__checkBreadCrumbPoint([bc[0]+1,bc[1]+1,bc[2]],json["altezza"],json["larghezza"])
 
 
-  def readMazeJson(self,path:str) -> np.ndarray: 
+  def readMazeJson(self,path:str) -> None: 
     '''
     Read a json description of a maze with the following structure and populate the maze object.
     e.g
