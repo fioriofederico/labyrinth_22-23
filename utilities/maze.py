@@ -1160,6 +1160,12 @@ class Maze:
   def getBreadcrumbs(self):
     return self.__breadcrumbs
 
+  def getMatixWithBreadcrumbs(self, matrix, coordinates_value_list):
+    for coord, value in coordinates_value_list:
+      x, y, val = coord[0], coord[1], value
+      matrix[x][y] = val
+    return matrix
+
 if __name__ == "__main__":
     import doctest
     doctest.testmod()

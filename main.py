@@ -10,9 +10,10 @@ if __name__ == "__main__":
     goal = tuple(p.endpoint)
     maze = p.getMaze()
     maze = np.where(np.array(maze) == 'w', 0, 1)
-    print(p.getBreadcrumbs())
+    bread_crumbs = [((x[0], x[1]), x[2]) for x in p.getBreadcrumbs()]
+    newMaze = p.getMatixWithBreadcrumbs(maze, bread_crumbs)
     maze = maze.tolist()
     foundPath = FoundPath(maze, start, goal)
     path = foundPath.find_multi_path_astar_return_visited()
     json = foundPath.getPathRetunrJson()
-    foundPath.write_json_file(json,'./output/', 'output')
+    foundPath.write_json_file(json, './output/', 'output')
