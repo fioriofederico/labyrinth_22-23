@@ -76,13 +76,13 @@ class Maze:
   Traceback (most recent call last):
   ValueError: Start point cant be in a edge; provided: 1-4
 
-  >>> m = Maze(4,4,endpoint=[4,2])
+  >>> m = Maze(4,4,endpoints=[4,2])
 
-  >>> m = Maze(4,4,endpoint=[4,1])
+  >>> m = Maze(4,4,endpoints=[4,1])
   Traceback (most recent call last):
   ValueError: End point cant be in a edge; provided: 4-1
 
-  >>> m = Maze(4,4,endpoint=[4,4])
+  >>> m = Maze(4,4,endpoints=[4,4])
   Traceback (most recent call last):
   ValueError: End point cant be in a edge; provided: 4-4
 
@@ -183,7 +183,7 @@ class Maze:
   __walls = []
   __breadcrumbs = []
   startpoints = []
-  endpoint = []
+  endpoints = []
   __mazeSchema = {
     "type": "object",
     "required": [ "larghezza", "altezza", "pareti"],
@@ -251,14 +251,14 @@ class Maze:
     }
   }
 
-  def __init__(self, height:int=4, width:int=4, startpoints:List[List[int]]=[], endpoint:List[int]=[], breadcrumbs:List[List[int]]=[]):
+  def __init__(self, height:int=4, width:int=4, startpoints:List[List[int]]=[], endpoints:List[int]=[], breadcrumbs:List[List[int]]=[]):
     '''Initialize a Maze object. 
 
     Parameters:
     - height (int): First dimension of the maze, should be greater than 3
     - width (int): Second dimension of the maze, should be greater than 3
     - startpoint ([int,int]): The ingress of the maze, should along the corner of the maze.
-    - endpoint ([int, int]): The exit point of the maze, should be along the corner of the maze.
+    - endpoints ([int, int]): The exit point of the maze, should be along the corner of the maze.
     - breadcrumbs([[int, int],[...],[...]]):  The positions of breadcrumbs
 
     Returns:
@@ -281,7 +281,7 @@ class Maze:
 
     if len(startpoints) > 0:
       for startpoint in startpoints:
-        # Check start point and endpoint
+        # Check start point and endpoints
         if (height > 0 and width > 0 and len(startpoint)==2):
           self.__checkPoint(startpoint,'S',height,width)
       
@@ -289,10 +289,10 @@ class Maze:
         #Set start point if valid   
         self.startpoints.append([startpoint[0]-1,startpoint[1]-1])
     
-    if (height > 0 and width > 0 and len(endpoint)==2):
-      self.__checkPoint(endpoint,'E',height,width)
+    if (height > 0 and width > 0 and len(endpoints)==2):
+      self.__checkPoint(endpoints,'E',height,width)
       # Set end point if valid
-      self.endpoint = [endpoint[0]-1,endpoint[1]-1]
+      self.endpoints = [endpoints[0]-1,endpoints[1]-1]
     
     # Checks breadcrumbs
     if (len(breadcrumbs)>0):
@@ -315,7 +315,7 @@ class Maze:
     self.__walls = []
     self._breadcrumbs = []
     self.startpoints = []
-    self.endpoint = []
+    self.endpoints = []
 
   def __checkBreadCrumbPoint(self, bc: List[int], height: int, width: int) -> None :
     '''Check if a breadcrumb point is inside the maze bounds.
@@ -441,7 +441,7 @@ class Maze:
     maze_obj['larghezza'] = self.__width
     maze_obj['pareti'] = walls_list
     maze_obj['iniziali'] = [[a,b] for a, b in self.startpoints]
-    maze_obj['finale'] = [[a,b] for a, b in self.endpoint]
+    maze_obj['finale'] = [[a,b] for a, b in self.endpoints]
     maze_obj["costi"] = [[int(a),int(b),int(c)] for a, b, c in self.__breadcrumbs]
 
     with open("maze.json", "w") as outfile:
@@ -553,7 +553,7 @@ class Maze:
       self.startpoints=data["iniziali"]
 
     if data["finale"] != []:
-      self.endpoint = data["finale"]
+      self.endpoints = data["finale"]
 
     if data["costi"] != []:
       self.__breadcrumbs = data["costi"]
@@ -573,9 +573,9 @@ class Maze:
       for startpoint in self.startpoints:
         self.__maze[startpoint[0]][startpoint[1]] = "sp"
     
-    if self.endpoint != []:
-      for endpoint in self.endpoint:
-        self.__maze[endpoint[0]][endpoint[1]] = "ep"
+    if self.endpoints != []:
+      for endpoints in self.endpoints:
+        self.__maze[endpoints[0]][endpoints[1]] = "ep"
 
     if self.__breadcrumbs != []:
       for bc in self.__breadcrumbs:
@@ -864,7 +864,7 @@ class Maze:
         elif (a[i,j]==[0,0,0]).all():
           self.__maze[i][j] = 'w'
         elif (a[i,j] == [255,0,0]).all():
-          self.endpoint.append([i,j])
+          self.endpoints.append([i,j])
           self.__maze[i][j] = 'ep'
         elif (a[i,j] == [0,255,0]).all():
           self.startpoints.append([i,j])
@@ -1159,21 +1159,21 @@ class Maze:
           break
 
     # Set exit
-    if len(self.endpoint)==2:
-      self.__maze[self.endpoint[0]][self.endpoint[1]] = 'ep'
-      if self.endpoint[0]==0:
-        self.__maze[self.endpoint[0]+1][self.endpoint[1]] = 'c'
-      elif self.endpoint[0]==self.__height-1:
-        self.__maze[self.endpoint[0]-1][self.endpoint[1]] = 'c'
-      elif self.endpoint[1]==0:
-        self.__maze[self.endpoint[0]][self.endpoint[1]+1] = 'c'
-      elif self.endpoint[1]==self.__width-1:
-        self.__maze[self.endpoint[0]][self.endpoint[1]-1] = 'c' 
+    if len(self.endpoints)==2:
+      self.__maze[self.endpoints[0]][self.endpoints[1]] = 'ep'
+      if self.endpoints[0]==0:
+        self.__maze[self.endpoints[0]+1][self.endpoints[1]] = 'c'
+      elif self.endpoints[0]==self.__height-1:
+        self.__maze[self.endpoints[0]-1][self.endpoints[1]] = 'c'
+      elif self.endpoints[1]==0:
+        self.__maze[self.endpoints[0]][self.endpoints[1]+1] = 'c'
+      elif self.endpoints[1]==self.__width-1:
+        self.__maze[self.endpoints[0]][self.endpoints[1]-1] = 'c' 
     else:
       for i in range(self.__width-1, 0, -1):
         if (self.__maze[self.__height-2][i] == 'c'):
           self.__maze[self.__height-1][i] = 'ep'
-          self.endpoint.append([self.__height-1,i])
+          self.endpoints.append([self.__height-1,i])
           break
 
     if len(self.__breadcrumbs) > 0:
