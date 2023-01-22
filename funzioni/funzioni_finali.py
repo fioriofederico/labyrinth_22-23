@@ -3,8 +3,6 @@ from random import random, randint
 from colorama import Fore
 from PIL import Image, ImageDraw
 import numpy as np
-#from utilities.maze import Maze 
-
 
 """
 Funzione che prende in input uno o più ingressi per poi restituire un immagine in formati gif con il percorso ottimo
