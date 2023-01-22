@@ -124,12 +124,14 @@ class Maze:
 
   >>> m = Maze()
   >>> m.readMazeImage("tests/testcase/maze.tiff")
+  >>> m.getMaze()
   array([['w', 'sp', 'w', 'w'],
          ['w', 'c', 'c', 'w'],
          ['w', 'w', 'bc', 'w'],
          ['w', 'w', 'ep', 'w']], dtype='<U2')
 
   >>> m.readMazeJson("tests/testcase/maze.json")
+  >>> m.getMaze()
   array([['w', 'sp', 'w', 'w'],
          ['w', 'c', 'c', 'w'],
          ['w', 'w', 'bc', 'w'],
@@ -168,12 +170,14 @@ class Maze:
   ValueError: Invalid wall: [0, 3]
 
   >>> m.readMazeJson("tests/testcase/maze_8.json")
+  >>> m.getMaze()
   array([['w', 'c', 'w', 'w'],
          ['w', 'c', 'c', 'c'],
          ['w', 'w', 'bc', 'c'],
          ['w', 'sp', 'ep', 'c']], dtype='<U2')
   
   >>> m.readMazeJson("tests/testcase/maze_9.json")
+  >>> m.getMaze()
   array([['w', 'c', 'w', 'w'],
          ['w', 'bc', 'bc', 'c'],
          ['w', 'bc', 'bc', 'c'],
