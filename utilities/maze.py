@@ -76,41 +76,41 @@ class Maze:
   Traceback (most recent call last):
   ValueError: Start point cant be in a edge; provided: 1-4
 
-  >>> m = Maze(4,4,endpoints=[4,2])
+  >>> m = Maze(4,4,endpoints=[[4,2]])
 
-  >>> m = Maze(4,4,endpoints=[4,1])
+  >>> m = Maze(4,4,endpoints=[[4,1]])
   Traceback (most recent call last):
   ValueError: End point cant be in a edge; provided: 4-1
 
-  >>> m = Maze(4,4,endpoints=[4,4])
+  >>> m = Maze(4,4,endpoints=[[4,4]])
   Traceback (most recent call last):
   ValueError: End point cant be in a edge; provided: 4-4
 
   >>> m = Maze(4,4,[[2,1]])
 
-  >>> m = Maze(4,4,[[2,1]],[4,2],[[]])
+  >>> m = Maze(4,4,[[2,1]],[[4,2]],[[]])
   Traceback (most recent call last):
   ValueError: Invalid breadcrumb declaration, provided []
 
-  >>> m = Maze(4,4,[[2,1]],[4,2],[[2,2,96],[2,3,96],[3,3,96],[3,2,128]])
+  >>> m = Maze(4,4,[[2,1]],[[4,2]],[[2,2,96],[2,3,96],[3,3,96],[3,2,128]])
 
-  >>> m = Maze(4,4,[[2,1]],[4,2],[[2,2,96],[4,3,96],[3,3,128]])
+  >>> m = Maze(4,4,[[2,1]],[[4,2]],[[2,2,96],[4,3,96],[3,3,128]])
   Traceback (most recent call last):
   ValueError: Invalid breadcrumb: out of maze bounds, provided [4, 3, 96]
 
-  >>> m = Maze(4,4,[[2,1]],[4,2],[[2,2,96],[1,3,96],[3,3,128]])
+  >>> m = Maze(4,4,[[2,1]],[[4,2]],[[2,2,96],[1,3,96],[3,3,128]])
   Traceback (most recent call last):
   ValueError: Invalid breadcrumb: out of maze bounds, provided [1, 3, 96]
 
-  >>> m = Maze(4,4,[[2,1]],[4,2],[[2,2,96],[3,1,96],[3,3,128]])
+  >>> m = Maze(4,4,[[2,1]],[[4,2]],[[2,2,96],[3,1,96],[3,3,128]])
   Traceback (most recent call last):
   ValueError: Invalid breadcrumb: out of maze bounds, provided [3, 1, 96]
 
-  >>> m = Maze(4,4,[[2,1]],[4,2],[[2,2,96],[3,4,96],[3,3,128]])
+  >>> m = Maze(4,4,[[2,1]],[[4,2]],[[2,2,96],[3,4,96],[3,3,128]])
   Traceback (most recent call last):
   ValueError: Invalid breadcrumb: out of maze bounds, provided [3, 4, 96]
 
-  >>> m = Maze(4,4,[[2,1]],[4,2],[[2,2, 128],[4,4,128],[3,3,96]])
+  >>> m = Maze(4,4,[[2,1]],[[4,2]],[[2,2, 128],[4,4,128],[3,3,96]])
   Traceback (most recent call last):
   ValueError: Invalid breadcrumb: out of maze bounds, provided [4, 4, 128]
 
@@ -251,7 +251,7 @@ class Maze:
     }
   }
 
-  def __init__(self, height:int=4, width:int=4, startpoints:List[List[int]]=[], endpoints:List[int]=[], breadcrumbs:List[List[int]]=[]):
+  def __init__(self, height:int=4, width:int=4, startpoints:List[List[int]]=[], endpoints:List[List[int]]=[], breadcrumbs:List[List[int]]=[]):
     '''Initialize a Maze object. 
 
     Parameters:
@@ -279,6 +279,9 @@ class Maze:
     else:
       raise ValueError(f"Value provided for width is invalid, should be greater than 3: {width}")
 
+    # Clean maze
+    self.resetMaze()
+
     if len(startpoints) > 0:
       for startpoint in startpoints:
         # Check start point and endpoints
@@ -288,12 +291,17 @@ class Maze:
       for startpoint in startpoints:
         #Set start point if valid   
         self.startpoints.append([startpoint[0]-1,startpoint[1]-1])
-    
-    if (height > 0 and width > 0 and len(endpoints)==2):
-      self.__checkPoint(endpoints,'E',height,width)
-      # Set end point if valid
-      self.endpoints = [endpoints[0]-1,endpoints[1]-1]
-    
+      
+    if len(endpoints) > 0:
+      for endpoint in endpoints:
+        # Check start point and endpoints
+        if (height > 0 and width > 0 and len(endpoint)==2):
+          self.__checkPoint(endpoint,'E',height,width)
+      
+      for endpoint in endpoints:
+        #Set start point if valid   
+        self.endpoints.append([endpoint[0]-1,endpoint[1]-1])
+  
     # Checks breadcrumbs
     if (len(breadcrumbs)>0):
       # Checks breadcrumbs
@@ -306,9 +314,6 @@ class Maze:
     else:
       # Set a void list
       self.__breadcrumbs = []
-
-    # Clean maze
-    self.resetMaze()
 
   def resetMaze(self):
     self.__maze = []
