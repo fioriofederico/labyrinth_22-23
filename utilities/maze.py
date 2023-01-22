@@ -372,7 +372,7 @@ class Maze:
       raise ValueError(f"{'Start' if point_type=='S' else 'End'} point [x,y] invalid; provided: {point}")
 
 
-  def getMazeJson(self):
+  def getMazeJson(self) -> None:
     '''
     Create a json description of the maze if a maze was created or setted.
     It raises a generic Exception if the maze obj doesnt have a maze loaded or generated.
