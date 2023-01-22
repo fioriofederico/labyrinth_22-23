@@ -328,6 +328,8 @@ class Maze:
     
     Parameters:
     - breadcrumbs([int, int]):  The positions of the breadcrumb
+    - height(int): The height of the maze
+    - width(int): The width of the maze
 
     Returns:
     Nothing
