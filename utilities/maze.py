@@ -931,7 +931,7 @@ class Maze:
       if ([rand_wall[0]-1, rand_wall[1]] not in self.__walls):
         self.__walls.append([rand_wall[0]-1, rand_wall[1]])
 
-  def __markLeftAsWall(self,rand_wall):
+  def __markLeftAsWall(self,rand_wall) -> None:
     '''
     Mark Left cell as Wall Border
 
@@ -949,7 +949,7 @@ class Maze:
       if ([rand_wall[0], rand_wall[1]-1] not in self.__walls):
         self.__walls.append([rand_wall[0], rand_wall[1]-1])
 
-  def __markRightAsWall(self,rand_wall):
+  def __markRightAsWall(self,rand_wall) -> None:
     '''
     Mark Right cell as Wall Border
 
@@ -967,7 +967,7 @@ class Maze:
       if ([rand_wall[0], rand_wall[1]+1] not in self.__walls):
         self.__walls.append([rand_wall[0], rand_wall[1]+1])
 
-  def __markBottomAsWall(self,rand_wall):
+  def __markBottomAsWall(self,rand_wall) -> None:
     '''
     Mark Bottom cell as Wall Border
 
@@ -985,7 +985,7 @@ class Maze:
       if ([rand_wall[0]+1, rand_wall[1]] not in self.__walls):
         self.__walls.append([rand_wall[0]+1, rand_wall[1]])
   
-  def __deleteWall(self, rand_wall):
+  def __deleteWall(self, rand_wall) -> None:
     '''
     Delete the wall from walls border list.
 
@@ -997,12 +997,12 @@ class Maze:
       if (wall[0] == rand_wall[0] and wall[1] == rand_wall[1]):
         self.__walls.remove(wall)
 
-  def generate(self) -> np.ndarray:
+  def generate(self) -> None:
     '''
     Generate a random maze of specified dimensions.
 
     Return:
-    maze (numpy.ndarray): The random maze generated.
+    Nothing
     '''
 
     # Clean maze
@@ -1188,7 +1188,6 @@ class Maze:
     if len(self.__breadcrumbs) > 0:
       for bc in self.__breadcrumbs:
         self.__maze[bc[0]][bc[1]] = "bc"
-    return self.getMaze()
 
 
   def getBreadcrumbs(self):
