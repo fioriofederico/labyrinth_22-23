@@ -629,7 +629,7 @@ class Maze:
         
       print('\n')
   
-  def getMazeImage(self):
+  def getMazeImage(self) -> None:
     '''
     Generate a tiff image rapresent the current maze obj, the generated file will be named 'maze.tiff'
     It raises a generic Exception if the maze obj doesnt have a maze loaded or generated.
@@ -673,7 +673,7 @@ class Maze:
     im = Image.fromarray(a,mode="RGB")
     im.save("./maze.tiff")
 
-  def resizeMazeImg(self,path="maze.tiff"):
+  def resizeMazeImg(self,path="maze.tiff") -> None:
     '''
     Resize maze img. Create a large version of the maze tiff.
     This method raise a OSError if the provided path doesnt exist.
@@ -839,7 +839,7 @@ class Maze:
     im.save("./large_maze.tiff")
 
 
-  def readMazeImage(self,path: str) -> np.ndarray:
+  def readMazeImage(self,path: str) -> None:
     '''
     Read maze img and create a maze obj rappresentation.
     This method raise a OSError if the provided path doesnt exist.
