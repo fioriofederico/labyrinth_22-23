@@ -1155,6 +1155,7 @@ class Maze:
       for i in range(0, self.__width):
         if (self.__maze[1][i] == 'c'):
           self.__maze[0][i] = 'sp'
+          self.startpoints.append([0,i])
           break
 
     # Set exit
@@ -1172,6 +1173,7 @@ class Maze:
       for i in range(self.__width-1, 0, -1):
         if (self.__maze[self.__height-2][i] == 'c'):
           self.__maze[self.__height-1][i] = 'ep'
+          self.endpoint.append([self.__height-1,i])
           break
 
     if len(self.__breadcrumbs) > 0:
