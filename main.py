@@ -11,7 +11,7 @@ if __name__ == "__main__":
     maze = p.getMaze()
     maze = np.where(np.array(maze) == 'w', 0, 1)
     bread_crumbs = [((x[0], x[1]), x[2]) for x in p.getBreadcrumbs()]
-    newMaze = p.getMatixWithBreadcrumbs(maze, bread_crumbs)
+    maze = p.getMatixWithBreadcrumbs(maze, bread_crumbs)
     maze = maze.tolist()
     foundPath = FoundPath(maze, start, goal)
     path = foundPath.find_multi_path_astar_return_visited()
