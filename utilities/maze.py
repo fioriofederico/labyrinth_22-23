@@ -348,6 +348,8 @@ class Maze:
     Parameters:
     - point ([int,int]): A point in the maze.
     - point_type (Literal['S','E']): Indicate if the point is a Startpoint or an Endpoint
+    - height(int): The height of the maze
+    - width(int): The width of the maze
 
     Returns:
     Nothing
