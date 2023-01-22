@@ -604,11 +604,11 @@ class Maze:
      [w, w, c, w]]
     
     Return:
-    Nothing
+    maze(np.ndarray): The numpy array rappresentation of the Maze
     '''
     return np.asarray(self.__maze)
   
-  def printMaze(self):
+  def printMaze(self) -> None:
     '''
     Print via console stdout the maze array description.
 
