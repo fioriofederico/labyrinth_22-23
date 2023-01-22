@@ -1190,7 +1190,10 @@ class Maze:
         self.__maze[bc[0]][bc[1]] = "bc"
 
 
-  def getBreadcrumbs(self):
+  def getBreadcrumbs(self) -> List:
+    '''
+    Return breadcrumbs list
+    '''
     return self.__breadcrumbs
 
   def getMatixWithBreadcrumbs(self, matrix, coordinates_value_list):
