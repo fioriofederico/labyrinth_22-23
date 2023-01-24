@@ -20,7 +20,50 @@ class FoundPath:
 
     pass
     """
+    Input Example:
+    [
+        [1, 1, 0, 0],
+        [1, 0, 0, 1],
+        [0, 1, 1, 1],
+        [1, 1, 0, 1]
+    ]
+    
+    Output Example:
+    Graph=
+    {
+        (0, 0): [("S", (1, 0), 1), ("E", (0, 1), 1)],
+        (0, 1): [("W", (0, 0), 1), ("E", (0, 2), 1), ("S", (1, 1), 1)],
+        (0, 2): [("W", (0, 1), 1)],
+        (0, 3): [],
+        (1, 0): [("N", (0, 0), 1), ("S", (2, 0), 1)],
+        (1, 1): [("N", (0, 1), 1), ("E", (1, 2), 1)],
+        (1, 2): [("W", (1, 1), 1), ("E", (1, 3), 1)],
+        (1, 3): [("W", (1, 2), 1)],
+        (2, 0): [("N", (1, 0), 1), ("S", (3, 0), 1)],
+        (2, 1): [("N", (1, 1), 1), ("E", (2, 2), 1)],
+        (2, 2): [("W", (2, 1), 1), ("E", (2, 3), 1)],
+        (2, 3): [("W", (2, 2), 1)],
+        (3, 0): [("N", (2, 0), 1)],
+        (3, 1): [("N", (2, 1), 1)],
+        (3, 2): [("N", (2, 2), 1)],
+        (3, 3): [("W", (3, 2), 1)]
+    }
     Convert the matrix in graph for found path
+    
+    Questa funzione definisce un metodo chiamato "maze2graph()" che converte un labirinto rappresentato
+    come un array bidimensionale (self.__maze) in un grafo. Il grafo viene rappresentato come un dizionario, 
+    dove ogni chiave è una tupla che rappresenta le coordinate di una cella del labirinto, e il valore è una lista di tuple 
+    che rappresentano gli archi che collegano quella cella alle celle adiacenti. L'altezza e la larghezza del labirinto 
+    vengono determinate trovando la lunghezza dell'array esterno e interno, rispettivamente. 
+     
+     Quindi, per ogni cella del labirinto che non è vuota, viene aggiunta una lista vuota al dizionario come valore
+     per le coordinate della cella come chiave. Il codice quindi controlla le celle a sud ed est di ogni cella e 
+     aggiunge archi al grafo per le celle che non sono vuote. Gli archi sono rappresentati come tuple contenenti una 
+     stringa che indica la direzione dell'arco, le coordinate della cella adiacente e il valore della cella corrente. 
+     La funzione restituisce il grafo.
+     
+     Ho deciso di usufruire della convenzione che i muri assumessero il valore 0 e il percorso percorribile il valore 1 
+     o superiore in caso di caselle di colr grigio in base alla gradazione si pone il valore da modificare. 
     """
 
     def maze2graph(self):
@@ -48,6 +91,18 @@ class FoundPath:
     
     For Python, we can use "heapq" module for priority queuing and add the cost part of each element.
     For a maze, one of the most simple heuristics can be "Manhattan distance".
+    """
+
+    """
+    Il metodo chiamato "heuristic()" che calcola una stima della distanza tra la cella attuale e la cella obiettivo.
+    La funzione utilizza l'algoritmo di euristica "Manhattan Distance", che calcola la distanza come la somma delle
+    differenze assolute tra le coordinate x e y della cella attuale e quella obiettivo. In altre parole, la funzione
+    restituisce la somma delle differenze assolute tra la coordinata x della cella attuale e quella obiettivo più
+    la somma delle differenze assolute tra la coordinata y della cella attuale e quella obiettivo.
+    
+    Questo fornisce una stima approssimativa della distanza tra le due celle, che può essere utilizzata in un algoritmo
+    di ricerca come A* per determinare la cella più vicina all'obiettivo.
+        
     """
 
     def heuristic(self, cell, goal):
