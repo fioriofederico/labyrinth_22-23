@@ -109,6 +109,33 @@ class FoundPath:
         return abs(cell[0] - goal[0]) + abs(cell[1] - goal[1])
 
     """
+    Il metodo chiamato "find_multi_path_astar_return_visited()" che utilizza l'algoritmo A* per trovare più percorsi tra un insieme di punti di partenza
+    e un punto di destinazione specifico. Il metodo accetta un parametro opzionale "num_paths" che specifica il numero di percorsi da trovare 
+    (il valore predefinito è 3).
+    Il metodo utilizza una coda di priorità per tenere traccia dei nodi da visitare e una lista "visitati"
+    per evitare di ripercorrere i nodi già visitati. Per ogni punto di partenza specificato, l'algoritmo utilizza la funzione euristica definita precedentemente.
+    Se il nodo corrente è uguale al nodo obiettivo, il percorso viene aggiunto alla lista di percorsi trovati e all'oggetto mydict.
+    Se non sono stati trovati percorsi sufficienti, il metodo restituisce "NO WAY!"
+    Inoltre, l'algoritmo ritorna una lista di tutti i nodi visitati durante la ricerca dei percorsi questo per permettere la continuazione del progetto per poi generare
+    l'immagine tenendo traccia di quali sono i punti analizzati.
+    
+    Esempio di input data:
+    
+    maze = [    
+        [1, 1, 0, 0],
+        [1, 0, 0, 1],
+        [0, 1, 1, 1],
+        [1, 1, 0, 1]
+    ]
+    start = [(0, 0), (3, 3)]
+    goal = (2, 2)
+    
+    Esempio di Output: 
+    
+    paths = [((0, 0), (2, 2), "SEEN", 5), ((3, 3), (2, 2), "WNW", 5)]
+    visited = [[(0, 0), (0, 1), (1, 1), (2, 1), (2, 2)], [(3, 3), (2, 3), (2, 2)]]
+    
+    
     Input: 
         Maze is all matrix with position wall and course
         Start Just with 2 parameter (row, column)
