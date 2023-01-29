@@ -1,9 +1,11 @@
 import numpy as np
 import json
-
 from utilities.maze import Maze
 from utilities.foundPath import FoundPath
-import funzioni.funzioni_finali
+import matplotlib.pyplot as plt
+import os
+from datetime import datetime
+from skimage.morphology import skeletonize
 import time
 
 

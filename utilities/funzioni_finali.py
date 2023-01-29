@@ -197,7 +197,7 @@ plt.imshow(rgb_img)
 plt.plot(x0,y0, 'gx', markersize=14)
 plt.plot(x1,y1, 'rx', markersize=14)
 plt.plot(path_x, path_y, 'r-', linewidth=4)
-plt.savefig('./funzioni/labirinto_finale.tiff')
+plt.savefig('./output/labirinto_finale.tiff')
 
 
 """
