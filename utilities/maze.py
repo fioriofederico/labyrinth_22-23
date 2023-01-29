@@ -622,6 +622,7 @@ class Maze:
   def getMazeImage(self):
     '''
     Generate a tiff image rapresent the current maze obj, the generated file will be named 'maze.tiff'
+
     It raises a generic Exception if the maze obj doesnt have a maze loaded or generated.
 
     Return:
@@ -1194,5 +1195,3 @@ class Maze:
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
-
-    
