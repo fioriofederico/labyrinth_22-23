@@ -224,7 +224,7 @@ L'opzione "append_images=images[1:]" indica che tutte le immagini successive all
 L'opzione "optimize=False" indica che l'animazione non deve essere ottimizzata, in modo che tutte le immagini nell'animazione abbiano la stessa qualità. 
 L'opzione "duration=1" indica che ogni immagine deve essere visualizzata per 1 secondo, mentre l'opzione "loop=0" indica che l'animazione non deve essere riprodotta in loop.
 """
-images[0].save('maze.gif',
+images[0].save('./output/maze.gif',
                save_all=True, append_images=images[1:],
                optimize=False, duration=1, loop=0)
 
