@@ -8,177 +8,7 @@ import jsonschema
 from typing import List, Literal
 
 class Maze:
-  '''
-  Maze Object, It's defined by:
-  - Height (int): First dimension of the maze
-  - Width (int): Second dimension of the maze
-  - Startpoint ([int,int]): The ingress of the maze
-  - Endpoint ([int, int]): The exit point of the maze
-  - Breadcrumbs([[int, int],[...],[...]]):  The positions of breadcrumbs
 
-  >>> m = Maze()
-
-  >>> m = Maze(1,0)
-  Traceback (most recent call last):
-  ValueError: Value provided for height is invalid, should be greater than 3: 1
-
-  >>> m = Maze(1,1)
-  Traceback (most recent call last):
-  ValueError: Value provided for height is invalid, should be greater than 3: 1
-
-  >>> m = Maze(1,2)
-  Traceback (most recent call last):
-  ValueError: Value provided for height is invalid, should be greater than 3: 1
-
-  >>> m = Maze(1,3)
-  Traceback (most recent call last):
-  ValueError: Value provided for height is invalid, should be greater than 3: 1
-
-  >>> m = Maze(1,4)
-  Traceback (most recent call last):
-  ValueError: Value provided for height is invalid, should be greater than 3: 1
-
-  >>> m = Maze(2,1)
-  Traceback (most recent call last):
-  ValueError: Value provided for height is invalid, should be greater than 3: 2
-
-  >>> m = Maze(3,1)
-  Traceback (most recent call last):
-  ValueError: Value provided for height is invalid, should be greater than 3: 3
-
-  >>> m = Maze(4,1)
-  Traceback (most recent call last):
-  ValueError: Value provided for width is invalid, should be greater than 3: 1
-
-  >>> m = Maze(4,1)
-  Traceback (most recent call last):
-  ValueError: Value provided for width is invalid, should be greater than 3: 1
-
-  >>> m = Maze(4,3)
-  Traceback (most recent call last):
-  ValueError: Value provided for width is invalid, should be greater than 3: 3
-
-  >>> m = Maze(4,4)
-
-  >>> m = Maze(4,4,[[0,0]])
-  Traceback (most recent call last):
-  ValueError: Start point [x,y] invalid, x must be greater than 0 and less than 5; provided: 0
-
-  >>> m = Maze(4,4,[[3,0]])
-  Traceback (most recent call last):
-  ValueError: Start point [x,y] invalid, y must be greater than 0 and less than 5; provided: 0
-
-  >>> m = Maze(4,4,[[1,1]])
-  Traceback (most recent call last):
-  ValueError: Start point cant be in a edge; provided: 1-1
-
-  >>> m = Maze(4,4,[[1,4]])
-  Traceback (most recent call last):
-  ValueError: Start point cant be in a edge; provided: 1-4
-
-  >>> m = Maze(4,4,endpoints=[4,2])
-
-  >>> m = Maze(4,4,endpoints=[4,1])
-  Traceback (most recent call last):
-  ValueError: End point cant be in a edge; provided: 4-1
-
-  >>> m = Maze(4,4,endpoints=[4,4])
-  Traceback (most recent call last):
-  ValueError: End point cant be in a edge; provided: 4-4
-
-  >>> m = Maze(4,4,[[2,1]])
-
-  >>> m = Maze(4,4,[[2,1]],[4,2],[[]])
-  Traceback (most recent call last):
-  ValueError: Invalid breadcrumb declaration, provided []
-
-  >>> m = Maze(4,4,[[2,1]],[4,2],[[2,2,96],[2,3,96],[3,3,96],[3,2,128]])
-
-  >>> m = Maze(4,4,[[2,1]],[4,2],[[2,2,96],[4,3,96],[3,3,128]])
-  Traceback (most recent call last):
-  ValueError: Invalid breadcrumb: out of maze bounds, provided [4, 3, 96]
-
-  >>> m = Maze(4,4,[[2,1]],[4,2],[[2,2,96],[1,3,96],[3,3,128]])
-  Traceback (most recent call last):
-  ValueError: Invalid breadcrumb: out of maze bounds, provided [1, 3, 96]
-
-  >>> m = Maze(4,4,[[2,1]],[4,2],[[2,2,96],[3,1,96],[3,3,128]])
-  Traceback (most recent call last):
-  ValueError: Invalid breadcrumb: out of maze bounds, provided [3, 1, 96]
-
-  >>> m = Maze(4,4,[[2,1]],[4,2],[[2,2,96],[3,4,96],[3,3,128]])
-  Traceback (most recent call last):
-  ValueError: Invalid breadcrumb: out of maze bounds, provided [3, 4, 96]
-
-  >>> m = Maze(4,4,[[2,1]],[4,2],[[2,2, 128],[4,4,128],[3,3,96]])
-  Traceback (most recent call last):
-  ValueError: Invalid breadcrumb: out of maze bounds, provided [4, 4, 128]
-
-  >>> m = Maze(4,4,[[4,2]])
-
-  >>> m = Maze(4,4,[[3,4]])
-
-  >>> m = Maze(4,4,[[2,2]])
-  Traceback (most recent call last):
-  ValueError: Start point [x,y] invalid; provided: [2, 2]
-
-  >>> m = Maze()
-  >>> m.readMazeImage("tests/testcase/maze.tiff")
-  array([['w', 'sp', 'w', 'w'],
-         ['w', 'c', 'c', 'w'],
-         ['w', 'w', 'bc', 'w'],
-         ['w', 'w', 'ep', 'w']], dtype='<U2')
-
-  >>> m.readMazeJson("tests/testcase/maze.json")
-  array([['w', 'sp', 'w', 'w'],
-         ['w', 'c', 'c', 'w'],
-         ['w', 'w', 'bc', 'w'],
-         ['w', 'w', 'ep', 'w']], dtype='<U2')
-
-  >>> m.readMazeJson("tests/testcase/maze_1.json")
-  Traceback (most recent call last):
-  Exception: 'larghezza' is a required property
-
-  >>> m.readMazeJson("tests/testcase/maze_2.json")
-  Traceback (most recent call last):
-  Exception: [] is too short
-
-  >>> m.readMazeJson("tests/testcase/maze_3.json")
-  Traceback (most recent call last):
-  KeyError: 'iniziali'
-
-  >>> m.readMazeJson("tests/testcase/maze_4.json")
-  Traceback (most recent call last):
-  Exception: 'lunghezza' is a required property
-
-  >>> m.readMazeJson("tests/testcase/maze_4.json")
-  Traceback (most recent call last):
-  Exception: 'lunghezza' is a required property
-
-  >>> m.readMazeJson("tests/testcase/maze_5.json")
-  Traceback (most recent call last):
-  json.decoder.JSONDecodeError: Expecting ',' delimiter: line 4 column 5 (char 43)
-
-  >>> m.readMazeJson("tests/testcase/maze_6.json")
-  Traceback (most recent call last):
-  ValueError: Invalid wall: [3, 0]
-
-  >>> m.readMazeJson("tests/testcase/maze_7.json")
-  Traceback (most recent call last):
-  ValueError: Invalid wall: [0, 3]
-
-  >>> m.readMazeJson("tests/testcase/maze_8.json")
-  array([['w', 'c', 'w', 'w'],
-         ['w', 'c', 'c', 'c'],
-         ['w', 'w', 'bc', 'c'],
-         ['w', 'sp', 'ep', 'c']], dtype='<U2')
-  
-  >>> m.readMazeJson("tests/testcase/maze_9.json")
-  array([['w', 'c', 'w', 'w'],
-         ['w', 'bc', 'bc', 'c'],
-         ['w', 'bc', 'bc', 'c'],
-         ['w', 'sp', 'ep', 'c']], dtype='<U2')
-  '''
   __maze = []
   __walls = []
   __breadcrumbs = []
@@ -252,18 +82,7 @@ class Maze:
   }
 
   def __init__(self, height:int=4, width:int=4, startpoints:List[List[int]]=[], endpoints:List[int]=[], breadcrumbs:List[List[int]]=[]):
-    '''Initialize a Maze object. 
-
-    Parameters:
-    - height (int): First dimension of the maze, should be greater than 3
-    - width (int): Second dimension of the maze, should be greater than 3
-    - startpoint ([int,int]): The ingress of the maze, should along the corner of the maze.
-    - endpoints ([int, int]): The exit point of the maze, should be along the corner of the maze.
-    - breadcrumbs([[int, int],[...],[...]]):  The positions of breadcrumbs
-
-    Returns:
-    maze (Maze): A new maze object with params setted
-    '''
+    
 
     if (height != 0 and height > 3):
       self.__height = height
@@ -318,15 +137,7 @@ class Maze:
     self.endpoints = []
 
   def __checkBreadCrumbPoint(self, bc: List[int], height: int, width: int) -> None :
-    '''Check if a breadcrumb point is inside the maze bounds.
-    Raise ValueError if the breadcrumb is not inside the maze bounds.
     
-    Parameters:
-    - breadcrumbs([int, int]):  The positions of the breadcrumb
-
-    Returns:
-    Nothing
-    '''
 
     if (len(bc)==3):
       if not ((bc[0]>1 and bc[0]<height)and(bc[1]>1 and bc[1]<width)):
@@ -335,16 +146,7 @@ class Maze:
       raise ValueError(f"Invalid breadcrumb declaration, provided {bc}")
 
   def __checkPoint(self, point: List[int], point_type: Literal["S","E"],height:int,width:int) -> None:
-    '''Verify that a point is along the maze corner.
-    Raise ValueError if a point is not along maze corners.
-
-    Parameters:
-    - point ([int,int]): A point in the maze.
-    - point_type (Literal['S','E']): Indicate if the point is a Startpoint or an Endpoint
-
-    Returns:
-    Nothing
-    '''
+    
     if (point[0]<1 or point[0]>(width)):
       raise ValueError(f"{'Start' if point_type=='S' else 'End'} point [x,y] invalid, x must be greater than 0 and less than {width+1}; provided: {point[0]}")
     elif (point[1]<1 or point[1]>(width)):
@@ -449,15 +251,7 @@ class Maze:
       outfile.close()
 
   def __validateJson(self,json):
-    '''
-    Validate the raeded json based on schema definitions.
-
-    Parameters:
-    - json : The json to validate
-
-    Returns:
-    Nothing
-    '''
+    
     # Check schema consistency
     try:
       jsonschema.validate(json,schema=self.__mazeSchema)
@@ -491,47 +285,7 @@ class Maze:
 
 
   def readMazeJson(self,path:str) -> np.ndarray: 
-    '''
-    Read a json description of a maze with the following structure and populate the maze object.
-    e.g
-    {
-      "larghezza": 41,
-      "altezza": 21,
-      "pareti": 
-      [
-        {
-          "orientamento": "H",
-          "posizione": 
-          [
-            0,
-            0
-          ],
-          "lunghezza": 19
-        },
-        ...
-      ],
-      "iniziali":
-      [
-        [0, 3] [...]
-      ],
-      "finale":
-      [
-        20, 12
-      ],
-      "costi":
-      [
-        [1, 1, 10], [...]
-      ]
-    }
     
-    This method raise a OSError if the provided path doesnt exist.
-
-    Parameters:
-    - path (str): The path to the specified json maze description
-
-    Returns:
-    Nothing
-    '''
 
     # Check if the path and the file exist
     if not(bool(os.path.exists(path))):
@@ -584,27 +338,11 @@ class Maze:
     return self.getMaze()
 
   def getMaze(self) -> np.ndarray:
-    '''
-    Return a NumPy array description of the maze.
-
-    e.g
-    [[w, c, w, w],
-     [w, c, c, w],
-     [w, w, c, w],
-     [w, w, c, w]]
     
-    Return:
-    Nothing
-    '''
     return np.asarray(self.__maze)
   
   def printMaze(self):
-    '''
-    Print via console stdout the maze array description.
-
-    Return:
-    Nothing
-    '''
+    
 
     for i in range(0, self.__height):
       for j in range(0, self.__width):
@@ -620,13 +358,7 @@ class Maze:
       print('\n')
   
   def getMazeImage(self):
-    '''
-    Generate a tiff image rapresent the current maze obj, the generated file will be named 'maze.tiff'
-    It raises a generic Exception if the maze obj doesnt have a maze loaded or generated.
-
-    Return:
-    Nothing
-    '''
+    
 
     # Check if a maze was loaded or generated
     if not(bool(self.__maze)):
@@ -664,12 +396,7 @@ class Maze:
     im.save("./maze.tiff")
 
   def resizeMazeImg(self,path="maze.tiff"):
-    '''
-    Resize maze img. Create a large version of the maze tiff.
-    This method raise a OSError if the provided path doesnt exist.
-    Return:
-    Nothing
-    '''
+   
 
     a = self.readMazeImage(path)
 
@@ -830,16 +557,7 @@ class Maze:
 
 
   def readMazeImage(self,path: str) -> np.ndarray:
-    '''
-    Read maze img and create a maze obj rappresentation.
-    This method raise a OSError if the provided path doesnt exist.
     
-    Parameters:
-    - path (str): The path to the specified maze img.
-
-    Return:
-    Nothing
-    '''
 
     # Check if the path and the file exist
     if not(bool(os.path.exists(path))):
@@ -876,12 +594,7 @@ class Maze:
     return self.getMaze()
 
   def __surroundingCells(self, rand_wall: list):
-    '''
-    Find number of surrounding cells.
-
-    Parameters:
-    - rand_wall ([int, int]): The position of the wall.
-    '''
+    
 
     # Number of surrounding cells
     s_cells = 0
@@ -902,15 +615,7 @@ class Maze:
     return s_cells
 
   def __markUpperAsWall(self,rand_wall):
-    '''
-    Mark Upper cell as Wall Border
-
-    Parameters:
-    - rand_wall ([int, int]): The position of the wall.
-
-    Return:
-    Nothing
-    '''
+   
 
     # Check if it is the upper bound
     if (rand_wall[0] != 0):
@@ -923,12 +628,7 @@ class Maze:
         self.__walls.append([rand_wall[0]-1, rand_wall[1]])
 
   def __markLeftAsWall(self,rand_wall):
-    '''
-    Mark Left cell as Wall Border
-
-    Return:
-    Nothing
-    '''
+   
 
     # Check if it is the left bound
     if (rand_wall[1] != 0):
@@ -941,12 +641,7 @@ class Maze:
         self.__walls.append([rand_wall[0], rand_wall[1]-1])
 
   def __markRightAsWall(self,rand_wall):
-    '''
-    Mark Right cell as Wall Border
-
-    Return:
-    Nothing
-    '''
+    
 
     # Check if it is the right bound
     if (rand_wall[1] != self.__width-1):
@@ -959,12 +654,7 @@ class Maze:
         self.__walls.append([rand_wall[0], rand_wall[1]+1])
 
   def __markBottomAsWall(self,rand_wall):
-    '''
-    Mark Bottom cell as Wall Border
-
-    Return:
-    Nothing
-    '''
+    
 
     # Check if it is the lower bound
     if (rand_wall[0] != self.__height-1):
@@ -977,24 +667,14 @@ class Maze:
         self.__walls.append([rand_wall[0]+1, rand_wall[1]])
   
   def __deleteWall(self, rand_wall):
-    '''
-    Delete the wall from walls border list.
 
-    Return:
-    Nothing
-    '''
 
     for wall in self.__walls:
       if (wall[0] == rand_wall[0] and wall[1] == rand_wall[1]):
         self.__walls.remove(wall)
 
   def generate(self) -> np.ndarray:
-    '''
-    Generate a random maze of specified dimensions.
-
-    Return:
-    maze (numpy.ndarray): The random maze generated.
-    '''
+    
 
     # Clean maze
     self.resetMaze()
@@ -1194,5 +874,3 @@ class Maze:
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
-
-    

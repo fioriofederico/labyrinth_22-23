@@ -19,10 +19,7 @@ class FoundPath:
         self.__goal = goal
 
     pass
-    """
-    Convert the matrix in graph for found path
-    """
-
+    
     def maze2graph(self):
         height = len(self.__maze)
         width = len(self.__maze[0]) if height else 0
@@ -36,33 +33,9 @@ class FoundPath:
                 graph[(row, col + 1)].append(("W", (row, col), self.__maze[row][col]))
         return graph
 
-    """
-    A* is a widely used pathfinding algorithm and an extension of Edsger Dijkstra's 1959 algorithm.
-    A* uses a greedy search and finds a least-cost path from the given initial node to one goal node out of one or more possibilities.
-    As A* traverses the graph, it follows a path of the lowest expected total cost or distance,
-    keeping a sorted priority queue of alternate path segments along the way.
-    It uses a heuristic cost function of node to determine the order in which the search visits nodes in the graph.
-    For A* we take the first node which has the lowest sum path cost and expected remaining cost.
-    But heuristics must be admissible, that is, it must not overestimate the distance to the goal.
-    The time complexity of A* depends on the heuristic.
-    
-    For Python, we can use "heapq" module for priority queuing and add the cost part of each element.
-    For a maze, one of the most simple heuristics can be "Manhattan distance".
-    """
-
     def heuristic(self, cell, goal):
         return abs(cell[0] - goal[0]) + abs(cell[1] - goal[1])
 
-    """
-    Input: 
-        Maze is all matrix with position wall and course
-        Start Just with 2 parameter (row, column)
-        Goal Just with 2 parameter (row, column)
-        
-    Output: 
-        Movement wih North East South West
-        And Cost for moviment
-    """
     #Ultima opzione di codice
     def find_multi_path_astar_return_visited(self, num_paths=3):
         goal = self.__goal
@@ -115,3 +88,4 @@ class FoundPath:
         name = self.unique_file_name(file_name)
         with open(file_path+name, "w") as json_file:
             json.dump(data, json_file)
+            #json.loads(data, json_file)
