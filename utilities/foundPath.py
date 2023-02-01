@@ -9,6 +9,7 @@ class FoundPath:
     # Nota fondamentale il primo valore rappresenta la riga il secondo la colonna essendo un array si conta sempre a partite da 0
     __visited = {}
     __path_return = []
+    __path = []
     __mydict = {}
     pass
 
@@ -31,23 +32,18 @@ class FoundPath:
     Output Example:
     Graph=
     {
-        (0, 0): [("S", (1, 0), 1), ("E", (0, 1), 1)],
-        (0, 1): [("W", (0, 0), 1), ("E", (0, 2), 1), ("S", (1, 1), 1)],
-        (0, 2): [("W", (0, 1), 1)],
-        (0, 3): [],
-        (1, 0): [("N", (0, 0), 1), ("S", (2, 0), 1)],
-        (1, 1): [("N", (0, 1), 1), ("E", (1, 2), 1)],
-        (1, 2): [("W", (1, 1), 1), ("E", (1, 3), 1)],
-        (1, 3): [("W", (1, 2), 1)],
-        (2, 0): [("N", (1, 0), 1), ("S", (3, 0), 1)],
-        (2, 1): [("N", (1, 1), 1), ("E", (2, 2), 1)],
-        (2, 2): [("W", (2, 1), 1), ("E", (2, 3), 1)],
-        (2, 3): [("W", (2, 2), 1)],
-        (3, 0): [("N", (2, 0), 1)],
-        (3, 1): [("N", (2, 1), 1)],
-        (3, 2): [("N", (2, 2), 1)],
-        (3, 3): [("W", (3, 2), 1)]
+        (0, 0): [('S', (1, 0), 1), ('E', (0, 1), 1)],
+        (1, 0): [('N', (0, 0), 1)], 
+        (3, 0): [('E', (3, 1), 1)],
+        (0, 1): [('W', (0, 0), 1)], 
+        (2, 1): [('S', (3, 1), 1), ('E', (2, 2), 1)], 
+        (3, 1): [('W', (3, 0), 1), ('N', (2, 1), 1)], 
+        (2, 2): [('W', (2, 1), 1), ('E', (2, 3), 1)], 
+        (1, 3): [('S', (2, 3), 1)], 
+        (2, 3): [('W', (2, 2), 1), ('N', (1, 3), 1), ('S', (3, 3), 1)], 
+        (3, 3): [('N', (2, 3), 1)]
     }
+
     Convert the matrix in graph for found path
     
     Questa funzione definisce un metodo chiamato "maze2graph()" che converte un labirinto rappresentato
@@ -158,6 +154,7 @@ class FoundPath:
                 if current == goal:
                     self.__path_return.append((start, goal, path, cost))
                     new_element = "percorso" + str(start)
+                    self.__path.append(path)
                     if new_element not in self.__mydict:
                         self.__mydict[f"{new_element}"] = {}
                     self.__mydict[f"{new_element}"]["start"] = start
@@ -178,6 +175,9 @@ class FoundPath:
 
     def getPathVisited(self):
         return self.__visited
+
+    def getPath(self):
+        return self.__path
 
     def getPathRetunrJson(self):
         return self.__path_returned_json
