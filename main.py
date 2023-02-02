@@ -1,3 +1,5 @@
+#TODO importantissimo fix di tutti i try except all'interno di tutto il codice per evitare troppi errori
+
 from utilities.menuOption import menuOption
 import os
 """

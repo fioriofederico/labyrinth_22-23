@@ -1,3 +1,7 @@
+# TODO aggiungere i commenti alle funzioni più piccole all'interno del codice seguente
+# TODO vedere se aggiungere try except
+
+
 from heapq import heappop, heappush
 import numpy as np
 import json
@@ -182,18 +186,28 @@ class FoundPath:
     def getPathRetunrJson(self):
         return self.__path_returned_json
 
+
+    #Funzione di verifica se esiste il path di destinazione
     def ensure_path_exists(self, file_path):
         directory = os.path.dirname(file_path)
+        # in caso il controllo fallisce viene creata la cartella aggiuntiva
         if not os.path.exists(directory):
+            #creazione della directory che non esisteva
             os.makedirs(directory)
 
+    #Con questa funzione avvalendosi del timestamp viene concetenato al nome del file una stringa timestemp che
+    # permette di rendere univoco l'output
     def unique_file_name(self, file_name):
         timestamp = int(time.time())
         unique_name = f"{file_name}_{timestamp}"+'.json'
         return unique_name
 
+    #Funzione che permette di scrivere un file json
     def write_json_file(self, data, file_path, file_name):
+        #Si richiama al controllo dell'esistenza del file
         self.ensure_path_exists(file_path)
+        # richiamata la funzione di unicità del file con aggiunta al nome del time stamp
         name = self.unique_file_name(file_name)
+        # viene scritto il file nel percorso di destinazione
         with open(file_path+name, "w") as json_file:
             json.dump(data, json_file)

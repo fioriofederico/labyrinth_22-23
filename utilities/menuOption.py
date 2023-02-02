@@ -1,3 +1,7 @@
+#TODO aggiungere i richiami alle funzioni di eleonora
+#TODO fix problem generation destinazione fissa Vincenzo vedi se riesci
+
+
 import numpy as np
 import math
 from utilities.maze import Maze
