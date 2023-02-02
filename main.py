@@ -8,7 +8,7 @@ def main_menu():
     menu = menuOption()
     choice = int(input("Enter your choice: "))
     if choice == 1:
-        create_maze()
+        create_maze(menu)
     elif choice == 2:
         upload_image(menu)
     elif choice == 3:
@@ -18,23 +18,26 @@ def main_menu():
         main_menu()
 
 def create_maze(menu):
-    size = int(input("Enter the size of the maze: "))
-    start = None
-    while start != "0":
-        start = input("Enter the starting point (or 0 to finish): ")
-        if start != "0":
-            print("You entered:", start)
-    goal = input("Enter the goal point: ")
-    print("Goal:", goal)
-    add_breadcrumbs = None
-    while add_breadcrumbs != "0":
-        add_breadcrumbs = input("Do you want to add breadcrumbs? (yes/no or 0 to finish): ")
-        if add_breadcrumbs == "yes":
-            print("Breadcrumbs added.")
-        elif add_breadcrumbs == "no":
-            print("Breadcrumbs not added.")
-        else:
-            print("Invalid choice. Please try again.")
+    height = int(input("Insert the height of the maze: "))
+    width = int(input("Insert the width of the maze: "))
+    startPoint = []
+    start = list(map(int, input("Insert the start point as a list: ").split()))
+    startPoint.append(start)
+    while True:
+        add_start = input("Do you want to add another start point? (yes/no): ")
+        if add_start == 'no':
+            break
+        start = list(map(int, input("Insert the start point as a list: ").split()))
+        startPoint.append(start)
+    goal = list(map(int, input("Insert the goal point as a list: ").split()))
+
+    breadcrumps = []
+    add_breadcrumps = int(input("Do you want to add breadcrumps? (0/1): "))
+    while add_breadcrumps:
+        bc = list(map(int, input("Insert the breadcrump (x y weight): ").split()))
+        breadcrumps.append(bc)
+        add_breadcrumps = int(input("Do you want to add another breadcrump? (0/1): "))
+    menu.GenerateInput(height, width, startPoint, goal, breadcrumps)
 
 def upload_image(menu):
     path = input("Enter the path of the image on tiff: ")
