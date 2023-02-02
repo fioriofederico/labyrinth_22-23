@@ -15,20 +15,59 @@ class menuOption:
         return file_path.split("/")[-1].split(".")[0]
 
     def GenerateInput(self, height, width, startpoints, endpoints, breadcrumbs):
+        # Con la riga subito sotto viene instanziato un maze e passati i parametri per effettuare la sua crezione
         p = Maze(height, width, startpoints, endpoints, breadcrumbs)
+        #generazione del maze
         p.generate()
+        #viene anche creata l'immagine tiff per visualizzare l'esito dei parametri inseriti
         p.getMazeImage()
+        #viene convertito la lista di liste in una lista di tuple
         start = [(x[0], x[1]) for x in p.startpoints]
+        #il goal viene convertito in tupla
         goal = tuple(p.endpoints[0])
+        # si richiama la struttura matrice del labirinto
+        """ con la riga numero 55 avvalendosi del sistema di ricerca di numpy all'interno
+            dei numpy array è possibile sostituire i valori delle w con un valore definito 
+            in questo caso 0 e le c con 1 ecco l'esempio
+                    Input:
+                        [
+                            ['w' 'w' 'w' ... 'w' 'w' 'w']
+                            ['w' 'c' 'c' ... 'w' 'c' 'w']
+                            ['w' 'c' 'w' ... 'w' 'c' 'w']
+                            ...
+                            ['w' 'w' 'w' ... 'w' 'c' 'w']
+                            ['w' 'c' 'c' ... 'c' 'c' 'w']
+                            ['w' 'w' 'w' ... 'w' 'w' 'w']
+                        ]
+
+                    Output:
+                        [
+                            [0 0 0 ... 0 0 0]
+                            [0 1 1 ... 0 1 0]
+                            [0 1 0 ... 0 1 0]
+                            ...
+                            [0 0 0 ... 0 1 0]
+                            [0 1 1 ... 1 1 0]
+                            [0 0 0 ... 0 0 0]
+                        ]
+                """
         maze = p.getMaze()
         maze = np.where(np.array(maze) == 'w', 0, 1)
+        # convertiti i breadcrumps in una lista con una tupla di posizioni e il costo
         bread_crumbs = [((x[0], x[1]), int(math.sqrt(x[2]))) for x in p.getBreadcrumbs()]
+        # viene costruita la matrice finale composta da 0 1 per la strada a costo 1 e i breadcrumps
         maze = p.getMatixWithBreadcrumbs(maze, bread_crumbs)
+        # viene convertito il tutto in lista
         maze = maze.tolist()
+        # viene istanziato il foundpath
         foundPath = FoundPath(maze, start, goal)
+        # viene creato il grafo per poi procedere alla ricerca del path
         foundPath.maze2graph()
+        # viene cercato il path all'interno del maze
         foundPath.find_multi_path_astar_return_visited()
+        # creata una stringa json
         json = foundPath.getPathRetunrJson()
+        # creato il file output json
         foundPath.write_json_file(json, './output/', 'outputGenerated')
 
     #In questa funzione è possibile trovare il percorso a partire dall'immagine
