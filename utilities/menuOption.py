@@ -17,6 +17,7 @@ class menuOption:
     def GenerateInput(self, height, width, startpoints, endpoints, breadcrumbs):
         p = Maze(height, width, startpoints, endpoints, breadcrumbs)
         p.generate()
+        p.getMazeImage()
         start = [(x[0], x[1]) for x in p.startpoints]
         goal = tuple(p.endpoints[0])
         maze = p.getMaze()
