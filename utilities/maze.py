@@ -1204,8 +1204,9 @@ class Maze:
     '''
     return self.__breadcrumbs
 
-  def getValuebleMatrixWithBreadcrumbs(self):
+  def getValuebleMatrixWithBreadcrumbs(self) -> np.ndarray:
     '''
+    Return a digits rappresentation of the maze.
     '''
     # Con la riga successiva vengono aggiunti al percorso i costi aggiuntivi
     # creati dalla base dei vari tasselli grigi posti all'interno del percorso
