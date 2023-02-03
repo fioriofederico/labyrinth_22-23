@@ -1009,9 +1009,6 @@ class Maze:
     Nothing
     '''
 
-    # Clean maze
-    self.resetMaze()
-
     # Denote all cells as unvisited
     # Create an empty list of list (matrix) with height x width dimension
     for i in range(0, self.__height):
