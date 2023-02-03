@@ -55,12 +55,7 @@ class menuOption:
                             [0 0 0 ... 0 0 0]
                         ]
                 """
-        maze = p.getMaze()
-        maze = np.where(np.array(maze) == 'w', 0, 1)
-        # convertiti i breadcrumps in una lista con una tupla di posizioni e il costo
-        bread_crumbs = [((x[0], x[1]), int(math.sqrt(x[2]))) for x in p.getBreadcrumbs()]
-        # viene costruita la matrice finale composta da 0 1 per la strada a costo 1 e i breadcrumps
-        maze = p.getMatixWithBreadcrumbs(maze, bread_crumbs)
+        maze = p.getValuebleMatrixWithBreadcrumbs()
         # viene convertito il tutto in lista
         maze = maze.tolist()
         # viene istanziato il foundpath
@@ -112,15 +107,9 @@ class menuOption:
                     [0 0 0 ... 0 0 0]
                 ]
         """
-        maze = np.where(np.array(maze) == 'w', 0, 1)
-        # Con la riga successiva vengono aggiunti al percorso i costi aggiuntivi
-        # creati dalla base dei vari tasselli grigi posti all'interno del percorso
-        # p.getBreadcrumbs() restituisce un array come il seguente [[17, 47, 160], [18, 47, 192], [20, 47, 160], [22, 47, 128]]
-        # bread_crumbs conterrà il seguente array [((17, 47), 12), ((18, 47), 13), ((20, 47), 12), ((22, 47), 11)]
-        # come si nota all'interno del codice c'è anche la radice quadrata da aplicare
-        bread_crumbs = [((x[0], x[1]), int(math.sqrt(x[2]))) for x in p.getBreadcrumbs()]
+
         # la matrice del nostro labirinto viene sostituita con il labirinto corretto
-        maze = p.getMatixWithBreadcrumbs(maze, bread_crumbs)
+        maze = p.getValuebleMatrixWithBreadcrumbs()
         # il labirinto viene convertito in una lista aggiunte le virgole tra i vari punti
         maze = maze.tolist()
         #Entra in azione la funzione per la ricerca del percorso migliore
@@ -172,14 +161,8 @@ class menuOption:
                     [0 0 0 ... 0 0 0]
                 ]
         """
-        maze = np.where(np.array(maze) == 'w', 0, 1)
-        # Con la riga successiva vengono aggiunti al percorso i costi aggiuntivi
-        # creati dalla base dei vari tasselli grigi posti all'interno del percorso
-        # p.getBreadcrumbs() restituisce un array come il seguente [[17, 47, 160], [18, 47, 192], [20, 47, 160], [22, 47, 128]]
-        # bread_crumbs conterrà il seguente array [((17, 47), 12.649110640673518), ((18, 47), 13.856406460551018), ((20, 47), 12.649110640673518), ((22, 47), 11.313708498984761)]
-        bread_crumbs = [((x[0], x[1]), math.sqrt(x[2])) for x in p.getBreadcrumbs()]
         # la matrice del nostro labirinto viene sostituita con il labirinto corretto
-        maze = p.getMatixWithBreadcrumbs(maze, bread_crumbs)
+        maze = p.getValuebleMatrixWithBreadcrumbs()
         # il labirinto viene convertito in una lista aggiunte le virgole tra i vari punti
         maze = maze.tolist()
         # Entra in azione la funzione per la ricerca del percorso migliore

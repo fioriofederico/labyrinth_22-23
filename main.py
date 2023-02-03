@@ -6,8 +6,8 @@ import os
 Il progetto che segue è stato realizzato da un gruppo di stundeti dell'università campus bio medico di roma
 che frequentano il corso di Ingegneria dei sistemi intelligenti.
 Il prodotto che segue è il progetto per concludere lo studio nel corso di Programmazione del primo anno primo semestre
-La richiesta era quella di creare un programma in grado di leggere un labirinto o da un immagine o da un file json.
-Il codice presente è stato realizzato dai seguenti studenti:
+La richiesta era quella di creare un progra1mma in grado di leggere un labirinto o da un immagine o da un file json.
+Il codice presente è stato realizzato dai seguenti studentxwi:
     - Calandra Vincenzo Maria
     - Fiorio Federico
     - Papi Eleonora
@@ -54,8 +54,10 @@ def create_maze(menu):
             break
         start = list(map(int, input("Insert the start point as a list: ").split()))
         startPoint.append(start)
+
     # da richiesta è stato definto un solo endpoint goal all'interno del labirinto
     goal = list(map(int, input("Insert the goal point as a list: ").split()))
+    goal = [goal]
 
     #breadcrumps sono i tasselli di grigio che vengono posti in mezzo al labirinto nel percorso che si dovrà effettuare.
     # questi possono assumere valori da 0 a 256 e ogni valore avrà una tonalità e un peso differente

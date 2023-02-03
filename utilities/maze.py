@@ -6,6 +6,7 @@ import os
 import json
 import jsonschema
 from typing import List, Literal
+import math
 
 class Maze:
   '''
@@ -322,7 +323,7 @@ class Maze:
   def resetMaze(self):
     self.__maze = []
     self.__walls = []
-    self._breadcrumbs = []
+    self.__breadcrumbs = []
     self.startpoints = []
     self.endpoints = []
 
@@ -1010,9 +1011,6 @@ class Maze:
     Nothing
     '''
 
-    # Clean maze
-    self.resetMaze()
-
     # Denote all cells as unvisited
     # Create an empty list of list (matrix) with height x width dimension
     for i in range(0, self.__height):
@@ -1173,16 +1171,18 @@ class Maze:
           break
 
     # Set exit
-    if len(self.endpoints)==2:
-      self.__maze[self.endpoints[0]][self.endpoints[1]] = 'ep'
-      if self.endpoints[0]==0:
-        self.__maze[self.endpoints[0]+1][self.endpoints[1]] = 'c'
-      elif self.endpoints[0]==self.__height-1:
-        self.__maze[self.endpoints[0]-1][self.endpoints[1]] = 'c'
-      elif self.endpoints[1]==0:
-        self.__maze[self.endpoints[0]][self.endpoints[1]+1] = 'c'
-      elif self.endpoints[1]==self.__width-1:
-        self.__maze[self.endpoints[0]][self.endpoints[1]-1] = 'c' 
+    if len(self.endpoints)>0:
+      for endpoint in self.endpoints:
+              if len(endpoint)==2:
+                self.__maze[endpoint[0]][endpoint[1]] = 'ep'
+                if endpoint[0]==0:
+                  self.__maze[endpoint[0]+1][endpoint[1]] = 'c'
+                elif endpoint[0]==self.__height-1:
+                  self.__maze[endpoint[0]-1][endpoint[1]] = 'c'
+                elif endpoint[1]==0:
+                  self.__maze[endpoint[0]][endpoint[1]+1] = 'c'
+                elif endpoint[1]==self.__width-1:
+                  self.__maze[endpoint[0]][endpoint[1]-1] = 'c'
     else:
       for i in range(self.__width-1, 0, -1):
         if (self.__maze[self.__height-2][i] == 'c'):
@@ -1204,13 +1204,22 @@ class Maze:
     '''
     return self.__breadcrumbs
 
-  def getMatrixWithBreadcrumbs(self, matrix, coordinates_value_list):
+  def getValuebleMatrixWithBreadcrumbs(self):
     '''
     '''
-    for coord, value in coordinates_value_list:
+    # Con la riga successiva vengono aggiunti al percorso i costi aggiuntivi
+    # creati dalla base dei vari tasselli grigi posti all'interno del percorso
+    # self.__breadcrumbs restituisce un array come il seguente [[17, 47, 160], [18, 47, 192], [20, 47, 160], [22, 47, 128]]
+    # bread_crumbs conterrà il seguente array [((17, 47), 12), ((18, 47), 13), ((20, 47), 12), ((22, 47), 11)]
+    # come si nota all'interno del codice c'è anche la radice quadrata da aplicare
+
+    maze = np.where(np.array(self.__maze) == 'w', 0, 1)
+    bread_crumbs = [((x[0], x[1]), int(math.sqrt(x[2]))) for x in self.__breadcrumbs]
+    
+    for coord, value in bread_crumbs:
       x, y, val = coord[0], coord[1], value
-      matrix[x][y] = val
-    return matrix
+      maze[x][y] = val
+    return maze
 
 if __name__ == "__main__":
     import doctest

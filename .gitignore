@@ -12,5 +12,5 @@ indata/*.tiff
 indata/*.json
 ex.py
 pro.py
-*.json 
+*.json
 *.tiff
