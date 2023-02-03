@@ -10,7 +10,7 @@ La richiesta era quella di creare un progra1mma in grado di leggere un labirinto
 Il codice presente è stato realizzato dai seguenti studentxwi:
     - Calandra Vincenzo Maria
     - Fiorio Federico
-    - Papi Eleonora
+    - Papa Eleonora
     
 con la supervisione dei docenti:
     - Iannello Giulio
