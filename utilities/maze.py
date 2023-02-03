@@ -76,41 +76,41 @@ class Maze:
   Traceback (most recent call last):
   ValueError: Start point cant be in a edge; provided: 1-4
 
-  >>> m = Maze(4,4,endpoints=[4,2])
+  >>> m = Maze(4,4,endpoints=[[4,2]])
 
-  >>> m = Maze(4,4,endpoints=[4,1])
+  >>> m = Maze(4,4,endpoints=[[4,1]])
   Traceback (most recent call last):
   ValueError: End point cant be in a edge; provided: 4-1
 
-  >>> m = Maze(4,4,endpoints=[4,4])
+  >>> m = Maze(4,4,endpoints=[[4,4]])
   Traceback (most recent call last):
   ValueError: End point cant be in a edge; provided: 4-4
 
   >>> m = Maze(4,4,[[2,1]])
 
-  >>> m = Maze(4,4,[[2,1]],[4,2],[[]])
+  >>> m = Maze(4,4,[[2,1]],[[4,2]],[[]])
   Traceback (most recent call last):
   ValueError: Invalid breadcrumb declaration, provided []
 
-  >>> m = Maze(4,4,[[2,1]],[4,2],[[2,2,96],[2,3,96],[3,3,96],[3,2,128]])
+  >>> m = Maze(4,4,[[2,1]],[[4,2]],[[2,2,96],[2,3,96],[3,3,96],[3,2,128]])
 
-  >>> m = Maze(4,4,[[2,1]],[4,2],[[2,2,96],[4,3,96],[3,3,128]])
+  >>> m = Maze(4,4,[[2,1]],[[4,2]],[[2,2,96],[4,3,96],[3,3,128]])
   Traceback (most recent call last):
   ValueError: Invalid breadcrumb: out of maze bounds, provided [4, 3, 96]
 
-  >>> m = Maze(4,4,[[2,1]],[4,2],[[2,2,96],[1,3,96],[3,3,128]])
+  >>> m = Maze(4,4,[[2,1]],[[4,2]],[[2,2,96],[1,3,96],[3,3,128]])
   Traceback (most recent call last):
   ValueError: Invalid breadcrumb: out of maze bounds, provided [1, 3, 96]
 
-  >>> m = Maze(4,4,[[2,1]],[4,2],[[2,2,96],[3,1,96],[3,3,128]])
+  >>> m = Maze(4,4,[[2,1]],[[4,2]],[[2,2,96],[3,1,96],[3,3,128]])
   Traceback (most recent call last):
   ValueError: Invalid breadcrumb: out of maze bounds, provided [3, 1, 96]
 
-  >>> m = Maze(4,4,[[2,1]],[4,2],[[2,2,96],[3,4,96],[3,3,128]])
+  >>> m = Maze(4,4,[[2,1]],[[4,2]],[[2,2,96],[3,4,96],[3,3,128]])
   Traceback (most recent call last):
   ValueError: Invalid breadcrumb: out of maze bounds, provided [3, 4, 96]
 
-  >>> m = Maze(4,4,[[2,1]],[4,2],[[2,2, 128],[4,4,128],[3,3,96]])
+  >>> m = Maze(4,4,[[2,1]],[[4,2]],[[2,2, 128],[4,4,128],[3,3,96]])
   Traceback (most recent call last):
   ValueError: Invalid breadcrumb: out of maze bounds, provided [4, 4, 128]
 
@@ -124,12 +124,14 @@ class Maze:
 
   >>> m = Maze()
   >>> m.readMazeImage("tests/testcase/maze.tiff")
+  >>> m.getMaze()
   array([['w', 'sp', 'w', 'w'],
          ['w', 'c', 'c', 'w'],
          ['w', 'w', 'bc', 'w'],
          ['w', 'w', 'ep', 'w']], dtype='<U2')
 
   >>> m.readMazeJson("tests/testcase/maze.json")
+  >>> m.getMaze()
   array([['w', 'sp', 'w', 'w'],
          ['w', 'c', 'c', 'w'],
          ['w', 'w', 'bc', 'w'],
@@ -168,12 +170,14 @@ class Maze:
   ValueError: Invalid wall: [0, 3]
 
   >>> m.readMazeJson("tests/testcase/maze_8.json")
+  >>> m.getMaze()
   array([['w', 'c', 'w', 'w'],
          ['w', 'c', 'c', 'c'],
          ['w', 'w', 'bc', 'c'],
          ['w', 'sp', 'ep', 'c']], dtype='<U2')
   
   >>> m.readMazeJson("tests/testcase/maze_9.json")
+  >>> m.getMaze()
   array([['w', 'c', 'w', 'w'],
          ['w', 'bc', 'bc', 'c'],
          ['w', 'bc', 'bc', 'c'],
@@ -251,7 +255,7 @@ class Maze:
     }
   }
 
-  def __init__(self, height:int=4, width:int=4, startpoints:List[List[int]]=[], endpoints:List[int]=[], breadcrumbs:List[List[int]]=[]):
+  def __init__(self, height:int=4, width:int=4, startpoints:List[List[int]]=[], endpoints:List[List[int]]=[], breadcrumbs:List[List[int]]=[]):
     '''Initialize a Maze object. 
 
     Parameters:
@@ -279,6 +283,9 @@ class Maze:
     else:
       raise ValueError(f"Value provided for width is invalid, should be greater than 3: {width}")
 
+    # Clean maze
+    self.resetMaze()
+
     if len(startpoints) > 0:
       for startpoint in startpoints:
         # Check start point and endpoints
@@ -288,12 +295,17 @@ class Maze:
       for startpoint in startpoints:
         #Set start point if valid   
         self.startpoints.append([startpoint[0]-1,startpoint[1]-1])
-    
-    if (height > 0 and width > 0 and len(endpoints)==2):
-      self.__checkPoint(endpoints,'E',height,width)
-      # Set end point if valid
-      self.endpoints = [endpoints[0]-1,endpoints[1]-1]
-    
+      
+    if len(endpoints) > 0:
+      for endpoint in endpoints:
+        # Check start point and endpoints
+        if (height > 0 and width > 0 and len(endpoint)==2):
+          self.__checkPoint(endpoint,'E',height,width)
+      
+      for endpoint in endpoints:
+        #Set start point if valid   
+        self.endpoints.append([endpoint[0]-1,endpoint[1]-1])
+  
     # Checks breadcrumbs
     if (len(breadcrumbs)>0):
       # Checks breadcrumbs
@@ -306,9 +318,6 @@ class Maze:
     else:
       # Set a void list
       self.__breadcrumbs = []
-
-    # Clean maze
-    self.resetMaze()
 
   def resetMaze(self):
     self.__maze = []
@@ -323,6 +332,8 @@ class Maze:
     
     Parameters:
     - breadcrumbs([int, int]):  The positions of the breadcrumb
+    - height(int): The height of the maze
+    - width(int): The width of the maze
 
     Returns:
     Nothing
@@ -341,6 +352,8 @@ class Maze:
     Parameters:
     - point ([int,int]): A point in the maze.
     - point_type (Literal['S','E']): Indicate if the point is a Startpoint or an Endpoint
+    - height(int): The height of the maze
+    - width(int): The width of the maze
 
     Returns:
     Nothing
@@ -363,7 +376,7 @@ class Maze:
       raise ValueError(f"{'Start' if point_type=='S' else 'End'} point [x,y] invalid; provided: {point}")
 
 
-  def getMazeJson(self):
+  def getMazeJson(self) -> None:
     '''
     Create a json description of the maze if a maze was created or setted.
     It raises a generic Exception if the maze obj doesnt have a maze loaded or generated.
@@ -448,16 +461,17 @@ class Maze:
       json.dump(maze_obj, outfile)
       outfile.close()
 
-  def __validateJson(self,json):
+  def __validateJson(self,json:dict) -> None:
     '''
     Validate the raeded json based on schema definitions.
 
     Parameters:
-    - json : The json to validate
+    - json(dict): The json to validate
 
     Returns:
     Nothing
     '''
+
     # Check schema consistency
     try:
       jsonschema.validate(json,schema=self.__mazeSchema)
@@ -490,7 +504,7 @@ class Maze:
         self.__checkBreadCrumbPoint([bc[0]+1,bc[1]+1,bc[2]],json["altezza"],json["larghezza"])
 
 
-  def readMazeJson(self,path:str) -> np.ndarray: 
+  def readMazeJson(self,path:str) -> None: 
     '''
     Read a json description of a maze with the following structure and populate the maze object.
     e.g
@@ -580,8 +594,6 @@ class Maze:
     if self.__breadcrumbs != []:
       for bc in self.__breadcrumbs:
         self.__maze[bc[0]][bc[1]] = "bc"
-    
-    return self.getMaze()
 
   def getMaze(self) -> np.ndarray:
     '''
@@ -594,11 +606,11 @@ class Maze:
      [w, w, c, w]]
     
     Return:
-    Nothing
+    maze(np.ndarray): The numpy array rappresentation of the Maze
     '''
     return np.asarray(self.__maze)
   
-  def printMaze(self):
+  def printMaze(self) -> None:
     '''
     Print via console stdout the maze array description.
 
@@ -619,7 +631,7 @@ class Maze:
         
       print('\n')
   
-  def getMazeImage(self):
+  def getMazeImage(self) -> None:
     '''
     Generate a tiff image rapresent the current maze obj, the generated file will be named 'maze.tiff'
 
@@ -664,7 +676,7 @@ class Maze:
     im = Image.fromarray(a,mode="RGB")
     im.save("./maze.tiff")
 
-  def resizeMazeImg(self,path="maze.tiff"):
+  def resizeMazeImg(self,path="maze.tiff") -> None:
     '''
     Resize maze img. Create a large version of the maze tiff.
     This method raise a OSError if the provided path doesnt exist.
@@ -830,7 +842,7 @@ class Maze:
     im.save("./large_maze.tiff")
 
 
-  def readMazeImage(self,path: str) -> np.ndarray:
+  def readMazeImage(self,path: str) -> None:
     '''
     Read maze img and create a maze obj rappresentation.
     This method raise a OSError if the provided path doesnt exist.
@@ -874,14 +886,15 @@ class Maze:
           self.__breadcrumbs.append([i,j,a[i,j][0]])
           self.__maze[i][j] = 'bc'
 
-    return self.getMaze()
-
-  def __surroundingCells(self, rand_wall: list):
+  def __surroundingCells(self, rand_wall: list) -> int:
     '''
     Find number of surrounding cells.
 
     Parameters:
     - rand_wall ([int, int]): The position of the wall.
+
+    Returns:
+    s_cells (int): n. of surrainding cells
     '''
 
     # Number of surrounding cells
@@ -902,7 +915,7 @@ class Maze:
       
     return s_cells
 
-  def __markUpperAsWall(self,rand_wall):
+  def __markUpperAsWall(self,rand_wall) -> None:
     '''
     Mark Upper cell as Wall Border
 
@@ -923,7 +936,7 @@ class Maze:
       if ([rand_wall[0]-1, rand_wall[1]] not in self.__walls):
         self.__walls.append([rand_wall[0]-1, rand_wall[1]])
 
-  def __markLeftAsWall(self,rand_wall):
+  def __markLeftAsWall(self,rand_wall) -> None:
     '''
     Mark Left cell as Wall Border
 
@@ -941,7 +954,7 @@ class Maze:
       if ([rand_wall[0], rand_wall[1]-1] not in self.__walls):
         self.__walls.append([rand_wall[0], rand_wall[1]-1])
 
-  def __markRightAsWall(self,rand_wall):
+  def __markRightAsWall(self,rand_wall) -> None:
     '''
     Mark Right cell as Wall Border
 
@@ -959,7 +972,7 @@ class Maze:
       if ([rand_wall[0], rand_wall[1]+1] not in self.__walls):
         self.__walls.append([rand_wall[0], rand_wall[1]+1])
 
-  def __markBottomAsWall(self,rand_wall):
+  def __markBottomAsWall(self,rand_wall) -> None:
     '''
     Mark Bottom cell as Wall Border
 
@@ -977,7 +990,7 @@ class Maze:
       if ([rand_wall[0]+1, rand_wall[1]] not in self.__walls):
         self.__walls.append([rand_wall[0]+1, rand_wall[1]])
   
-  def __deleteWall(self, rand_wall):
+  def __deleteWall(self, rand_wall) -> None:
     '''
     Delete the wall from walls border list.
 
@@ -989,12 +1002,12 @@ class Maze:
       if (wall[0] == rand_wall[0] and wall[1] == rand_wall[1]):
         self.__walls.remove(wall)
 
-  def generate(self) -> np.ndarray:
+  def generate(self) -> None:
     '''
     Generate a random maze of specified dimensions.
 
     Return:
-    maze (numpy.ndarray): The random maze generated.
+    Nothing
     '''
 
     # Clean maze
@@ -1180,13 +1193,20 @@ class Maze:
     if len(self.__breadcrumbs) > 0:
       for bc in self.__breadcrumbs:
         self.__maze[bc[0]][bc[1]] = "bc"
-    return self.getMaze()
 
 
-  def getBreadcrumbs(self):
+  def getBreadcrumbs(self) -> List:
+    '''
+    Return breadcrumbs list.
+
+    Returns:
+    breadcrumbs(list): The list of posix of breadcrumbs and their values
+    '''
     return self.__breadcrumbs
 
-  def getMatixWithBreadcrumbs(self, matrix, coordinates_value_list):
+  def getMatrixWithBreadcrumbs(self, matrix, coordinates_value_list):
+    '''
+    '''
     for coord, value in coordinates_value_list:
       x, y, val = coord[0], coord[1], value
       matrix[x][y] = val
