@@ -90,15 +90,46 @@ y1,x1 = x1,y1
 print(x0,y0)
 print(x1,y1)
 
+#recupero il percorso corrente del file
+current_path = os.getcwd()
+#creo un percorso combinando il percorso corrente con la cartella "indata"
+img_files = os.path.join(current_path,"./indata/")
+#utilizzo una list comprehension per creare una lista di file nella cartella specificata che terminano con ".tiff"
+img = [f for f in os.listdir(img_files) if f.endswith('.tiff')]
+print(img)
 
-img_name = './indata/labirinto2_marked.tiff'
-rgb_img = plt.imread(img_name)
+#imposto la variabile "latest_file" come una stringa vuota e la variabile "latest_timestamp" come una data iniziale molto vecchia (1 gennaio 1)
+latest_file = ""
+latest_timestamp = datetime(1, 1, 1)
+#verifico se ci sono file nella directory specificata
+if img:
+    for file in img:
+        # ottengo la data di modifica del file in formato timestamp
+        timestamp = os.path.getmtime(os.path.join(img_files, file))
+        # la converto in un oggetto datetime
+        timestamp = datetime.fromtimestamp(timestamp)
+        # confronto la data di modifica con quella del file più recente 
+        if timestamp > latest_timestamp:
+            latest_file = file  #se è più recente, la variabile "latest_file" viene impostata come il nome del file corrente 
+            latest_timestamp = timestamp    #e la variabile "latest_timestamp" viene impostata come la data di modifica del file corrente.
 
+img = os.path.join(img_files, latest_file)
+rgb_img = plt.imread(img)
 plt.figure(figsize=(10,10))
 plt.imshow(rgb_img)
 
 plt.plot(x0,y0, 'gx', markersize = 14)
 plt.plot(x1,y1, 'rx', markersize = 14)
+
+
+###img_name = './indata/labirinto2_marked.tiff'
+###rgb_img = plt.imread(img_name)
+###
+###plt.figure(figsize=(10,10))
+###plt.imshow(rgb_img)
+###
+###plt.plot(x0,y0, 'gx', markersize = 14)
+###plt.plot(x1,y1, 'rx', markersize = 14)
 
 
 thr_img = rgb_img[:,:,0] > 128
