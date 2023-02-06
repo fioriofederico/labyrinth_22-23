@@ -77,11 +77,12 @@ class menuOption:
         p.readMazeImage(imagePath)
         #Con questa riga vengono convertiti i punti di start
         # da [[0, 29], [19, 60]] in un array di tuple [(0, 29), (19, 60)]
+        print(p.startpoints)
         start = [(x[0], x[1]) for x in p.startpoints]
         #viene settato il goal dai endpoin in una tupla
         goal = tuple(p.endpoints[0])
         #viene presa e assegnata a maze la matrice ritornata dall'analisi
-        maze = p.getMaze()
+        p.getMaze()
         """ in questa riga avvalendosi del sistema di ricerca di numpy all'interno
             dei numpy array è possibile sostituire i valori delle w con un valore definito 
             in questo caso 0 e le c con 1 ecco l'esempio
