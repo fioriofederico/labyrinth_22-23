@@ -89,11 +89,15 @@ x1,y1 = goal
 y1,x1 = x1,y1
 print(x0,y0)
 print(x1,y1)
+start = x0,y0
+goal = x1,y1
+print(start)
+print(goal)
 
 #recupero il percorso corrente del file
 current_path = os.getcwd()
 #creo un percorso combinando il percorso corrente con la cartella "indata"
-img_files = os.path.join(current_path,"./indata/")
+img_files = os.path.join(current_path,"./img_input/")
 #utilizzo una list comprehension per creare una lista di file nella cartella specificata che terminano con ".tiff"
 img = [f for f in os.listdir(img_files) if f.endswith('.tiff')]
 print(img)
@@ -120,16 +124,6 @@ plt.imshow(rgb_img)
 
 plt.plot(x0,y0, 'gx', markersize = 14)
 plt.plot(x1,y1, 'rx', markersize = 14)
-
-
-###img_name = './indata/labirinto2_marked.tiff'
-###rgb_img = plt.imread(img_name)
-###
-###plt.figure(figsize=(10,10))
-###plt.imshow(rgb_img)
-###
-###plt.plot(x0,y0, 'gx', markersize = 14)
-###plt.plot(x1,y1, 'rx', markersize = 14)
 
 
 thr_img = rgb_img[:,:,0] > 128
