@@ -86,10 +86,7 @@ def upload_image(menu):
         path = input("Enter the path of the image on tiff: ")
         if check_file_extension(path, '.tiff'):
             # Aggiunto un try except per evitare l'interruzione del programma per errori dell'utente
-            try:
-                menu.ImageInput(path)
-            except:
-                print("The file doesn't exist or the path is wrong")
+            menu.ImageInput(path)
         else:
             print("Incorrect file th extension is not tiff, please enter the correct file path.")
 

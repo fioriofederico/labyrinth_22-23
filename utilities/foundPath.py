@@ -150,6 +150,39 @@ class FoundPath:
         goal = self.__goal
         for start in self.__start:
             pr_queue = []
+            heappush(pr_queue, (0 + self.heuristic(start, goal), 0, "", "", start))
+            visited = [start]
+            graph: dict = self.maze2graph()
+            while len(self.__path_return) < num_paths * len(self.__start) and pr_queue:
+                _, cost, path, pathCordination, current = heappop(pr_queue)
+                if current == goal:
+                    self.__path_return.append((start, goal, path, pathCordination, cost))
+                    new_element = "percorso" + str(start)
+                    self.__new_element = new_element
+                    self.__path.append(path)
+                    if new_element not in self.__mydict:
+                        self.__mydict[f"{new_element}"] = {}
+                    self.__mydict[f"{new_element}"]["start"] = start
+                    self.__mydict[f"{new_element}"]["goal"] = goal
+                    self.__mydict[f"{new_element}"]["cost"] = cost
+                    self.__mydict[f"{new_element}"]["path"] = path
+                    self.__mydict[f"{new_element}"]["path_cord"] = pathCordination
+                    self.__mydict[f"{new_element}"]["pathVisited"] = visited
+                    self.__path_returned_json = json.dumps(self.__mydict)
+                    self.__visited[start] = visited
+                for direction, neighbour, real_cost in graph[current]:
+                    if neighbour not in visited:
+                        visited.append(neighbour)
+                        heappush(pr_queue, (cost + self.heuristic(neighbour, goal), cost + real_cost,
+                                            path + direction, pathCordination + str(neighbour), neighbour))
+        if len(self.__path_return) < num_paths * len(self.__start):
+            self.__path_return.append("NO WAY!")
+        return self.__path_return
+
+    def no_find_multi_path_astar_return_visited(self, num_paths=3):
+        goal = self.__goal
+        for start in self.__start:
+            pr_queue = []
             heappush(pr_queue, (0 + self.heuristic(start, goal), 0, "", start))
             visited = [start]
             graph: dict = self.maze2graph()
@@ -158,6 +191,7 @@ class FoundPath:
                 if current == goal:
                     self.__path_return.append((start, goal, path, cost))
                     new_element = "percorso" + str(start)
+                    self.__new_element = new_element
                     self.__path.append(path)
                     if new_element not in self.__mydict:
                         self.__mydict[f"{new_element}"] = {}
@@ -166,6 +200,20 @@ class FoundPath:
                     self.__mydict[f"{new_element}"]["cost"] = cost
                     self.__mydict[f"{new_element}"]["path"] = path
                     self.__mydict[f"{new_element}"]["pathVisited"] = visited
+
+                    # Aggiunto questa parte di codice per permettere l'aggiunta in ritorno del path fatto dalle
+                    # sole cordinate che si visita
+                    coord_path = []
+                    for i, direction in enumerate(path):
+                        if direction == 'S':
+                            coord_path.append((visited[i][0] + 1, visited[i][1]))
+                        elif direction == 'N':
+                            coord_path.append((visited[i][0] - 1, visited[i][1]))
+                        elif direction == 'W':
+                            coord_path.append((visited[i][0], visited[i][1] - 1))
+                        else:
+                            coord_path.append((visited[i][0], visited[i][1] + 1))
+                    self.__mydict[f"{new_element}"]["coord_path"] = coord_path
                     self.__path_returned_json = json.dumps(self.__mydict)
                     self.__visited[start] = visited
                 for direction, neighbour, real_cost in graph[current]:
