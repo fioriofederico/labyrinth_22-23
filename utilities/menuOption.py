@@ -129,6 +129,7 @@ class menuOption:
         p = Maze()
         # Funzione per la lettura del file JSON
         p.readMazeJson(jsonPath)
+        p.getMazeImage()
         # Con questa riga vengono convertiti i punti di start
         # da [[0, 29], [19, 60]] in un array di tuple [(0, 29), (19, 60)]
         start = [(x[0], x[1]) for x in p.startpoints]
