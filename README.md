@@ -83,5 +83,5 @@ Or if the module doesnt contains the doctest import:
 foo@bar:~$ python -m doctest maze.py -v
 ```
 ## Some useful information
-Here you can find a list of possible functionalities of this tool.
+Here you can find a diagram that graph possible functionalities of this tool.
 ![](./diagram/usecase.drawio.png)
