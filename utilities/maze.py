@@ -1220,7 +1220,7 @@ class Maze:
     for coord, value in bread_crumbs:
       x, y, val = coord[0], coord[1], value
       maze[x][y] = val
-    return maze
+    return maze, bread_crumbs
 
 if __name__ == "__main__":
     import doctest

@@ -55,7 +55,7 @@ class menuOption:
                             [0 0 0 ... 0 0 0]
                         ]
                 """
-        maze = p.getValuebleMatrixWithBreadcrumbs()
+        maze, breadcrumbs = p.getValuebleMatrixWithBreadcrumbs()
         # viene convertito il tutto in lista
         maze = maze.tolist()
         # viene istanziato il foundpath
@@ -63,7 +63,7 @@ class menuOption:
         # viene creato il grafo per poi procedere alla ricerca del path
         foundPath.maze2graph()
         # viene cercato il path all'interno del maze
-        foundPath.find_multi_path_astar_return_visited()
+        foundPath.find_multi_path_astar_return_visited(breadcrumbs)
         # creata una stringa json
         json = foundPath.getPathRetunrJson()
         # creato il file output json
@@ -109,7 +109,7 @@ class menuOption:
         """
 
         # la matrice del nostro labirinto viene sostituita con il labirinto corretto
-        maze = p.getValuebleMatrixWithBreadcrumbs()
+        maze, breadcrumps = p.getValuebleMatrixWithBreadcrumbs()
         # il labirinto viene convertito in una lista aggiunte le virgole tra i vari punti
         maze = maze.tolist()
         #Entra in azione la funzione per la ricerca del percorso migliore
@@ -117,7 +117,7 @@ class menuOption:
         # il nostro maze viene convertito per ottenere il grafo
         foundPath.maze2graph()
         #si procede alla ricerca del path con la funzione che usa l'algoritmo A*
-        foundPath.find_multi_path_astar_return_visited()
+        foundPath.find_multi_path_astar_return_visited(breadcrumps)
         #viene generato una stringa json
         json = foundPath.getPathRetunrJson()
         #viene fatto output file json
@@ -163,7 +163,7 @@ class menuOption:
                 ]
         """
         # la matrice del nostro labirinto viene sostituita con il labirinto corretto
-        maze = p.getValuebleMatrixWithBreadcrumbs()
+        maze, breadcrumps = p.getValuebleMatrixWithBreadcrumbs()
         # il labirinto viene convertito in una lista aggiunte le virgole tra i vari punti
         maze = maze.tolist()
         # Entra in azione la funzione per la ricerca del percorso migliore
@@ -171,7 +171,7 @@ class menuOption:
         # il nostro maze viene convertito per ottenere il grafo
         foundPath.maze2graph()
         # si procede alla ricerca del path con la funzione che usa l'algoritmo A*
-        foundPath.find_multi_path_astar_return_visited()
+        foundPath.find_multi_path_astar_return_visited(breadcrumps)
         # viene generato una stringa json
         json = foundPath.getPathRetunrJson()
         # viene fatto output file json
