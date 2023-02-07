@@ -675,7 +675,7 @@ class Maze:
     
     # Save the tiff in the current main folder
     im = Image.fromarray(a,mode="RGB")
-    im.save("./maze.tiff")
+    im.save("./img_input/maze.tiff")
 
   def resizeMazeImg(self,path="maze.tiff") -> None:
     '''
@@ -840,7 +840,7 @@ class Maze:
     # above array
     # Save the tiff in the current main folder
     im = Image.fromarray(a,mode="RGB")
-    im.save("./large_maze.tiff")
+    im.save("./img_input/large_maze.tiff")
 
 
   def readMazeImage(self,path: str) -> None:
