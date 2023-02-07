@@ -66,7 +66,7 @@ class menuOption:
         foundPath.find_multi_path_astar_return_visited(breadcrumbs)
         # creato il file output json
         foundPath.write_json_file('./outputJsonFile/', 'outputGenerated')
-        foundPath.write_json_file(foundPath.getPathRetunrJson(), './output/', 'outputGenerated')
+        foundPath.write_json_file_from_dumps(foundPath.getPathRetunrJson(), './output/', 'outputGenerated')
 
     #In questa funzione è possibile trovare il percorso a partire dall'immagine
     def ImageInput(self, imagePath):
@@ -119,7 +119,7 @@ class menuOption:
         foundPath.find_multi_path_astar_return_visited(breadcrumps)
         #viene fatto output file json
         foundPath.write_json_file('./outputJsonFile/', self.get_file_name(imagePath))
-        foundPath.write_json_file(foundPath.getPathRetunrJson(), './output/', self.get_file_name(imagePath))
+        foundPath.write_json_file_from_dumps(foundPath.getPathRetunrJson(), './output/', self.get_file_name(imagePath))
 
     #Come il processo precedente in questo caso ci si aspetta un JSON in Input
     def JsonInput(self, jsonPath):
@@ -172,4 +172,4 @@ class menuOption:
         foundPath.find_multi_path_astar_return_visited(breadcrumps)
         # viene fatto output file json
         foundPath.write_json_file('./outputJsonFile/', self.get_file_name(jsonPath))
-        foundPath.write_json_file(foundPath.getPathRetunrJson(), './output/', self.get_file_name(jsonPath))
+        foundPath.write_json_file_from_dumps(foundPath.getPathRetunrJson(), './output/', self.get_file_name(jsonPath))
