@@ -55,6 +55,11 @@ Go to the principal folder and launch the code main.py. In the terminal you will
 * If you choose to create the maze, remember to stay in the borders when assigning variables
 * If you choose to create a maze from an image make sure to insert the image in the "img_input" folder because the program will draw the maze on the last inserted image
 
+To run the application:
+```console
+foo@bar:~$ python main.py
+```
+
 ## How to run unittest
 To run unittest you can execute the TestMaze.py under test directory to run all test like:
 ```console
