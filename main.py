@@ -1,7 +1,9 @@
 #TODO importantissimo fix di tutti i try except all'interno di tutto il codice per evitare troppi errori
 
 from utilities.menuOption import menuOption
+from utilities.funzioni_finali import *
 import os
+import time
 """
 Il progetto che segue è stato realizzato da un gruppo di stundeti dell'università campus bio medico di roma
 che frequentano il corso di Ingegneria dei sistemi intelligenti.
@@ -36,7 +38,9 @@ def main_menu():
         upload_json(menu)
     else:
         print("Invalid choice. Please try again.")
-        main_menu()
+    
+    main_menu()
+  
 
 def create_maze(menu):
     height = int(input("Insert the height of the maze: "))
@@ -70,6 +74,9 @@ def create_maze(menu):
     #tutti i dati inseriti dall'utente vengono passati
     menu.GenerateInput(height, width, startPoint, goal, breadcrumps)
 
+    print("Il percorso migliore è:")
+    json_to_path()
+
 
 #Funzione che permette di verificare che il file corrisponda a quello richiesto
 def check_file_extension(file_path, extension):
@@ -92,6 +99,9 @@ def upload_image(menu):
                 print("The file doesn't exist or the path is wrong")
         else:
             print("Incorrect file th extension is not tiff, please enter the correct file path.")
+        
+        print("Il percorso migliore è:")
+        json_to_path()
 
 def upload_json(menu):
     #caricamento di un json file all'interno di un while che controlla se si tratta di un json
@@ -106,5 +116,12 @@ def upload_json(menu):
         else:
             print("Incorrect file extension is not json, please enter the correct file path.")
 
+        print("Il percorso migliore è:")
+        json_to_path()
+
+
 if __name__ == "__main__":
     main_menu()
+    
+
+    
