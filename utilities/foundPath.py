@@ -147,7 +147,7 @@ class FoundPath:
     """
     #Ultima opzione di codice
     def find_multi_path_astar_return_visited(self, breadcrumps, num_paths=3):
-        self.__mydict["breadcrumps"] = breadcrumps
+
         goal = self.__goal
         for start in self.__start:
             pr_queue = []
@@ -163,6 +163,7 @@ class FoundPath:
                     self.__path.append(path)
                     if new_element not in self.__mydict:
                         self.__mydict[f"{new_element}"] = {}
+                    self.__mydict[f"{new_element}"]["breadcrumps"] = breadcrumps
                     self.__mydict[f"{new_element}"]["start"] = start
                     self.__mydict[f"{new_element}"]["goal"] = goal
                     self.__mydict[f"{new_element}"]["cost"] = cost
