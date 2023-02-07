@@ -24,6 +24,15 @@ After that you can activate your conda env.
 foo@bar:~$ conda activate maze
 ```
 
+## How it works
+Go to the principal folder and launch the code main.py. In the terminal you will have 3 options, choose the one you prefer:
+1. Create Maze
+2. Upload image
+3. Upload JSON
+Note, consider the three implementation methods before you run your code.
+* If you choose to create the maze, remember to stay in the borders when assigning variables
+* If you choose to create a maze from an image make sure to insert the image in the "img_input" folder because the program will draw the maze on the last inserted image
+
 ## How to run unittest
 To run unittest you can execute the TestMaze.py under test directory to run all test like:
 ```console
