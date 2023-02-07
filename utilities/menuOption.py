@@ -65,7 +65,8 @@ class menuOption:
         # viene cercato il path all'interno del maze
         foundPath.find_multi_path_astar_return_visited(breadcrumbs)
         # creato il file output json
-        foundPath.write_json_file('./output/', 'outputGenerated')
+        foundPath.write_json_file('./outputJsonFile/', 'outputGenerated')
+        foundPath.write_json_file(foundPath.getPathRetunrJson(), './output/', 'outputGenerated')
 
     #In questa funzione è possibile trovare il percorso a partire dall'immagine
     def ImageInput(self, imagePath):
@@ -117,7 +118,8 @@ class menuOption:
         #si procede alla ricerca del path con la funzione che usa l'algoritmo A*
         foundPath.find_multi_path_astar_return_visited(breadcrumps)
         #viene fatto output file json
-        foundPath.write_json_file('./output/', self.get_file_name(imagePath))
+        foundPath.write_json_file('./outputJsonFile/', self.get_file_name(imagePath))
+        foundPath.write_json_file(foundPath.getPathRetunrJson(), './output/', self.get_file_name(imagePath))
 
     #Come il processo precedente in questo caso ci si aspetta un JSON in Input
     def JsonInput(self, jsonPath):
@@ -169,4 +171,5 @@ class menuOption:
         # si procede alla ricerca del path con la funzione che usa l'algoritmo A*
         foundPath.find_multi_path_astar_return_visited(breadcrumps)
         # viene fatto output file json
-        foundPath.write_json_file('./output/', self.get_file_name(jsonPath))
+        foundPath.write_json_file('./outputJsonFile/', self.get_file_name(jsonPath))
+        foundPath.write_json_file(foundPath.getPathRetunrJson(), './output/', self.get_file_name(jsonPath))
