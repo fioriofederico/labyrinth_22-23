@@ -206,11 +206,11 @@ class FoundPath:
         return unique_name
 
     #Funzione che permette di scrivere un file json
-    def write_json_file(self, data, file_path, file_name):
+    def write_json_file(self, file_path, file_name):
         #Si richiama al controllo dell'esistenza del file
         self.ensure_path_exists(file_path)
         # richiamata la funzione di unicità del file con aggiunta al nome del time stamp
         name = self.unique_file_name(file_name)
         # viene scritto il file nel percorso di destinazione
         with open(file_path+name, "w") as json_file:
-            json.dump(data, json_file, indent=4)
+            json.dump(self.__mydict, json_file, indent=4)
