@@ -4,6 +4,10 @@ import os
 from datetime import datetime
 
 """
+Funzione che prende in ingresso un  json che rappresenta un labirinto, con "start", "goal", "path", "pathVisited", "path_cord", "breadcrumps"
+e ristampa un file json che racchiude solo il percorso ottimo (che costa meno) all'interno del labirinto.
+Dopodichè il percorso scritto all'interno di questo secondo json viene disegnato (sovrascritto) sopra all'immagine del labirinto preso in input.
+
 Prima di lanciare il codice assicurarsi di aver inserito nella cartella "img_input" il file  .tiff del labirinto.
 Se non si ha a disposizione un labirinto, tornare sul main e crearne uno prima di lanciare il codice.
 
@@ -11,6 +15,7 @@ N.B: L'immagine che si desidera sovrascrivere deve essere l'ultima caricata in i
 """
 
 def json_to_path():
+    
     #recupero il percorso corrente del file
     current_path = os.getcwd()
     #creo un percorso combinando il percorso corrente con la cartella "output"
@@ -81,6 +86,14 @@ def json_to_path():
     goal = tuple(map(int, path_json["goal"]))
     path_cord = path_json["path_cord"]
     path_visited = path_json["pathVisited"]
+
+    breadcrumps = path_json["breadcrumps"]
+    inverted_breadcrumps = [[point[0][::-1], point[1]] for point in breadcrumps]
+    breadcrumps_only = [point[0] for point in inverted_breadcrumps]
+    #for sublist in inverted_breadcrumps:
+    #    breadcrumps_end = sublist[0]
+    print(breadcrumps_only)
+
     for x, y in path_visited:
         if (x, y) == start:
             start_x, start_y = x, y
@@ -145,14 +158,18 @@ def json_to_path():
     """
     -----------------------------------------------------------------------------------
     """
+
     img = os.path.join(img_files, latest_file)
     im = Image.open(img)
     draw = ImageDraw.Draw(im)
-    color = (255, 0, 0)
+    color = (0, 0, 255)
     draw.line(new_path_cord, fill=color)
-    color1 = (0, 255, 255) # colore verde acqua
-    color2 = (0, 0, 255) # colore blu
+    color1 = (0, 255, 0) # colore verde acqua
+    color2 = (255, 0, 0) # colore blu
+    color3 = (128,0,128)
     draw.point(start, fill=color1)
     draw.point(goal, fill=color2)
+    for x,y in breadcrumps_only:
+        draw.point((x,y), fill=color3)
     im.save("./output/maze_finale.tiff")
     im.show()
