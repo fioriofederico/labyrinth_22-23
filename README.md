@@ -145,9 +145,6 @@ Go to the principal folder and launch the code main.py. In the terminal you will
 }
 ```
 
-## Maze tiff example
-![](diagram/labirinto2_marked.jpeg)
-
 To run the application:
 ```console
 foo@bar:~$ python main.py

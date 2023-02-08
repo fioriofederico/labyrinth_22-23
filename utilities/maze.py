@@ -685,7 +685,8 @@ class Maze:
     Nothing
     '''
 
-    a = self.readMazeImage(path)
+    self.readMazeImage(path)
+    a = self.getMaze()
 
     (height, width) = a.shape
 
