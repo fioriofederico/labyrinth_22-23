@@ -145,6 +145,7 @@ class FoundPath:
         Movement wih North East South West
         And Cost for moviment
     """
+
     #Ultima opzione di codice
     def find_multi_path_astar_return_visited(self, breadcrumps, num_paths=3):
         goal = self.__goal
@@ -180,6 +181,7 @@ class FoundPath:
             self.__path_return.append("NO WAY!")
         return self.__path_return
 
+
     def getPathVisited(self):
         return self.__visited
 
@@ -209,6 +211,7 @@ class FoundPath:
     def write_json_file(self, file_path, file_name):
         #Si richiama al controllo dell'esistenza del file
         self.ensure_path_exists(file_path)
+        self.ensure_path_exists('img_input')
         # richiamata la funzione di unicità del file con aggiunta al nome del time stamp
         name = self.unique_file_name(file_name)
         # viene scritto il file nel percorso di destinazione
@@ -219,6 +222,7 @@ class FoundPath:
     def write_json_file_from_dumps(self, data, file_path, file_name):
         # Si richiama al controllo dell'esistenza del file
         self.ensure_path_exists(file_path)
+        self.ensure_path_exists('img_input')
         # richiamata la funzione di unicità del file con aggiunta al nome del time stamp
         name = self.unique_file_name(file_name)
         # viene scritto il file nel percorso di destinazione
