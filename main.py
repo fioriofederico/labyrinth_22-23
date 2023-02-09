@@ -3,7 +3,7 @@
 from utilities.menuOption import menuOption
 from utilities.funzioni_finali import *
 import os
-import time
+from sys import exit
 """
 Il progetto che segue è stato realizzato da un gruppo di stundeti dell'università campus bio medico di roma
 che frequentano il corso di Ingegneria dei sistemi intelligenti.
@@ -26,6 +26,7 @@ def main_menu():
     print("1. Create maze")
     print("2. Upload image")
     print("3. Upload JSON")
+    print("4. Exit")
     menu = menuOption()
     choice = int(input("Enter your choice: "))
 
@@ -36,6 +37,8 @@ def main_menu():
         upload_image(menu)
     elif choice == 3:
         upload_json(menu)
+    elif choice == 4:
+        exit()
     else:
         print("Invalid choice. Please try again.")
     
