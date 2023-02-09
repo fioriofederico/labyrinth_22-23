@@ -1,1 +1,1 @@
-print("Let's Get It Started")
+print("Welcome to Maze.py!")

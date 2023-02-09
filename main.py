@@ -3,8 +3,8 @@
 from utilities.menuOption import menuOption
 from utilities.funzioni_finali import *
 import os
-from sys import exit,argv
-from getopt import getopt
+from sys import exit
+import argparse
 
 """
 Il progetto che segue è stato realizzato da un gruppo di stundeti dell'università campus bio medico di roma
@@ -48,34 +48,93 @@ def main_menu():
   
 
 def create_maze(menu):
-    height = int(input("Insert the height of the maze: "))
-    width = int(input("Insert the width of the maze: "))
+
+    condition = True
+
+    while condition:
+        try:
+            height = int(input("Insert the height of the maze: "))
+            condition = False
+        except ValueError as e:
+            print(e)
+    
+    condition = True
+    while condition:
+        try:
+            width = int(input("Insert the width of the maze: "))
+            condition = False
+        except ValueError as e:
+            print(e)
     #viene istanziato lo startPoint a vuoto in quanto viene richiesto
     # una lista di liste questo permette di fare l'inserimento iniziale e subito dopo aggiunto alla
     # lista successiva tramite append
+    condition = True
     startPoint = []
-    start = list(map(int, input("Insert the start point as a list: ").split()))
-    startPoint.append(start)
+    while condition:
+        try:
+            start = list(map(int, input("Insert the start point as a list: ").split()))
+            startPoint.append(start)
+            condition = False
+        except ValueError as e:
+            print(e)
+
     #il while permette di inserire molti punti di partenza
-    while True:
-        add_start = input("Do you want to add another start point? (yes/no): ")
-        if add_start == 'no':
-            break
-        start = list(map(int, input("Insert the start point as a list: ").split()))
-        startPoint.append(start)
+    condition = True
+    while condition:
+        try:
+            add_start = input("Do you want to add another start point? (yes/no): ")
+            if add_start == 'no':
+                break
+            elif add_start == 'yes':
+                start = list(map(int, input("Insert the start point as a list: ").split()))
+                startPoint.append(start)
+                break
+            else:
+                raise ValueError(f"Invalid choice: {add_start}")
+        except ValueError as e:
+            print(e)
 
     # da richiesta è stato definto un solo endpoint goal all'interno del labirinto
-    goal = list(map(int, input("Insert the goal point as a list: ").split()))
-    goal = [goal]
+
+    condition = True
+    while condition:
+        try:
+            goal = list(map(int, input("Insert the goal point as a list: ").split()))
+            goal = [goal]
+            condition = False
+        except ValueError as e:
+            print(e)
 
     #breadcrumps sono i tasselli di grigio che vengono posti in mezzo al labirinto nel percorso che si dovrà effettuare.
     # questi possono assumere valori da 0 a 256 e ogni valore avrà una tonalità e un peso differente
     breadcrumps = []
-    add_breadcrumps = int(input("Do you want to add breadcrumps? (0/1): "))
-    while add_breadcrumps:
-        bc = list(map(int, input("Insert the breadcrump (x y weight): ").split()))
-        breadcrumps.append(bc)
-        add_breadcrumps = int(input("Do you want to add another breadcrump? (0/1): "))
+    condition = True
+    while condition:
+        try:
+            add_breadcrumps = input("Do you want to add breadcrumps? (yes/no): ")
+            if add_breadcrumps == 'no':
+                condition = False
+            elif add_breadcrumps == 'yes':
+                break
+            else:
+                raise ValueError(f"Invalid choice: {add_start}")
+        except ValueError as e:
+            print(e)
+
+    while condition:
+        try:
+            bc = list(map(int, input("Insert the breadcrump (x y weight): ").split()))
+            breadcrumps.append(bc)
+            add_breadcrumps = input("Do you want to add another breadcrump? (yes/no): ")
+            if add_breadcrumps == 'no':
+                condition = False
+            elif add_breadcrumps == 'yes':
+                continue
+            else:
+                raise ValueError(f"Invalid choice: {add_start}")
+        except ValueError as e:
+            print(e)
+
     #tutti i dati inseriti dall'utente vengono passati
     menu.GenerateInput(height, width, startPoint, goal, breadcrumps)
 
@@ -91,59 +150,83 @@ def check_file_extension(file_path, extension):
 
 def upload_image(menu):
     #caricamento di un tiff in un while che verifica se si tratta davvero di un tiff file
-    while True:
-        path = input("Enter the path of the image on tiff: ")
-        if check_file_extension(path, '.tiff'):
-            # Aggiunto un try except per evitare l'interruzione del programma per errori dell'utente
-            menu.ImageInput(path)
-        else:
-            print("Incorrect file th extension is not tiff, please enter the correct file path.")
+    condition = True
+    while condition:
+        try:
+            path = input("Enter the path of the image on tiff: ")
+            if check_file_extension(path, '.tiff'):
+                # Aggiunto un try except per evitare l'interruzione del programma per errori dell'utente
+                menu.ImageInput(path)
+                condition = False
+            else:
+                raise ValueError("Incorrect file th extension is not tiff, please enter the correct file path.")
+        except ValueError as e:
+            print(e)
+        
 
 def upload_json(menu):
     #caricamento di un json file all'interno di un while che controlla se si tratta di un json
-    while True:
-        path = input("Enter the path of the json file: ")
-        if check_file_extension(path,'.json'):
-            #Aggiunto un try except per evitare l'interruzione del programma per errori dell'utente
-            menu.JsonInput(path)
+    condition = True
+
+    while condition:
+        try:
+            path = input("Enter the path of the json file: ")
+            if check_file_extension(path,'.json'):
+                #Aggiunto un try except per evitare l'interruzione del programma per errori dell'utente
+                menu.JsonInput(path)
+                condition = False
                 #print("The file doesn't exist or the path is wrong")
-        else:
-            print("Incorrect file extension is not json, please enter the correct file path.")
+            else:
+                raise ValueError("Incorrect file extension is not json, please enter the correct file path.")
+        except Exception as e:
+            print(e)
 
 
 if __name__ == "__main__":
-
-    heigth=0
-    width=0
-    breadcrumbs=[]
-    startpoints=[]
-    endpoint=[]
-    tiff_path=""
-    json_path=""
-    it =False
-
-    import argparse
-    from typing import List
+    
     parser = argparse.ArgumentParser(prog='maze', description='Create,read and solve a maze.')
-    parser.add_argument('-i', '--interactive', action='store_true',
+    parser.add_argument('-it', '--interactive', action='store_true',
                         help="Start an interactive session.")
+    parser.add_argument('-g', '--generate', action='store_true',
+                        help="Generate a maze.")
     parser.add_argument('-sp', '--startpoints', nargs="+", type=int,
-                        description="Must be a sequence of two digit")
+                        help="Must be a sequence of two digit")
     parser.add_argument('-ep', '--endpoint', nargs="+", type=int,
-                        description="Must be a sequence of two digit")
+                        help="Must be a sequence of two digit")
     parser.add_argument('-bc', '--breadcrumbs', nargs="+", type=int,
-                        description="Must be a sequence of 3 digit")
-    parser.add_argument('-h', '--heigth', type=int,
-                        description="Must be a digit")
+                        help="Must be a sequence of 3 digit")
+    parser.add_argument('-he', '--heigth', type=int,
+                        help="Must be a digit")
     parser.add_argument('-w', '--width', type=int,
-                        description="Must be a digit")
+                        help="Must be a digit")
     parser.add_argument('-tp', '--tiff-path', type=int,
-                        description="Must be a path to a tiff file")
+                        help="Must be a path to a tiff file")
     parser.add_argument('-tj', '--json-path', type=int,
-                        description="Must be a path to a json file")
+                        help="Must be a path to a json file")
     
     args = parser.parse_args()
-    print(args.startpoints)
+    
+    if args.interactive == True:
+        main_menu()
+    else:
+        menu = menuOption()
+        if args.generate == True:
+            menu.GenerateInput(args.heigth, args.width, args.startpoints, args.endpoint, args.breadcrumbs)
+        elif args.tiff_path != None:
+            if check_file_extension(args.tiff_path, '.tiff'):
+                # Aggiunto un try except per evitare l'interruzione del programma per errori dell'utente
+                menu.ImageInput(args.tiff_path)
+            else:
+                print("Incorrect file th extension is not tiff, please enter the correct file path.")
+        elif args.json_path != None:
+            if check_file_extension(args.json_path,'.json'):
+                #Aggiunto un try except per evitare l'interruzione del programma per errori dell'utente
+                menu.JsonInput(args.json_path)
+                    #print("The file doesn't exist or the path is wrong")
+            else:
+                print("Incorrect file extension is not json, please enter the correct file path.")
+
+
         
     
 
