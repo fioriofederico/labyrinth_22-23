@@ -224,7 +224,7 @@ if __name__ == "__main__":
         if args.generate == True:
 
             if args.startpoint != None:
-                startpoint = [args.startpoints]
+                startpoint = [args.startpoint]
             else:
                 startpoint = []
 
