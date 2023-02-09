@@ -56,751 +56,92 @@ Go to the principal folder and launch the code main.py. In the terminal you will
 * If you choose to create the maze, remember to stay in the borders when assigning variables
 * If you choose to create a maze from an image make sure to insert the image in the "img_input" folder because the program will draw the maze on the last inserted image
 
-# Example of a json file for a maze
+## Example of a json file for a maze
 ```json
 {
-   "larghezza": 41,
-   "altezza": 21,
-   "pareti": [
-      {
-         "orientamento": "H",
-         "posizione": [
-            0,
+    "larghezza": 5,
+    "altezza": 5,
+    "pareti": [
+        {
+            "orientamento": "H",
+            "posizione": [
+                0,
+                2
+            ],
+            "lunghezza": 3
+        },
+        {
+            "orientamento": "H",
+            "posizione": [
+                4,
+                0
+            ],
+            "lunghezza": 2
+        },
+        {
+            "orientamento": "H",
+            "posizione": [
+                4,
+                3
+            ],
+            "lunghezza": 2
+        },
+        {
+            "orientamento": "v",
+            "posizione": [
+                0,
+                0
+            ],
+            "lunghezza": 2
+        },
+        {
+            "orientamento": "v",
+            "posizione": [
+                3,
+                0
+            ],
+            "lunghezza": 2
+        },
+        {
+            "orientamento": "v",
+            "posizione": [
+                0,
+                2
+            ],
+            "lunghezza": 2
+        },
+        {
+            "orientamento": "v",
+            "posizione": [
+                0,
+                4
+            ],
+            "lunghezza": 5
+        }
+    ],
+    "iniziali": [
+        [
+            2,
             0
-         ],
-         "lunghezza": 19
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
+        ],
+        [
             0,
-            20
-         ],
-         "lunghezza": 21
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            1,
-            0
-         ],
-         "lunghezza": 20
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            1,
-            14
-         ],
-         "lunghezza": 2
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            1,
-            18
-         ],
-         "lunghezza": 2
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            1,
-            20
-         ],
-         "lunghezza": 6
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            1,
-            26
-         ],
-         "lunghezza": 6
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            1,
-            30
-         ],
-         "lunghezza": 2
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            1,
-            34
-         ],
-         "lunghezza": 6
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            1,
-            36
-         ],
-         "lunghezza": 8
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            1,
-            40
-         ],
-         "lunghezza": 20
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            2,
-            2
-         ],
-         "lunghezza": 5
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            2,
-            8
-         ],
-         "lunghezza": 7
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            2,
-            16
-         ],
-         "lunghezza": 3
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            2,
-            22
-         ],
-         "lunghezza": 3
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            2,
-            27
-         ],
-         "lunghezza": 2
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            2,
-            31
-         ],
-         "lunghezza": 2
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            2,
-            38
-         ],
-         "lunghezza": 11
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            3,
-            2
-         ],
-         "lunghezza": 4
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            3,
-            6
-         ],
-         "lunghezza": 4
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            3,
-            8
-         ],
-         "lunghezza": 2
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            3,
-            22
-         ],
-         "lunghezza": 2
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            4,
-            4
-         ],
-         "lunghezza": 3
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            4,
-            9
-         ],
-         "lunghezza": 4
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            4,
-            14
-         ],
-         "lunghezza": 3
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            4,
-            17
-         ],
-         "lunghezza": 6
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            4,
-            24
-         ],
-         "lunghezza": 3
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            4,
-            28
-         ],
-         "lunghezza": 7
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            5,
-            28
-         ],
-         "lunghezza": 6
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            5,
-            30
-         ],
-         "lunghezza": 2
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            6,
-            3
-         ],
-         "lunghezza": 2
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            6,
-            7
-         ],
-         "lunghezza": 12
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            6,
-            22
-         ],
-         "lunghezza": 3
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            6,
-            32
-         ],
-         "lunghezza": 5
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            7,
-            4
-         ],
-         "lunghezza": 2
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            7,
-            22
-         ],
-         "lunghezza": 2
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            7,
-            24
-         ],
-         "lunghezza": 6
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            8,
             1
-         ],
-         "lunghezza": 2
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            8,
-            5
-         ],
-         "lunghezza": 8
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            8,
-            14
-         ],
-         "lunghezza": 9
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            8,
-            26
-         ],
-         "lunghezza": 7
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            8,
-            34
-         ],
-         "lunghezza": 3
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            9,
-            8
-         ],
-         "lunghezza": 4
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            9,
-            12
-         ],
-         "lunghezza": 4
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            9,
-            14
-         ],
-         "lunghezza": 10
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            10,
+        ]
+    ],
+    "finale": [
+        [
+            4,
             2
-         ],
-         "lunghezza": 5
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            10,
-            10
-         ],
-         "lunghezza": 3
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            10,
-            16
-         ],
-         "lunghezza": 9
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            10,
-            26
-         ],
-         "lunghezza": 9
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            10,
-            29
-         ],
-         "lunghezza": 2
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            10,
-            33
-         ],
-         "lunghezza": 4
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            11,
-            2
-         ],
-         "lunghezza": 4
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            11,
-            36
-         ],
-         "lunghezza": 8
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            12,
-            4
-         ],
-         "lunghezza": 7
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            12,
-            15
-         ],
-         "lunghezza": 4
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            12,
-            20
-         ],
-         "lunghezza": 3
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            12,
-            27
-         ],
-         "lunghezza": 8
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            12,
-            39
-         ],
-         "lunghezza": 2
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            13,
-            4
-         ],
-         "lunghezza": 4
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            13,
-            18
-         ],
-         "lunghezza": 6
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            13,
-            22
-         ],
-         "lunghezza": 2
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            13,
-            34
-         ],
-         "lunghezza": 8
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            14,
-            1
-         ],
-         "lunghezza": 2
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            14,
-            6
-         ],
-         "lunghezza": 7
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            14,
-            16
-         ],
-         "lunghezza": 7
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            14,
-            19
-         ],
-         "lunghezza": 2
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            14,
-            23
-         ],
-         "lunghezza": 4
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            14,
-            28
-         ],
-         "lunghezza": 5
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            14,
-            37
-         ],
-         "lunghezza": 2
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            15,
-            6
-         ],
-         "lunghezza": 4
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            15,
-            12
-         ],
-         "lunghezza": 2
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            15,
-            28
-         ],
-         "lunghezza": 6
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            15,
-            32
-         ],
-         "lunghezza": 4
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            16,
-            2
-         ],
-         "lunghezza": 3
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            16,
-            8
-         ],
-         "lunghezza": 5
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            16,
-            20
-         ],
-         "lunghezza": 5
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            16,
-            29
-         ],
-         "lunghezza": 2
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            16,
-            38
-         ],
-         "lunghezza": 5
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            17,
-            2
-         ],
-         "lunghezza": 2
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            17,
-            20
-         ],
-         "lunghezza": 4
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            17,
-            22
-         ],
-         "lunghezza": 2
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            18,
-            4
-         ],
-         "lunghezza": 7
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            18,
-            12
-         ],
-         "lunghezza": 3
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            18,
-            24
-         ],
-         "lunghezza": 3
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            18,
-            30
-         ],
-         "lunghezza": 3
-      },
-      {
-         "orientamento": "V",
-         "posizione": [
-            19,
-            4
-         ],
-         "lunghezza": 2
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            20,
-            1
-         ],
-         "lunghezza": 20
-      },
-      {
-         "orientamento": "H",
-         "posizione": [
-            20,
-            22
-         ],
-         "lunghezza": 19
-      }
-   ],
-   "iniziali": [
-      [
-         0,
-         19
-      ]
-   ],
-   "finale": [
-      [
-         20,
-         21
-      ]
-   ],
-   "costi": [
-      [
-         9,
-         25,
-         15
-      ],
-      [
-         10,
-         25,
-         10
-      ],
-      [
-         12,
-         19,
-         15
-      ],
-      [
-         13,
-         24,
-         15
-      ]
-   ]
+        ]
+    ],
+    "costi": [
+        [
+            2,
+            2,
+            90
+        ]
+    ]
 }
 ```
 
