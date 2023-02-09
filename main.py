@@ -3,7 +3,9 @@
 from utilities.menuOption import menuOption
 from utilities.funzioni_finali import *
 import os
-from sys import exit
+from sys import exit,argv
+from getopt import getopt
+
 """
 Il progetto che segue è stato realizzato da un gruppo di stundeti dell'università campus bio medico di roma
 che frequentano il corso di Ingegneria dei sistemi intelligenti.
@@ -110,7 +112,66 @@ def upload_json(menu):
 
 
 if __name__ == "__main__":
-    main_menu()
+
+    heigth=0
+    width=0
+    breadcrumbs=[]
+    startpoints=[]
+    endpoint=[]
+    generate=True
+    tiff_path=""
+    json_path=""
+    it =False
+    argv = argv[1:]
+
+    # try:
+    #     options, args = getopt(argv, "i:h:w:s:e:b:g:tp:jp",
+    #                             ["interactive=",
+    #                             "height=",
+    #                             "width=",
+    #                             "startpoints=",
+    #                             "endpoint=",
+    #                             "breadcrumbs=",
+    #                             "generate=",
+    #                             "tiff-path=",
+    #                             "json-path="])
+    # except:
+    #     print("Invalid parameters")
+    
+    # for name, value in options:
+    #     if name in ['-i', '--interactive']:
+    #         it = True
+    #     elif name in ['-h', '--height']:
+    #         height = value
+    #     elif name in ['-w', '--width']:
+    #         width = value
+    #     elif name in ['-s', '--startpoints']:
+    #         startpoints = value
+    #     elif name in ['-e', '--endpoint']:
+    #         endpoint = value
+    #     elif name in ['-b', '--breadcrumbs']:
+    #         breadcrumbs = value
+    #     elif name in ['-g', '--generate']:
+    #         generate = value
+    #     elif name in ['-tp', '--json-path']:
+    #         generate = value
+    #     elif name in ['-jp', '--tiff-path']:
+    #         generate = value
+    
+    # print(options)
+
+    import argparse
+    from typing import List
+    parser = argparse.ArgumentParser(prog='maze', description='Create,read and solve a maze.')
+    parser.add_argument('-i', '--interactive', action='store_true',
+                        help="Start an interactive session.")
+    parser.add_argument('-sp', '--startpoints', nargs="+", type=int,
+                        description="Must be a sequence of two digit")
+    parser.add_argument('-ep', '--endpoint', nargs="+", type=int,
+                        description="Must be a sequence of two digit")
+    args = parser.parse_args()
+    print(args.startpoints)
+        
     
 
     
