@@ -49,13 +49,18 @@ class menuOption:
             json.dump(resultWriteOnJson, json_file, indent=4)
             return path
 
-    def GenerateInput(self, height, width, startpoints, endpoints, breadcrumbs):
+    def GenerateInput(self, height, width, startpoints, endpoints, breadcrumps):
+        self.ensure_path_exists(self.__destinationFolder)
         # Con la riga subito sotto viene instanziato un maze e passati i parametri per effettuare la sua crezione
-        p = Maze(height, width, startpoints, endpoints, breadcrumbs)
+        p = Maze(height, width, startpoints, endpoints, breadcrumps)
         # generazione del maze
         p.generate()
         # viene anche creata l'immagine tiff per visualizzare l'esito dei parametri inseriti
-        p.getMazeImage()
+        fileNameWithOutExt = "mazeGenerated" + str(height) + "_"+ str(width) + self.timeStamp()
+        fileNameImgInput = self.__destinationFolder + "input_" + fileNameWithOutExt + self.__extTiff
+        p.getMazeImage(fileNameImgInput)
+        fileNameJsonInput = self.__destinationFolder + "input_" + fileNameWithOutExt + self.__extJson
+        p.getMazeJson(fileNameJsonInput)
         # viene convertito la lista di liste in una lista di tuple
         start = [(x[0], x[1]) for x in p.startpoints]
         # il goal viene convertito in tupla
@@ -86,19 +91,24 @@ class menuOption:
                             [0 0 0 ... 0 0 0]
                         ]
                 """
-        maze, breadcrumbs = p.getValuebleMatrixWithBreadcrumbs()
+        maze, breadcrumps = p.getValuebleMatrixWithBreadcrumbs()
         # viene convertito il tutto in lista
         maze = maze.tolist()
         # viene istanziato il foundpath
         foundPath = FoundPath(maze, start, goal)
-        # viene creato il grafo per poi procedere alla ricerca del path
-        foundPath.maze2graph()
-        # viene cercato il path all'interno del maze
-        foundPath.find_multi_path_astar_return_visited(breadcrumbs)
-        # creato il file output json
-        foundPath.write_json_file('./outputJsonFile/', 'outputGenerated')
-        foundPath.write_json_file_from_dumps(foundPath.getPathRetunrJson(), './output/', 'outputGenerated')
-
+        # si procede alla ricerca del path con la funzione che usa l'algoritmo A*
+        trovati = foundPath.deikstra()
+        # viene fatto output file json e viene preso il path
+        fileNameJsonOutput = self.__destinationFolder + "output_" + fileNameWithOutExt + self.__extJson
+        path = self.write_json_file(trovati, fileNameJsonOutput)
+        generateImage = GenerationMazeOutputImage(path)
+        keys = generateImage.openJson()
+        generateImage.getParamOnTheBestPath(keys)
+        for i in range(len(start)):
+            fileNameImgOutput = self.__destinationFolder + "output_" + fileNameWithOutExt + "_" + str(i) + self.__extTiff
+            generateImage.createImageForASpecifcStartPoint(fileNameImgInput, fileNameImgOutput, i, breadcrumps)
+        fileNameImgOutput = self.__destinationFolder + "output_" + fileNameWithOutExt + self.__extTiff
+        generateImage.createImageForAllPointStart(fileNameImgInput, fileNameImgOutput, breadcrumps)
 
     def ImageInput(self, imagePath):
         #richiamo il metodo per la creazione della cartella di output in caso non esista
