@@ -30,7 +30,17 @@ def main_menu():
     print("3. Upload JSON")
     print("4. Exit")
     menu = menuOption()
-    choice = int(input("Enter your choice: "))
+
+    condition = True
+    while condition:
+        try:
+            choice = int(input("Enter your choice: "))
+            if choice > 0 and choice < 5:
+                break
+            else:
+                raise ValueError(f"Invalid choice: {choice}")
+        except ValueError as e:
+            print(e)
 
     #Il controllo che segue identifica che sottoprogramma lanciare per eseguire il codice
     if choice == 1:
@@ -82,13 +92,13 @@ def create_maze(menu):
     condition = True
     while condition:
         try:
-            add_start = input("Do you want to add another start point? (yes/no): ")
+            add_start = (input("Do you want to add another start point? (yes/no): ")).strip()
             if add_start == 'no':
                 break
             elif add_start == 'yes':
                 start = list(map(int, input("Insert the start point as a list: ").split()))
                 startPoint.append(start)
-                break
+                continue
             else:
                 raise ValueError(f"Invalid choice: {add_start}")
         except ValueError as e:
@@ -111,7 +121,7 @@ def create_maze(menu):
     condition = True
     while condition:
         try:
-            add_breadcrumps = input("Do you want to add breadcrumps? (yes/no): ")
+            add_breadcrumps = (input("Do you want to add breadcrumps? (yes/no): ")).strip()
             if add_breadcrumps == 'no':
                 condition = False
             elif add_breadcrumps == 'yes':
@@ -125,7 +135,7 @@ def create_maze(menu):
         try:
             bc = list(map(int, input("Insert the breadcrump (x y weight): ").split()))
             breadcrumps.append(bc)
-            add_breadcrumps = input("Do you want to add another breadcrump? (yes/no): ")
+            add_breadcrumps = (input("Do you want to add another breadcrump? (yes/no): ")).strip()
             if add_breadcrumps == 'no':
                 condition = False
             elif add_breadcrumps == 'yes':
