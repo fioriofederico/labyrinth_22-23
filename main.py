@@ -118,47 +118,9 @@ if __name__ == "__main__":
     breadcrumbs=[]
     startpoints=[]
     endpoint=[]
-    generate=True
     tiff_path=""
     json_path=""
     it =False
-    argv = argv[1:]
-
-    # try:
-    #     options, args = getopt(argv, "i:h:w:s:e:b:g:tp:jp",
-    #                             ["interactive=",
-    #                             "height=",
-    #                             "width=",
-    #                             "startpoints=",
-    #                             "endpoint=",
-    #                             "breadcrumbs=",
-    #                             "generate=",
-    #                             "tiff-path=",
-    #                             "json-path="])
-    # except:
-    #     print("Invalid parameters")
-    
-    # for name, value in options:
-    #     if name in ['-i', '--interactive']:
-    #         it = True
-    #     elif name in ['-h', '--height']:
-    #         height = value
-    #     elif name in ['-w', '--width']:
-    #         width = value
-    #     elif name in ['-s', '--startpoints']:
-    #         startpoints = value
-    #     elif name in ['-e', '--endpoint']:
-    #         endpoint = value
-    #     elif name in ['-b', '--breadcrumbs']:
-    #         breadcrumbs = value
-    #     elif name in ['-g', '--generate']:
-    #         generate = value
-    #     elif name in ['-tp', '--json-path']:
-    #         generate = value
-    #     elif name in ['-jp', '--tiff-path']:
-    #         generate = value
-    
-    # print(options)
 
     import argparse
     from typing import List
@@ -169,6 +131,17 @@ if __name__ == "__main__":
                         description="Must be a sequence of two digit")
     parser.add_argument('-ep', '--endpoint', nargs="+", type=int,
                         description="Must be a sequence of two digit")
+    parser.add_argument('-bc', '--breadcrumbs', nargs="+", type=int,
+                        description="Must be a sequence of 3 digit")
+    parser.add_argument('-h', '--heigth', type=int,
+                        description="Must be a digit")
+    parser.add_argument('-w', '--width', type=int,
+                        description="Must be a digit")
+    parser.add_argument('-tp', '--tiff-path', type=int,
+                        description="Must be a path to a tiff file")
+    parser.add_argument('-tj', '--json-path', type=int,
+                        description="Must be a path to a json file")
+    
     args = parser.parse_args()
     print(args.startpoints)
         
