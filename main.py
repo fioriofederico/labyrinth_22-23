@@ -199,11 +199,11 @@ if __name__ == "__main__":
                         help="Start an interactive session.")
     parser.add_argument('-g', '--generate', action='store_true',
                         help="Generate a maze.")
-    parser.add_argument('-sp', '--startpoints', nargs="+", type=int,
+    parser.add_argument('-sp', '--startpoint', nargs="+", type=int,
                         help="Must be a sequence of two digit")
     parser.add_argument('-ep', '--endpoint', nargs="+", type=int,
                         help="Must be a sequence of two digit")
-    parser.add_argument('-bc', '--breadcrumbs', nargs="+", type=int,
+    parser.add_argument('-bc', '--breadcrumb', nargs="+", type=int,
                         help="Must be a sequence of 3 digit")
     parser.add_argument('-he', '--heigth', type=int,
                         help="Must be a digit")
@@ -215,13 +215,30 @@ if __name__ == "__main__":
                         help="Must be a path to a json file")
     
     args = parser.parse_args()
-    print(args)
+    
     if args.interactive == True:
         main_menu()
     else:
         menu = menuOption()
+
         if args.generate == True:
-            menu.GenerateInput(args.heigth, args.width, [args.startpoints], [args.endpoint], [args.breadcrumbs])
+
+            if args.startpoint != None:
+                startpoint = [args.startpoints]
+            else:
+                startpoint = []
+
+            if args.endpoint != None:
+                endpoint = [args.endpoint]
+            else:
+                endpoint = []
+
+            if args.breadcrumb != None:
+                breadcrumb = [args.breadcrumb]
+            else:
+                breadcrumb = []
+
+            menu.GenerateInput(args.heigth, args.width, startpoint, endpoint, breadcrumb)
         elif args.tiff_path != None:
             if check_file_extension(args.tiff_path, '.tiff'):
                 # Aggiunto un try except per evitare l'interruzione del programma per errori dell'utente
