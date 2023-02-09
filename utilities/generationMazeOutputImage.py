@@ -16,27 +16,6 @@ class GenerationMazeOutputImage:
         self.__movimentPath = []
         pass
 
-    def get_file_name_without_extension(self, file_path):
-        file_name = os.path.basename(file_path)
-        file_name_without_extension = os.path.splitext(file_name)[0]
-        return file_name_without_extension
-
-    def split_filename(self, filename):
-        name, extension = os.path.splitext(filename)
-        return name, extension
-
-    def ensure_directory_exists(self, directory):
-        if not os.path.exists(directory):
-            os.makedirs(directory)
-
-    def create_unique_filename(self, nameFile):
-        filename, extension = self.split_filename(nameFile)
-        timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-        return filename + "_" + timestamp + extension
-
-    def copyFile(self, pathOrign, pathDestination):
-        shutil.copy(pathOrign, pathDestination)
-
     def getParamOnTheBestPath(self, keys):
         for i in range(len(keys)):
             self.__percorsi.append(self.__dataOfJson[i][keys[i][0]]["Opzione1"])
