@@ -1,0 +1,83 @@
+import json
+import shutil
+import os
+import datetime
+from PIL import Image, ImageDraw
+import random
+
+class GenerationMazeOutputImage:
+
+    def __init__(self, jsonFile):
+        self.__json = jsonFile
+        self.__dataOfJson = None
+        self.__percorsi = []
+        self.__start = []
+        self.__goal = None
+        self.__movimentPath = []
+        pass
+
+    def get_file_name_without_extension(self, file_path):
+        file_name = os.path.basename(file_path)
+        file_name_without_extension = os.path.splitext(file_name)[0]
+        return file_name_without_extension
+
+    def split_filename(self, filename):
+        name, extension = os.path.splitext(filename)
+        return name, extension
+
+    def ensure_directory_exists(self, directory):
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+
+    def create_unique_filename(self, nameFile):
+        filename, extension = self.split_filename(nameFile)
+        timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        return filename + "_" + timestamp + extension
+
+    def copyFile(self, pathOrign, pathDestination):
+        shutil.copy(pathOrign, pathDestination)
+
+    def getParamOnTheBestPath(self, keys):
+        for i in range(len(keys)):
+            self.__percorsi.append(self.__dataOfJson[i][keys[i][0]]["Opzione1"])
+        for i in range(len(self.__percorsi)):
+            self.__start.append(self.__percorsi[i]["start"])
+            self.__goal = self.__percorsi[i]["goal"]
+            self.__movimentPath.append(self.__percorsi[i]["movimentPath"])
+
+    def generateColrLine(self):
+        r = random.randint(0, 255)
+        g = random.randint(0, 255)
+        b = random.randint(0, 255)
+        return (r, g, b)
+
+    def generateGreyScale(self, value):
+        value = value * value + 128
+        return (value, value, value)
+    def invert_coordinates(self, point):
+        x, y = point
+        return (y, x)
+
+    def createImage(self, pathImgInput, pathImgOutput, breadcrumps):
+        im = Image.open(pathImgInput)
+        draw = ImageDraw.Draw(im)
+        colorGoal = (255, 0, 0)
+        for i in range(len(self.__movimentPath)):
+            tuple_data = [(x[1], x[0]) for x in self.__movimentPath[i]]
+            color = self.generateColrLine()
+            draw.line(tuple_data, fill=color)
+        draw.point(self.invert_coordinates(self.__goal), fill=colorGoal)
+        converted_data = [(point[::-1], value) for point, value in breadcrumps]
+        for i in range(len(converted_data)):
+            draw.point(converted_data[i][0], self.generateGreyScale(converted_data[i][1]))
+        im.save(pathImgOutput)
+
+
+    def openJson(self):
+        with open(self.__json) as json_file:
+            data = json.load(json_file)
+            self.__dataOfJson = data
+            myKeys = []
+            for i in range(len(data)):
+                myKeys.append(list(data[i]))
+            return myKeys

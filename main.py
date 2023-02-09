@@ -77,9 +77,6 @@ def create_maze(menu):
     #tutti i dati inseriti dall'utente vengono passati
     menu.GenerateInput(height, width, startPoint, goal, breadcrumps)
 
-    print("Il percorso migliore è:")
-    json_to_path()
-
 
 #Funzione che permette di verificare che il file corrisponda a quello richiesto
 def check_file_extension(file_path, extension):
@@ -99,9 +96,6 @@ def upload_image(menu):
             menu.ImageInput(path)
         else:
             print("Incorrect file th extension is not tiff, please enter the correct file path.")
-        
-        print("Il percorso migliore è:")
-        json_to_path()
 
 def upload_json(menu):
     #caricamento di un json file all'interno di un while che controlla se si tratta di un json
@@ -109,15 +103,10 @@ def upload_json(menu):
         path = input("Enter the path of the json file: ")
         if check_file_extension(path,'.json'):
             #Aggiunto un try except per evitare l'interruzione del programma per errori dell'utente
-            try:
-                menu.JsonInput(path)
-            except:
-                print("The file doesn't exist or the path is wrong")
+            menu.JsonInput(path)
+                #print("The file doesn't exist or the path is wrong")
         else:
             print("Incorrect file extension is not json, please enter the correct file path.")
-
-        print("Il percorso migliore è:")
-        json_to_path()
 
 
 if __name__ == "__main__":

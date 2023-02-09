@@ -15,12 +15,11 @@ class FoundPath:
     __mydict = {}
     pass
 
-    def __init__(self, maze: List[List[int]], start: List[Tuple[int, int]], goal: Tuple[int, int], breadcrumps):
+    def __init__(self, maze: List[List[int]], start: List[Tuple[int, int]], goal: Tuple[int, int]):
         self.__path_returned_json = None
         self.__maze = maze
         self.__start = start
         self.__goal = goal
-        self.__breadcrumps = breadcrumps
 
     pass
 
@@ -329,7 +328,6 @@ class FoundPath:
                         self.__mydict[f"{new_element}"] = {}
                     self.__mydict[f"{new_element}"]["start"] = start
                     self.__mydict[f"{new_element}"]["goal"] = goal
-                    self.__mydict[f"{new_element}"]["breadcrumps"] = breadcrumps
                     self.__mydict[f"{new_element}"]["cost"] = cost
                     self.__mydict[f"{new_element}"]["path"] = path
                     self.__mydict[f"{new_element}"]["path_cord"] = pathCordination
@@ -378,14 +376,17 @@ class FoundPath:
         # richiamata la funzione di unicità del file con aggiunta al nome del time stamp
         name = self.unique_file_name(file_name)
         # viene scritto il file nel percorso di destinazione
-        with open(file_path+name, "w") as json_file:
+        path = file_path+name
+        print(path)
+        with open(path, "w") as json_file:
             json.dump(self.__path_return, json_file, indent=4)
+
+            return path
 
         # Funzione che permette di scrivere un file json
     def write_json_file_from_dumps(self, data, file_path, file_name):
         # Si richiama al controllo dell'esistenza del file
         self.ensure_path_exists(file_path)
-        self.ensure_path_exists('img_input')
         # richiamata la funzione di unicità del file con aggiunta al nome del time stamp
         name = self.unique_file_name(file_name)
         # viene scritto il file nel percorso di destinazione

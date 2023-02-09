@@ -3,6 +3,7 @@ from PIL import Image, ImageDraw
 import os
 from datetime import datetime
 
+
 """
 Funzione che prende in ingresso un  json che rappresenta un labirinto, con "start", "goal", "path", "pathVisited", "path_cord", "breadcrumps"
 e ristampa un file json che racchiude solo il percorso ottimo (che costa meno) all'interno del labirinto.

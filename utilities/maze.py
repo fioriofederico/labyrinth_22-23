@@ -377,7 +377,7 @@ class Maze:
       raise ValueError(f"{'Start' if point_type=='S' else 'End'} point [x,y] invalid; provided: {point}")
 
 
-  def getMazeJson(self) -> None:
+  def getMazeJson(self, path) -> None:
     '''
     Create a json description of the maze if a maze was created or setted.
     It raises a generic Exception if the maze obj doesnt have a maze loaded or generated.
@@ -458,7 +458,7 @@ class Maze:
     maze_obj['finale'] = [[a,b] for a, b in self.endpoints]
     maze_obj["costi"] = [[int(a),int(b),int(c)] for a, b, c in self.__breadcrumbs]
 
-    with open("maze.json", "w") as outfile:
+    with open(path, "w") as outfile:
       json.dump(maze_obj, outfile)
       outfile.close()
 
@@ -632,7 +632,7 @@ class Maze:
         
       print('\n')
   
-  def getMazeImage(self) -> None:
+  def getMazeImage(self, path = "./input/maze.tiff") -> None:
     '''
     Generate a tiff image rapresent the current maze obj, the generated file will be named 'maze.tiff'
 
@@ -675,8 +675,8 @@ class Maze:
     
     # Save the tiff in the current main folder
     im = Image.fromarray(a,mode="RGB")
-    im.save("./img_input/maze.tiff")
-
+    im.save(path)
+    return path
   def resizeMazeImg(self,path="maze.tiff") -> None:
     '''
     Resize maze img. Create a large version of the maze tiff.
