@@ -308,7 +308,7 @@ class Maze:
         self.endpoints.append([endpoint[0]-1,endpoint[1]-1])
   
     # Checks breadcrumbs
-    if (len(breadcrumbs)>0):
+    if (breadcrumbs != None and len(breadcrumbs)>0):
       # Checks breadcrumbs
       for bc in breadcrumbs:
         self.__checkBreadCrumbPoint(bc,height,width)
@@ -340,7 +340,7 @@ class Maze:
     Nothing
     '''
 
-    if (len(bc)==3):
+    if (bc != None and len(bc)==3):
       if not ((bc[0]>1 and bc[0]<height)and(bc[1]>1 and bc[1]<width)):
         raise ValueError(f"Invalid breadcrumb: out of maze bounds, provided {bc}")
     else:

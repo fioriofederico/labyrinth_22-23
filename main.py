@@ -209,19 +209,19 @@ if __name__ == "__main__":
                         help="Must be a digit")
     parser.add_argument('-w', '--width', type=int,
                         help="Must be a digit")
-    parser.add_argument('-tp', '--tiff-path', type=int,
+    parser.add_argument('-tp', '--tiff-path',
                         help="Must be a path to a tiff file")
-    parser.add_argument('-tj', '--json-path', type=int,
+    parser.add_argument('-jp', '--json-path',
                         help="Must be a path to a json file")
     
     args = parser.parse_args()
-    
+    print(args)
     if args.interactive == True:
         main_menu()
     else:
         menu = menuOption()
         if args.generate == True:
-            menu.GenerateInput(args.heigth, args.width, args.startpoints, args.endpoint, args.breadcrumbs)
+            menu.GenerateInput(args.heigth, args.width, [args.startpoints], [args.endpoint], [args.breadcrumbs])
         elif args.tiff_path != None:
             if check_file_extension(args.tiff_path, '.tiff'):
                 # Aggiunto un try except per evitare l'interruzione del programma per errori dell'utente
