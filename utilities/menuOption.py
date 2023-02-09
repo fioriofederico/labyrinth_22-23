@@ -5,8 +5,6 @@ import os
 import shutil
 import time
 
-import numpy as np
-import math
 from utilities.maze import Maze
 from utilities.foundPath import FoundPath
 import json
@@ -160,7 +158,8 @@ class menuOption:
         keys = generateImage.openJson()
         generateImage.getParamOnTheBestPath(keys)
         fileNameImgOutput = self.__destinationFolder + "output_" + fileNameWithOutExt + self.__extTiff
-        generateImage.createImage(imagePath, fileNameImgOutput, breadcrumps)
+        generateImage.createMultiImageForPath(imagePath, fileNameImgOutput, breadcrumps)
+        generateImage.createImageForAllPointStart(imagePath, fileNameImgOutput, breadcrumps)
 
     # Come il processo precedente in questo caso ci si aspetta un JSON in Input
     def JsonInput(self, jsonPath):
