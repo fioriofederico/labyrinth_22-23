@@ -55,6 +55,7 @@ Go to the principal folder and launch the code main.py. In the terminal you will
 <b>Note</b>, consider the three implementation methods before you run your code.
 * If you choose to create the maze, remember to stay in the borders when assigning variables
 * If you choose to create a maze from an image make sure to insert the image in the "img_input" folder because the program will draw the maze on the last inserted image
+* Whichever choice you make, relaunch the code
 
 ## Example of a json file for a maze
 ```json
