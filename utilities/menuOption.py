@@ -157,8 +157,10 @@ class menuOption:
         generateImage = GenerationMazeOutputImage(path)
         keys = generateImage.openJson()
         generateImage.getParamOnTheBestPath(keys)
+        for i in range(len(start)):
+            fileNameImgOutput = self.__destinationFolder + "output_" + fileNameWithOutExt + "_" + str(i) + self.__extTiff
+            generateImage.createImageForASpecifcStartPoint(imagePath, fileNameImgOutput, i, breadcrumps)
         fileNameImgOutput = self.__destinationFolder + "output_" + fileNameWithOutExt + self.__extTiff
-        generateImage.createMultiImageForPath(imagePath, fileNameImgOutput, breadcrumps)
         generateImage.createImageForAllPointStart(imagePath, fileNameImgOutput, breadcrumps)
 
     # Come il processo precedente in questo caso ci si aspetta un JSON in Input
@@ -219,5 +221,8 @@ class menuOption:
         generateImage = GenerationMazeOutputImage(path)
         keys = generateImage.openJson()
         generateImage.getParamOnTheBestPath(keys)
+        for i in range(len(start)):
+            fileNameImgOutput = self.__destinationFolder + "output_" + fileNameWithOutExt + "_" + str(i) + self.__extTiff
+            generateImage.createImageForASpecifcStartPoint(fileNameImgInput, fileNameImgOutput, i, breadcrumps)
         fileNameImgOutput = self.__destinationFolder + "output_" + fileNameWithOutExt + self.__extTiff
-        generateImage.createImage(fileNameImgInput, fileNameImgOutput, breadcrumps)
+        generateImage.createImageForAllPointStart(fileNameImgInput, fileNameImgOutput, breadcrumps)

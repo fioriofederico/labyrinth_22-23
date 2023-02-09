@@ -48,21 +48,18 @@ class GenerationMazeOutputImage:
             draw.point(converted_data[i][0], self.generateGreyScale(converted_data[i][1]))
         im.save(pathImgOutput)
 
-    def createMultiImageForPath(self, pathImgInput, pathImgOutput, breadcrumps):
+    def createImageForASpecifcStartPoint(self, pathImgInput, pathImgOutput, startPoint, breadcrumps):
         im = Image.open(pathImgInput)
+        draw = ImageDraw.Draw(im)
         colorGoal = (255, 0, 0)
-        print(len(self.__movimentPath))
-        for i in range(len(self.__movimentPath)):
-            tuple_data = [(x[1], x[0]) for x in self.__movimentPath[i]]
-            color = self.generateColorLine()
-            new_im = im.copy()
-            draw = ImageDraw.Draw(new_im)
-            draw.line(tuple_data, fill=color)
-            draw.point(self.invert_coordinates(self.__goal), fill=colorGoal)
-            converted_data = [(point[::-1], value) for point, value in breadcrumps]
-            for i in range(len(converted_data)):
-                draw.point(converted_data[i][0], self.generateGreyScale(converted_data[i][1]))
-                new_im.save(f"{pathImgOutput}_{i}.tiff")
+        tuple_data = [(x[1], x[0]) for x in self.__movimentPath[startPoint]]
+        color = self.generateColorLine()
+        draw.line(tuple_data, fill=color)
+        draw.point(self.invert_coordinates(self.__goal), fill=colorGoal)
+        converted_data = [(point[::-1], value) for point, value in breadcrumps]
+        for i in range(len(converted_data)):
+            draw.point(converted_data[i][0], self.generateGreyScale(converted_data[i][1]))
+        im.save(pathImgOutput)
 
     def openJson(self):
         with open(self.__json) as json_file:
