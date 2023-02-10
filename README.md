@@ -31,7 +31,6 @@ The principal use of this code is when you decide to run with Argparse Menu.
 If the user try to run the main.py the system respone:
 ```console
 Welcome to Maze.py!
-Namespace(interactive=False, generate=False, startpoints=None, endpoint=None, breadcrumbs=None, heigth=None, width=None, tiff_path=None, json_path=None)
 ```
 
 And for this yuo have for example this option for running the code:
