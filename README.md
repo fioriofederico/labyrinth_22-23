@@ -25,6 +25,20 @@ foo@bar:~$ conda activate maze
 ```
 
 ## How it works
+For use this code us implemention 2 type of input data on system.
+The principal use of this code is when you decide to run with Argparse Menu.
+
+If the user try to run the main.py the system respone:
+```console
+Welcome to Maze.py!
+Namespace(interactive=False, generate=False, startpoints=None, endpoint=None, breadcrumbs=None, heigth=None, width=None, tiff_path=None, json_path=None)
+```
+
+And for this yuo have for example this option for running the code:
+```console
+#This implementetion response with the menu the possible choice is write on down
+python main.py -it
+```
 Go to the principal folder and launch the code main.py. In the terminal you will have 3 options, choose the one you prefer:
 1. Create Maze
     - For example:
@@ -34,15 +48,14 @@ Go to the principal folder and launch the code main.py. In the terminal you will
     - Insert the start point as a list: 10 2
     - Do you want to add another start point? (yes/no): no 
     - Insert the goal point as a list: 8 4
-    - Do you want to add breadcrumps? (0/1): 1
+    - Do you want to add breadcrumps? (yes/no): yes
     - Insert the breadcrump (x y weight): 2 2 1
-    - Do you want to add another breadcrump? (0/1): 1
+    - Do you want to add another breadcrump? (yes/no): yes
     - Insert the breadcrump (x y weight): 4 3 5
-    - Do you want to add another breadcrump? (0/1): 1
+    - Do you want to add another breadcrump? (yes/no): yes
     - Insert the breadcrump (x y weight): 3 5 2
-    - Do you want to add another breadcrump? (0/1): 0
-    - Il percorso migliore è:
-    - [(1, 8), (2, 8), (2, 7), (3, 7)]
+    - Do you want to add another breadcrump? (yes/no): no
+   
 2. Upload image 
     - For example:
     - Enter your choice: 2
@@ -51,11 +64,30 @@ Go to the principal folder and launch the code main.py. In the terminal you will
     - For example:
     - Enter your choice: 3
     - Enter the path of the json file: ./indata/20-10_marked.json
+4. Exit
 
-<b>Note</b>, consider the three implementation methods before you run your code.
+Another one possible running code:
+```console
+#This implementetion response with the menu the possible choice is write on down
+python main.py -g -he 10 -w 10 -sp 1 5 -ep 5 7 -bc 3 3 126
+```
+These command run code with a generated maze
+
+Alternative one possible running code:
+```console
+#This implementetion response with the menu the possible choice is write on down
+python main.py -tf writePathofTiffThere
+```
+These command run code when operator put path maze on tiff format
+
+Alternative one possible running code:
+```console
+#This implementetion response with the menu the possible choice is write on down
+python main.py -jp writePathofJsonThere
+```
+These command run code when operator put path maze on json format
+
 * If you choose to create the maze, remember to stay in the borders when assigning variables
-* If you choose to create a maze from an image make sure to insert the image in the "img_input" folder because the program will draw the maze on the last inserted image
-* Whichever choice you make, relaunch the code
 
 ## Example of a json file for a maze
 ```json
@@ -146,10 +178,26 @@ Go to the principal folder and launch the code main.py. In the terminal you will
 }
 ```
 
-To run the application:
-```console
-foo@bar:~$ python main.py
-```
+# Output
+Software implement the function archive all output data on folder name "Output".
+For every file input in the folder founded minimum 4 file 2 for input and minimum 2 output
+Software genereted or copy input file and rename this.
+After the function FoundPath, code generate and write a Json Output File.
+The last part of generation is the part create a different image.
+Software created 1 images with together path on maze and one image for a single path.
+## Image of Output
+Now is possible see a tree of file created in folder
+![](./diagram/treeFolderStructor.png)
+The file in folder is:
+input_30-20_marked_1675986420.tiff
+in these file are clean there is just a strat point end point and breadcrumps
+![](./diagram/base.png)
+the output file with all path in just one maze image
+![](./diagram/all.png)
+our decided divided in different file with just one path for maze and
+rename the file on bottom with "_0" "_1" ... the number is in order or point of start
+![](./diagram/1.png)
+![](./diagram/2.png)
 
 ## How to run unittest
 To run unittest you can execute the TestMaze.py under test directory to run all test like:
