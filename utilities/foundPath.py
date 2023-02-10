@@ -177,9 +177,19 @@ class FoundPath:
 
             # Se la ricerca restituisce "NO WAY!",
             else:
+                #In caso non sia presente nessun path è essenziale creare
+                #Oggetto da inserire nel json di ritorno
+                #Questa parte di codice si occupa di questo
+                dictPath = {}
+                string = 'PercorsoDa' + f'{s}'
+                if string not in dictPath:
+                    dictPath[string] = {}
+                dictPath[string]['Opzione1'] = "NO WAY!"
+                dictPath[string]['Opzione2'] = "NO WAY!"
+                dictPath[string]['Opzione3'] = "NO WAY!"
                 # Aggiungi "NO WAY!" a "path"
                 path.append("NO WAY!")
-
+                paths.append(dictPath)
         # Restituisci il risultato della ricerca
         self.__path_return = paths
         return paths
@@ -377,7 +387,6 @@ class FoundPath:
         name = self.unique_file_name(file_name)
         # viene scritto il file nel percorso di destinazione
         path = file_path+name
-        print(path)
         with open(path, "w") as json_file:
             json.dump(self.__path_return, json_file, indent=4)
 
