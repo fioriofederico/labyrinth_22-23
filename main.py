@@ -198,6 +198,8 @@ if __name__ == "__main__":
                         help="Start an interactive session.")
     parser.add_argument('-g', '--generate', action='store_true',
                         help="Generate a maze.")
+    parser.add_argument('-s', '--scan', action='store_true',
+                        help="Scan input dir and search for json and tiff to analyze")
     parser.add_argument('-sp', '--startpoint', nargs="+", type=int,
                         help="Must be a sequence of two digit")
     parser.add_argument('-ep', '--endpoint', nargs="+", type=int,
@@ -251,3 +253,11 @@ if __name__ == "__main__":
                     #print("The file doesn't exist or the path is wrong")
             else:
                 print("Incorrect file extension is not json, please enter the correct file path.")
+        elif args.scan == True:
+            menu.scan()
+
+
+        
+    
+
+    

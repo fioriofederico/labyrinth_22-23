@@ -239,3 +239,15 @@ class menuOption:
                 generateImage.createImageForASpecifcStartPoint(fileNameImgInput, fileNameImgOutput, i, breadcrumps)
         fileNameImgOutput = self.__destinationFolder + "output_" + fileNameWithOutExt + self.__extTiff
         generateImage.createImageForAllPointStart(fileNameImgInput, fileNameImgOutput, breadcrumps)
+
+    def scan(self) -> None:
+        condition = True
+        while condition:
+            for file in os.listdir("./indata"):
+                if file.endswith(".json"):
+                    self.JsonInput(os.path.join("./indata", file))
+                elif file.endswith(".tiff"):
+                    self.ImageInput(os.path.join("./indata", file))
+                os.remove(os.path.join("./indata", file))
+
+                    
