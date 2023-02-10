@@ -104,9 +104,10 @@ class menuOption:
         generateImage = GenerationMazeOutputImage(path)
         keys = generateImage.openJson()
         generateImage.getParamOnTheBestPath(keys)
-        for i in range(len(start)):
-            fileNameImgOutput = self.__destinationFolder + "output_" + fileNameWithOutExt + "_" + str(i) + self.__extTiff
-            generateImage.createImageForASpecifcStartPoint(fileNameImgInput, fileNameImgOutput, i, breadcrumps)
+        if len(start) > 1:
+            for i in range(len(start)):
+                fileNameImgOutput = self.__destinationFolder + "output_" + fileNameWithOutExt + "_" + str(i) + self.__extTiff
+                generateImage.createImageForASpecifcStartPoint(fileNameImgInput, fileNameImgOutput, i, breadcrumps)
         fileNameImgOutput = self.__destinationFolder + "output_" + fileNameWithOutExt + self.__extTiff
         generateImage.createImageForAllPointStart(fileNameImgInput, fileNameImgOutput, breadcrumps)
 
@@ -167,9 +168,10 @@ class menuOption:
         generateImage = GenerationMazeOutputImage(path)
         keys = generateImage.openJson()
         generateImage.getParamOnTheBestPath(keys)
-        for i in range(len(start)):
-            fileNameImgOutput = self.__destinationFolder + "output_" + fileNameWithOutExt + "_" + str(i) + self.__extTiff
-            generateImage.createImageForASpecifcStartPoint(imagePath, fileNameImgOutput, i, breadcrumps)
+        if len(start) > 1:
+            for i in range(len(start)):
+                fileNameImgOutput = self.__destinationFolder + "output_" + fileNameWithOutExt + "_" + str(i) + self.__extTiff
+                generateImage.createImageForASpecifcStartPoint(imagePath, fileNameImgOutput, i, breadcrumps)
         fileNameImgOutput = self.__destinationFolder + "output_" + fileNameWithOutExt + self.__extTiff
         generateImage.createImageForAllPointStart(imagePath, fileNameImgOutput, breadcrumps)
 
@@ -231,8 +233,9 @@ class menuOption:
         generateImage = GenerationMazeOutputImage(path)
         keys = generateImage.openJson()
         generateImage.getParamOnTheBestPath(keys)
-        for i in range(len(start)):
-            fileNameImgOutput = self.__destinationFolder + "output_" + fileNameWithOutExt + "_" + str(i) + self.__extTiff
-            generateImage.createImageForASpecifcStartPoint(fileNameImgInput, fileNameImgOutput, i, breadcrumps)
+        if len(start) > 1:
+            for i in range(len(start)):
+                fileNameImgOutput = self.__destinationFolder + "output_" + fileNameWithOutExt + "_" + str(i) + self.__extTiff
+                generateImage.createImageForASpecifcStartPoint(fileNameImgInput, fileNameImgOutput, i, breadcrumps)
         fileNameImgOutput = self.__destinationFolder + "output_" + fileNameWithOutExt + self.__extTiff
         generateImage.createImageForAllPointStart(fileNameImgInput, fileNameImgOutput, breadcrumps)

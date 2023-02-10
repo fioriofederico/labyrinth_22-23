@@ -88,7 +88,7 @@ python main.py -jp writePathofJsonThere
 These command run code when operator put path maze on json format
 
 * If you choose to create the maze, remember to stay in the borders when assigning variables
-
+***
 ## Example of a json file for a maze
 ```json
 {
@@ -178,6 +178,8 @@ These command run code when operator put path maze on json format
 }
 ```
 
+***
+
 # Output
 Software implement the function archive all output data on folder name "Output".
 For every file input in the folder founded minimum 4 file 2 for input and minimum 2 output
@@ -185,20 +187,121 @@ Software genereted or copy input file and rename this.
 After the function FoundPath, code generate and write a Json Output File.
 The last part of generation is the part create a different image.
 Software created 1 images with together path on maze and one image for a single path.
+
 ## Image of Output
 Now is possible see a tree of file created in folder
-![](./diagram/treeFolderStructor.png)
-The file in folder is:
-input_30-20_marked_1675986420.tiff
-in these file are clean there is just a strat point end point and breadcrumps
-![](./diagram/base.png)
-the output file with all path in just one maze image
-![](./diagram/all.png)
-our decided divided in different file with just one path for maze and
-rename the file on bottom with "_0" "_1" ... the number is in order or point of start
-![](./diagram/1.png)
-![](./diagram/2.png)
+The file our try is the example on top file is: a Json Input and save this with test.json
 
+Our code create 4 file:
+ - The firstone image are clean there is just a strat point end point and breadcrumps
+ - The output is minimun with one file but if there is a multi start generate one with all path and one for a single path
+   - The example in this test have 2 start point for these the code create 3 Output Image
+     - One name with all path found
+     - One for a single path start from one point and arrive on goal
+
+### Show a simple output
+
+
+![alt-text](./diagram/treeFolderStructor.png "Tree structur of File")
+
+![alt-text](./diagram/base.png "Base Output with only start point and point and breadcrumps")
+
+![alt-text](./diagram/all.png "Output with all Path")
+
+![alt-text](./diagram/1.png "Output with 1 Path")
+
+![alt-text](./diagram/2.png "Output with other Path")
+
+
+
+## Json of Output
+```json
+[
+    {
+        "PercorsoDa(2, 0)": {
+            "Opzione1": {
+                "start": [
+                    2,
+                    0
+                ],
+                "goal": [
+                    4,
+                    2
+                ],
+                "path": "ESES",
+                "numberOfMoviment": 4,
+                "cost": 4,
+                "movimentPath": [
+                    [
+                        2,
+                        1
+                    ],
+                    [
+                        3,
+                        1
+                    ],
+                    [
+                        3,
+                        2
+                    ],
+                    [
+                        4,
+                        2
+                    ]
+                ]
+            },
+            "Opzione2": "NO WAY!",
+            "Opzione3": "NO WAY!"
+        }
+    },
+    {
+        "PercorsoDa(0, 1)": {
+            "Opzione1": {
+                "start": [
+                    0,
+                    1
+                ],
+                "goal": [
+                    4,
+                    2
+                ],
+                "path": "SSSES",
+                "numberOfMoviment": 5,
+                "cost": 5,
+                "movimentPath": [
+                    [
+                        1,
+                        1
+                    ],
+                    [
+                        2,
+                        1
+                    ],
+                    [
+                        3,
+                        1
+                    ],
+                    [
+                        3,
+                        2
+                    ],
+                    [
+                        4,
+                        2
+                    ]
+                ]
+            },
+            "Opzione2": "NO WAY!",
+            "Opzione3": "NO WAY!"
+        }
+    }
+]
+```
+
+Is possible wiev in this output there are for all point of start 3 option of path if don't found the path
+code return "NO WAY!"
+
+---
 ## How to run unittest
 To run unittest you can execute the TestMaze.py under test directory to run all test like:
 ```console
@@ -226,6 +329,10 @@ Or if the module doesnt contains the doctest import:
 ```console
 foo@bar:~$ python -m doctest maze.py -v
 ```
+
+___
+
+
 ## Some useful information
 Here you can find a diagram that graph possible functionalities of this tool.
 ![](./diagram/usecase.drawio.png)
