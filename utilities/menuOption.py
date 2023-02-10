@@ -1,6 +1,6 @@
 # TODO aggiungere i richiami alle funzioni di eleonora
 # TODO fix problem generation destinazione fissa Vincenzo vedi se riesci
-
+import logging
 import os
 import shutil
 import time
@@ -35,6 +35,7 @@ class menuOption:
         if not os.path.exists(directory):
             # creazione della directory che non esisteva
             os.makedirs(directory)
+        return 200
 
     # Con questa funzione avvalendosi del timestamp viene concetenato al nome del file una stringa timestemp che
     # permette di rendere univoco l'output
@@ -177,12 +178,18 @@ class menuOption:
 
     # Come il processo precedente in questo caso ci si aspetta un JSON in Input
     def JsonInput(self, jsonPath):
+        logging.debug("Sono entrato dentro la funzione di JsonInput")
+        logging.debug("Il valore di jsonPath è %s", jsonPath)
         #richiamo il metodo per la creazione della cartella di output in caso non esista
-        self.ensure_path_exists(self.__destinationFolder)
+        logging.debug("verifico l'esistenza della cartella di destinazione: %s", self.__destinationFolder)
+        ritorno = self.ensure_path_exists(self.__destinationFolder)
+        logging.debug("in caso non esiste viene creata %s", ritorno)
         # Istanziamo oggetto MAZE
         p = Maze()
+        logging.debug("Istanzio oggetto Maze")
         # Funzione per la lettura del file JSON
         p.readMazeJson(jsonPath)
+
         fileNameWithOutExt = self.get_file_name(jsonPath) + self.timeStamp()
         self.copyFile(jsonPath, self.__destinationFolder + "input_" + fileNameWithOutExt + self.__extJson)
         fileNameImgInput = self.__destinationFolder + "input_" + fileNameWithOutExt + self.__extTiff
@@ -193,7 +200,10 @@ class menuOption:
         # viene settato il goal dai endpoin in una tupla
         goal = tuple(p.endpoints[0])
         # viene presa e assegnata a maze la matrice ritornata dall'analisi
-        p.getMaze()
+        maze = p.getMaze()
+        logging.debug("Letto il Json viene trovato la seguente struttura %s", maze)
+        logging.debug("Gli start sono: %s", start)
+        logging.debug("Il Goal è: %s", goal)
         """ in questa riga avvalendosi del sistema di ricerca di numpy all'interno
             dei numpy array è possibile sostituire i valori delle w con un valore definito 
             in questo caso 0 e le c con 1 ecco l'esempio
@@ -221,6 +231,8 @@ class menuOption:
         """
         # la matrice del nostro labirinto viene sostituita con il labirinto corretto
         maze, breadcrumps = p.getValuebleMatrixWithBreadcrumbs()
+        logging.debug("Il maze vine convertito : %s", maze)
+        logging.debug("I bredcrumps presenti sono: %s",breadcrumps)
         # il labirinto viene convertito in una lista aggiunte le virgole tra i vari punti
         maze = maze.tolist()
         # Entra in azione la funzione per la ricerca del percorso migliore

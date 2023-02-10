@@ -4,7 +4,7 @@ from utilities.menuOption import menuOption
 import os
 from sys import exit
 import argparse
-
+import logging
 
 """
 Il progetto che segue è stato realizzato da un gruppo di stundeti dell'università campus bio medico di roma
@@ -193,6 +193,9 @@ def upload_json(menu):
 
 
 if __name__ == "__main__":
+    #This line is for activetated deubg report
+    logging.basicConfig(filename="log.txt", level=logging.DEBUG, format="%(asctime)s %(message)s", filemode="w")
+
     parser = argparse.ArgumentParser(prog='maze', description='Create,read and solve a maze.')
     parser.add_argument('-it', '--interactive', action='store_true',
                         help="Start an interactive session.")
@@ -214,7 +217,6 @@ if __name__ == "__main__":
                         help="Must be a path to a json file")
     
     args = parser.parse_args()
-    
     if args.interactive == True:
         main_menu()
     else:
@@ -241,13 +243,14 @@ if __name__ == "__main__":
         elif args.tiff_path != None:
             if check_file_extension(args.tiff_path, '.tiff'):
                 # Aggiunto un try except per evitare l'interruzione del programma per errori dell'utente
+                logging.debug("L'utente ha deciso di analizzare il file tiff: %s", args.tiff_path)
                 menu.ImageInput(args.tiff_path)
             else:
                 print("Incorrect file th extension is not tiff, please enter the correct file path.")
         elif args.json_path != None:
             if check_file_extension(args.json_path,'.json'):
                 #Aggiunto un try except per evitare l'interruzione del programma per errori dell'utente
+                logging.debug("L'utente ha deciso di analizzare il file tiff: %s", args.json_path)
                 menu.JsonInput(args.json_path)
-                    #print("The file doesn't exist or the path is wrong")
             else:
                 print("Incorrect file extension is not json, please enter the correct file path.")
