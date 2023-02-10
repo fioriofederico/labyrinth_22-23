@@ -201,15 +201,15 @@ Our code create 4 file:
 ### Show a simple output
 
 
-![alt-text](./diagram/treeFolderStructor.png "Tree structur of File")
+![alt-text](./diagram/bis_tree.png "Tree structur of File")
 
-![alt-text](./diagram/base.png "Base Output with only start point and point and breadcrumps")
+![alt-text](./diagram/base_bis.png "Base Output with only start point and point and breadcrumps")
 
-![alt-text](./diagram/all.png "Output with all Path")
+![alt-text](./diagram/all_bis.png "Output with all Path")
 
-![alt-text](./diagram/1.png "Output with 1 Path")
+![alt-text](./diagram/1_bis.png "Output with 1 Path")
 
-![alt-text](./diagram/2.png "Output with other Path")
+![alt-text](./diagram/2_bis.png "Output with other Path")
 
 
 
