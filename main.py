@@ -1,11 +1,9 @@
 #TODO importantissimo fix di tutti i try except all'interno di tutto il codice per evitare troppi errori
 
 from utilities.menuOption import menuOption
-from utilities.funzioni_finali import *
 import os
 from sys import exit
 import argparse
-import logging
 
 
 """
@@ -195,8 +193,6 @@ def upload_json(menu):
 
 
 if __name__ == "__main__":
-    #This line is for activetated deubg report
-    logging.basicConfig(filename="log.txt", level=logging.DEBUG,format="%(asctime)s %(message)s")
     parser = argparse.ArgumentParser(prog='maze', description='Create,read and solve a maze.')
     parser.add_argument('-it', '--interactive', action='store_true',
                         help="Start an interactive session.")
@@ -255,9 +251,3 @@ if __name__ == "__main__":
                     #print("The file doesn't exist or the path is wrong")
             else:
                 print("Incorrect file extension is not json, please enter the correct file path.")
-
-
-        
-    
-
-    
