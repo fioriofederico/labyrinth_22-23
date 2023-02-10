@@ -301,6 +301,22 @@ Is possible wiev in this output there are for all point of start 3 option of pat
 code return "NO WAY!"
 
 ---
+
+## Dockerized Application
+It also has been developed a containerized version of the application. To use it you should have a docker as container engine.
+
+To run the docker container you have 2 option:
+```console
+#Use directly docker-cli and execute the following command
+#Where $PWD is the abs path to the folder
+docker run -v $PWD/indata:/usr/src/app/indata -v $PWD/output:/usr/src/app/output maze
+```
+or
+```console
+#Use docker-compose plugin and execute the following command
+docker-compose up
+```
+
 ## How to run unittest
 To run unittest you can execute the TestMaze.py under test directory to run all test like:
 ```console

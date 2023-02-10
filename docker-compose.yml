@@ -1,0 +1,8 @@
+services:
+  maze:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./indata:/usr/src/app/indata
+      - ./output:/usr/src/app/output

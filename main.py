@@ -1,5 +1,4 @@
-#TODO importantissimo fix di tutti i try except all'interno di tutto il codice per evitare troppi errori
-
+# coding=utf-8
 from utilities.menuOption import menuOption
 import os
 from sys import exit
@@ -193,6 +192,7 @@ def upload_json(menu):
 
 
 if __name__ == "__main__":
+    print("RUNNING")
     parser = argparse.ArgumentParser(prog='maze', description='Create,read and solve a maze.')
     parser.add_argument('-it', '--interactive', action='store_true',
                         help="Start an interactive session.")
@@ -254,6 +254,7 @@ if __name__ == "__main__":
             else:
                 print("Incorrect file extension is not json, please enter the correct file path.")
         elif args.scan == True:
+            print("SCAN")
             menu.scan()
 
 
