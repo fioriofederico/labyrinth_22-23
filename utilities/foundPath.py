@@ -89,6 +89,10 @@ class FoundPath:
                 # Se il nodo corrente è il goal, aggiungi il percorso alla lista dei percorsi e al dizionario
                 if current == goal:
                     paths.append((start, goal, path, cost))
+                    #Qui sotto viene creato il dict nel solo caso si sia trovato il path
+                    #Viene scritto con tutti i parametri per questioni di funzione
+                    #Bisogna effettuare un controllo per poi settare l'elemento a vuoto
+                    #Subito dopo tale dict viene scritto con i dati
                     nomeVar = 'PercorsoDa' + f'{start}'
                     string = 'Opzione' + f'{len(paths)}'
                     if nomeVar not in dictPath:

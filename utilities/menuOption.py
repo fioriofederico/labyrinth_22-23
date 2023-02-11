@@ -1,6 +1,3 @@
-# TODO aggiungere i richiami alle funzioni di eleonora
-# TODO fix problem generation destinazione fissa Vincenzo vedi se riesci
-
 import os
 import shutil
 import time
