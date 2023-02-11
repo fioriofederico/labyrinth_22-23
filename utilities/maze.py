@@ -93,27 +93,27 @@ class Maze:
   Traceback (most recent call last):
   ValueError: Invalid breadcrumb declaration, provided []
 
-  >>> m = Maze(4,4,[[2,1]],[[4,2]],[[2,2,96],[2,3,96],[3,3,96],[3,2,128]])
+  >>> m = Maze(4,4,[[2,1]],[[4,2]],[[2,2,6],[2,3,6],[3,3,6],[3,2,8]])
 
-  >>> m = Maze(4,4,[[2,1]],[[4,2]],[[2,2,96],[4,3,96],[3,3,128]])
+  >>> m = Maze(4,4,[[2,1]],[[4,2]],[[2,2,6],[4,3,6],[3,3,8]])
   Traceback (most recent call last):
-  ValueError: Invalid breadcrumb: out of maze bounds, provided [4, 3, 96]
+  ValueError: Invalid breadcrumb: out of maze bounds, provided [4, 3, 6]
 
-  >>> m = Maze(4,4,[[2,1]],[[4,2]],[[2,2,96],[1,3,96],[3,3,128]])
+  >>> m = Maze(4,4,[[2,1]],[[4,2]],[[2,2,6],[1,3,6],[3,3,8]])
   Traceback (most recent call last):
-  ValueError: Invalid breadcrumb: out of maze bounds, provided [1, 3, 96]
+  ValueError: Invalid breadcrumb: out of maze bounds, provided [1, 3, 6]
 
-  >>> m = Maze(4,4,[[2,1]],[[4,2]],[[2,2,96],[3,1,96],[3,3,128]])
+  >>> m = Maze(4,4,[[2,1]],[[4,2]],[[2,2,6],[3,1,6],[3,3,8]])
   Traceback (most recent call last):
-  ValueError: Invalid breadcrumb: out of maze bounds, provided [3, 1, 96]
+  ValueError: Invalid breadcrumb: out of maze bounds, provided [3, 1, 6]
 
-  >>> m = Maze(4,4,[[2,1]],[[4,2]],[[2,2,96],[3,4,96],[3,3,128]])
+  >>> m = Maze(4,4,[[2,1]],[[4,2]],[[2,2,6],[3,4,6],[3,3,8]])
   Traceback (most recent call last):
-  ValueError: Invalid breadcrumb: out of maze bounds, provided [3, 4, 96]
+  ValueError: Invalid breadcrumb: out of maze bounds, provided [3, 4, 6]
 
-  >>> m = Maze(4,4,[[2,1]],[[4,2]],[[2,2, 128],[4,4,128],[3,3,96]])
+  >>> m = Maze(4,4,[[2,1]],[[4,2]],[[2,2, 8],[4,4,8],[3,3,6]])
   Traceback (most recent call last):
-  ValueError: Invalid breadcrumb: out of maze bounds, provided [4, 4, 128]
+  ValueError: Invalid breadcrumb: out of maze bounds, provided [4, 4, 8]
 
   >>> m = Maze(4,4,[[4,2]])
 
@@ -343,6 +343,8 @@ class Maze:
     if (bc != None and len(bc)==3):
       if not ((bc[0]>1 and bc[0]<height)and(bc[1]>1 and bc[1]<width)):
         raise ValueError(f"Invalid breadcrumb: out of maze bounds, provided {bc}")
+      elif not (bc[2]>0 and bc[2]<16):
+        raise ValueError(f"Invalid breadcrumb: invalid cost, provided {bc[2]}")
     else:
       raise ValueError(f"Invalid breadcrumb declaration, provided {bc}")
 
@@ -632,14 +634,14 @@ class Maze:
         
       print('\n')
   
-  def getMazeImage(self, path = "./input/maze.tiff") -> None:
+  def getMazeImage(self, path = "./input/maze.tiff") -> str:
     '''
     Generate a tiff image rapresent the current maze obj, the generated file will be named 'maze.tiff'
 
     It raises a generic Exception if the maze obj doesnt have a maze loaded or generated.
 
     Return:
-    Nothing
+    str: The path to the generated image
     '''
 
     # Check if a maze was loaded or generated
@@ -661,7 +663,7 @@ class Maze:
               # Set the breadcrumb color
               for bc in self.__breadcrumbs:
                 if bc[0]==i and bc[1]==j:
-                  color = bc[2]
+                  color = bc[2]*16
                   break
               a[i,j]=[color,color,color]
         elif(self.__maze[i][j] == 'u'):
@@ -885,7 +887,7 @@ class Maze:
           self.startpoints.append([i,j])
           self.__maze[i][j] = 'sp'
         else:
-          self.__breadcrumbs.append([i,j,a[i,j][0]])
+          self.__breadcrumbs.append([i,j,a[i,j][0]/16])
           self.__maze[i][j] = 'bc'
 
   def __surroundingCells(self, rand_wall: list) -> int:
