@@ -202,27 +202,30 @@ def upload_json(menu):
 
 if __name__ == "__main__":
     print("RUNNING")
-    parser = argparse.ArgumentParser(prog='maze', description='Create,read and solve a maze.')
+    parser = argparse.ArgumentParser(prog='maze', description='Create,read and solve a maze.\n'+
+                                     'If no option is specified, the program will start in line mode.\n'+
+                                     'If the option -it is specified, the program will start in interactive mode.\n'+
+                                     'If the option -s is specified, the program will start in scan mode.')
     parser.add_argument('-it', '--interactive', action='store_true',
                         help="Start an interactive session.")
     parser.add_argument('-g', '--generate', action='store_true',
-                        help="Generate a maze.")
+                        help="Generate a maze. In this mode the program will accept only one startpoint, endpoint and breadcrumb")
     parser.add_argument('-s', '--scan', action='store_true',
                         help="Scan input dir and search for json and tiff to analyze")
     parser.add_argument('-sp', '--startpoint', nargs="+", type=int,
-                        help="Must be a sequence of two digit")
+                        help="Must be a sequence of two digit, e.g. 1 2")
     parser.add_argument('-ep', '--endpoint', nargs="+", type=int,
-                        help="Must be a sequence of two digit")
+                        help="Must be a sequence of two digit, e.g. 1 2")
     parser.add_argument('-bc', '--breadcrumb', nargs="+", type=int,
-                        help="Must be a sequence of 3 digit")
+                        help="Must be a sequence of 3 digit, e.g. 1 2 3")
     parser.add_argument('-he', '--heigth', type=int,
                         help="Must be a digit")
     parser.add_argument('-w', '--width', type=int,
                         help="Must be a digit")
     parser.add_argument('-tp', '--tiff-path',
-                        help="Must be a path to a tiff file")
+                        help="Must be a path to a tiff file, e.g. /home/user/file.tiff")
     parser.add_argument('-jp', '--json-path',
-                        help="Must be a path to a json file")
+                        help="Must be a path to a json file, e.g. /home/user/file.json")
     
     args = parser.parse_args()
     
