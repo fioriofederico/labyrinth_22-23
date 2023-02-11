@@ -17,13 +17,20 @@ class GenerationMazeOutputImage:
     def getParamOnTheBestPath(self, keys):
         # ciclo per ottenere tutti i percorsi dalla struttura dati
         for i in range(len(keys)):
+            #appende il valore "Opzione1" per la chiave corrispondente nella variabile "__dataOfJson" alla lista "__percorsi"
             self.__percorsi.append(self.__dataOfJson[i][keys[i][0]]["Opzione1"])
         # ciclo per estrarre le informazioni su start, goal e il movimento
         for i in range(len(self.__percorsi)):
-            # controllo per verificare che esista un percorso
+            # verifica se il valore corrente in "__percorsi" è diverso da "NO WAY!". 
+            # Se la condizione è vera, le istruzioni all'interno del blocco "if" verranno eseguite.
             if not self.__percorsi[i] == "NO WAY!":
+                #appende il valore per la chiave "start" nel dizionario corrente in "__percorsi" alla lista "__start"
+                #La lista "self.__start" viene utilizzata per immagazzinare i valori di "start" per tutti i percorsi che non sono "NO WAY!"
                 self.__start.append(self.__percorsi[i]["start"])
+                #assegna il valore per la chiave "goal" nel dizionario corrente in "__percorsi" alla variabile "__goal"
                 self.__goal = self.__percorsi[i]["goal"]
+                #appende il valore per la chiave "movimentPath" nel dizionario corrente in "__percorsi" alla lista "__movimentPath"
+                #La lista "self.__movimentPath" viene utilizzata per immagazzinare i valori di "movimentPath" per tutti i percorsi che non sono "NO WAY!"
                 self.__movimentPath.append(self.__percorsi[i]["movimentPath"])
             else:
                 # caso in cui non esiste un percorso
