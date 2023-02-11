@@ -1,7 +1,6 @@
 __pycache__
 .DS_Store
 .idea
-.output/
 outdata
 indata/labirinto2_def.tiff
 indata/labirinto3_def.tiff
