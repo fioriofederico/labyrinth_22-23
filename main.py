@@ -43,11 +43,20 @@ def main_menu():
 
     #Il controllo che segue identifica che sottoprogramma lanciare per eseguire il codice
     if choice == 1:
-        create_maze(menu)
+        try:
+            create_maze(menu)
+        except Exception as e:
+            print(e)
     elif choice == 2:
-        upload_image(menu)
+        try:
+            upload_image(menu)
+        except Exception as e:
+            print(e)
     elif choice == 3:
-        upload_json(menu)
+        try:
+            upload_json(menu)
+        except Exception as e:
+            print(e)
     elif choice == 4:
         exit()
     else:
@@ -218,7 +227,10 @@ if __name__ == "__main__":
     args = parser.parse_args()
     
     if args.interactive == True:
-        main_menu()
+        try:
+            main_menu()
+        except Exception as e:
+            print(e)
     else:
         menu = menuOption()
 
