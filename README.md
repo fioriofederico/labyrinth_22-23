@@ -43,21 +43,21 @@ When you use the interface or write a file json say that.
 
 If you put image this point named on code breadcrumps rispect this scale of grey
 
-   - 16 che assegna un costo pari a 1
-  - 32 che assegna un costo pari a 2
-  - 48 che assegna un costo pari a 3
-  - 64 che assegna un costo pari a 4
-  - 80 che assegna un costo pari a 5
-  - 96 che assegna un costo pari a 6
-  - 112 che assegna un costo pari a 7
-  - 128 che assegna un costo pari a 8
-  - 144 che assegna un costo pari a 9
-  - 160 che assegna un costo pari a 10
-  - 176 che assegna un costo pari a 11
-  - 192 che assegna un costo pari a 12
-  - 208 che assegna un costo pari a 13
-  - 124 che assegna un costo pari a 14
-  - 240 che assegna un costo pari a 15
+- 16 assigning a cost of 1
+- 32 assigning a cost of 2
+- 48 assigning a cost of 3
+- 64 assigning a cost of 4
+- 80 assigning a cost of 5
+- 96 assigning a cost of 6
+- 112 assigning a cost of 7
+- 128 assigning a cost of 8
+- 144 assigning a cost of 9
+- 160 assigning a cost of 10
+- 176 assigning a cost of 11
+- 192 assigning a cost of 12
+- 208 assigning a cost of 13
+- 224 assigning a cost of 14
+- 240 assigning a cost of 15
 
 And for this yuo have for example this option for running the code:
 ```console
