@@ -309,14 +309,17 @@ To run the docker container you have 2 option:
 ```console
 #Use directly docker-cli and execute the following command
 #Where $PWD is the abs path to the folder
-docker run -v $PWD/indata:/usr/src/app/indata -v $PWD/output:/usr/src/app/output maze
+foo@bar:~$ docker run -v $PWD/indata:/usr/src/app/indata -v $PWD/output:/usr/src/app/output maze
 ```
 or
 ```console
 #Use docker-compose plugin and execute the following command
-docker-compose up
+foo@bar:~$ docker-compose up
 ```
-
+If you choose to run the dockerized version of the application it will works as follow:
+- If you put a valid .tiff or a .json file in the "indata" dir the file will be read and the file will be deleted.
+- In the output dir will appears the generated output of the readed maze.
+  
 ## How to run unittest
 To run unittest you can execute the TestMaze.py under test directory to run all test like:
 ```console
