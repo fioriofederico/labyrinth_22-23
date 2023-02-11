@@ -31,7 +31,7 @@ class GenerationMazeOutputImage:
         return (r, g, b)
 
     def generateGreyScale(self, value):
-        value = value * value
+        value = value * 16
         return (value, value, value)
     def invert_coordinates(self, point):
         x, y = point
