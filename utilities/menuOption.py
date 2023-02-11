@@ -28,6 +28,10 @@ class menuOption:
     def get_file_name(self, file_path):
         return file_path.split("/")[-1].split(".")[0]
 
+    def calculate_time_taken(self, start_time, end_time):
+        time_taken = end_time - start_time
+        return time_taken
+
     # Funzione di verifica se esiste il path di destinazione
     def ensure_path_exists(self, file_path):
         directory = os.path.dirname(file_path)
@@ -50,6 +54,7 @@ class menuOption:
             return path
 
     def GenerateInput(self, height, width, startpoints, endpoints, breadcrumps):
+        startTime = time.time()
         self.ensure_path_exists(self.__destinationFolder)
         # Con la riga subito sotto viene instanziato un maze e passati i parametri per effettuare la sua crezione
         p = Maze(height, width, startpoints, endpoints, breadcrumps)
@@ -110,8 +115,11 @@ class menuOption:
                 generateImage.createImageForASpecifcStartPoint(fileNameImgInput, fileNameImgOutput, i, breadcrumps)
         fileNameImgOutput = self.__destinationFolder + "output_" + fileNameWithOutExt + self.__extTiff
         generateImage.createImageForAllPointStart(fileNameImgInput, fileNameImgOutput, breadcrumps)
+        end = time.time()
+        print("Time taken: " + str(self.calculate_time_taken(startTime, end)) + " seconds")
 
     def ImageInput(self, imagePath):
+        startTime = time.time()
         #richiamo il metodo per la creazione della cartella di output in caso non esista
         self.ensure_path_exists(self.__destinationFolder)
         # Istanziamo oggetto MAZE
@@ -174,9 +182,12 @@ class menuOption:
                 generateImage.createImageForASpecifcStartPoint(imagePath, fileNameImgOutput, i, breadcrumps)
         fileNameImgOutput = self.__destinationFolder + "output_" + fileNameWithOutExt + self.__extTiff
         generateImage.createImageForAllPointStart(imagePath, fileNameImgOutput, breadcrumps)
+        end = time.time()
+        print("Time taken: " + str(self.calculate_time_taken(startTime, end)) + " seconds")
 
     # Come il processo precedente in questo caso ci si aspetta un JSON in Input
     def JsonInput(self, jsonPath):
+        startTime = time.time()
         #richiamo il metodo per la creazione della cartella di output in caso non esista
         self.ensure_path_exists(self.__destinationFolder)
         # Istanziamo oggetto MAZE
@@ -239,6 +250,8 @@ class menuOption:
                 generateImage.createImageForASpecifcStartPoint(fileNameImgInput, fileNameImgOutput, i, breadcrumps)
         fileNameImgOutput = self.__destinationFolder + "output_" + fileNameWithOutExt + self.__extTiff
         generateImage.createImageForAllPointStart(fileNameImgInput, fileNameImgOutput, breadcrumps)
+        end = time.time()
+        print("Time taken: " + str(self.calculate_time_taken(startTime, end)) + " seconds")
 
     def scan(self) -> None:
         condition = True

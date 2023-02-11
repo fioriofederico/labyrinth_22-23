@@ -64,7 +64,7 @@ class GenerationMazeOutputImage:
             converted_data = [(point[::-1], value) for point, value in breadcrumps]
             for i in range(len(converted_data)):
                 draw.point(converted_data[i][0], self.generateGreyScale(converted_data[i][1]))
-        im.save(pathImgOutput)
+            im.save(pathImgOutput)
 
     def openJson(self):
         with open(self.__json) as json_file:
