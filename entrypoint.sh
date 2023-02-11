@@ -4,7 +4,6 @@
 
 # Enable strict mode.
 set -euo pipefail
-# ... Run whatever commands ...
 
 # Temporarily disable strict mode and activate conda:
 set +euo pipefail
