@@ -59,7 +59,7 @@ class menuOption:
         # generazione del maze
         p.generate()
         # viene anche creata l'immagine tiff per visualizzare l'esito dei parametri inseriti
-        fileNameWithOutExt = "mazeGenerated" + str(height) + "_"+ str(width) + self.timeStamp()
+        fileNameWithOutExt = "mazeGenerated" + str(height) + "_" + str(width) + self.timeStamp()
         fileNameImgInput = self.__destinationFolder + "input_" + fileNameWithOutExt + self.__extTiff
         p.getMazeImage(fileNameImgInput)
         fileNameJsonInput = self.__destinationFolder + "input_" + fileNameWithOutExt + self.__extJson

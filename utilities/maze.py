@@ -1217,16 +1217,21 @@ class Maze:
     # bread_crumbs conterrà il seguente array [((17, 47), 12), ((18, 47), 13), ((20, 47), 12), ((22, 47), 11)]
     # come si nota all'interno del codice c'è anche la radice quadrata da aplicare
     bread_crumbs = None
-    maze = np.where(np.array(self.__maze) == 'w', 0, 1)
-    for i in range(len(self.__breadcrumbs)):
-      if self.__breadcrumbs[i][2] > 0 and self.__breadcrumbs[i][2] < 16:
-        bread_crumbs = [((x[0], x[1]), int(x[2])) for x in self.__breadcrumbs]
-      elif self.__breadcrumbs[i][2] > 16 and self.__breadcrumbs[i][2] < 241:
-        bread_crumbs = [((x[0], x[1]), int(x[2]/16)) for x in self.__breadcrumbs]
-    
-    for coord, value in bread_crumbs:
-      x, y, val = coord[0], coord[1], value
-      maze[x][y] = val
+    maze = None
+    if not self.__breadcrumbs == []:
+      maze = np.where(np.array(self.__maze) == 'w', 0, 1)
+      for i in range(len(self.__breadcrumbs)):
+        if self.__breadcrumbs[i][2] > 0 and self.__breadcrumbs[i][2] < 16:
+          bread_crumbs = [((x[0], x[1]), int(x[2])) for x in self.__breadcrumbs]
+        elif self.__breadcrumbs[i][2] > 16 and self.__breadcrumbs[i][2] < 241:
+          bread_crumbs = [((x[0], x[1]), int(x[2]/16)) for x in self.__breadcrumbs]
+
+      for coord, value in bread_crumbs:
+        x, y, val = coord[0], coord[1], value
+        maze[x][y] = val
+    else:
+      bread_crumbs = []
+      maze = np.where(np.array(self.__maze) == 'w', 0, 1)
     return maze, bread_crumbs
 
 if __name__ == "__main__":
