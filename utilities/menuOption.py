@@ -15,6 +15,7 @@ class menuOption:
         self.__destinationFolder = './output/'
         self.__extTiff = '.tiff'
         self.__extJson = '.json'
+        self.__extGif = '.gif'
         pass
 
     #Funzione di copia di un file
@@ -110,6 +111,11 @@ class menuOption:
             for i in range(len(start)):
                 fileNameImgOutput = self.__destinationFolder + "output_" + fileNameWithOutExt + "_" + str(i) + self.__extTiff
                 generateImage.createImageForASpecifcStartPoint(fileNameImgInput, fileNameImgOutput, i, breadcrumps)
+                fileNameImgOutput = self.__destinationFolder + "output_" + fileNameWithOutExt + "_" + str(i) + self.__extGif
+                generateImage.createImageGifForASpecifcStartPoint(fileNameImgInput, fileNameImgOutput, i, breadcrumps)
+        elif len(start) == 1:
+            fileNameImgOutput = self.__destinationFolder + "output_" + fileNameWithOutExt + self.__extGif
+            generateImage.createImageGifForASpecifcStartPoint(fileNameImgInput, fileNameImgOutput, 0, breadcrumps)
         fileNameImgOutput = self.__destinationFolder + "output_" + fileNameWithOutExt + self.__extTiff
         generateImage.createImageForAllPointStart(fileNameImgInput, fileNameImgOutput, breadcrumps)
         end = time.time()
@@ -177,6 +183,11 @@ class menuOption:
             for i in range(len(start)):
                 fileNameImgOutput = self.__destinationFolder + "output_" + fileNameWithOutExt + "_" + str(i) + self.__extTiff
                 generateImage.createImageForASpecifcStartPoint(imagePath, fileNameImgOutput, i, breadcrumps)
+                fileNameImgOutput = self.__destinationFolder + "output_" + fileNameWithOutExt + "_" + str(i) + self.__extGif
+                generateImage.createImageGifForASpecifcStartPoint(imagePath, fileNameImgOutput, i, breadcrumps)
+        elif len(start) == 1:
+            fileNameImgOutput = self.__destinationFolder + "output_" + fileNameWithOutExt + self.__extGif
+            generateImage.createImageGifForASpecifcStartPoint(imagePath, fileNameImgOutput, 0, breadcrumps)
         fileNameImgOutput = self.__destinationFolder + "output_" + fileNameWithOutExt + self.__extTiff
         generateImage.createImageForAllPointStart(imagePath, fileNameImgOutput, breadcrumps)
         end = time.time()
@@ -245,6 +256,11 @@ class menuOption:
             for i in range(len(start)):
                 fileNameImgOutput = self.__destinationFolder + "output_" + fileNameWithOutExt + "_" + str(i) + self.__extTiff
                 generateImage.createImageForASpecifcStartPoint(fileNameImgInput, fileNameImgOutput, i, breadcrumps)
+                fileNameImgOutput = self.__destinationFolder + "output_" + fileNameWithOutExt + "_" + str(i) + self.__extGif
+                generateImage.createImageGifForASpecifcStartPoint(fileNameImgInput, fileNameImgOutput, i, breadcrumps)
+        elif len(start) == 1:
+            fileNameImgOutput = self.__destinationFolder + "output_" + fileNameWithOutExt + self.__extGif
+            generateImage.createImageGifForASpecifcStartPoint(fileNameImgInput, fileNameImgOutput, 0, breadcrumps)
         fileNameImgOutput = self.__destinationFolder + "output_" + fileNameWithOutExt + self.__extTiff
         generateImage.createImageForAllPointStart(fileNameImgInput, fileNameImgOutput, breadcrumps)
         end = time.time()

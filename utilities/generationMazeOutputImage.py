@@ -2,6 +2,7 @@ import json
 from PIL import Image, ImageDraw
 import random
 
+
 class GenerationMazeOutputImage:
 
     def __init__(self, jsonFile):
@@ -107,6 +108,46 @@ class GenerationMazeOutputImage:
             # Salva l'immagine modificata nel percorso specificato
             im.save(pathImgOutput)
 
+
+    #Aggiunta possibilità di ritornare una gif image
+    def createImageGifForASpecifcStartPoint(self, pathImgInput, pathImgOutput, startPoint, breadcrumps):
+        # Apre l'immagine presente nel percorso specificato
+        im = Image.open(pathImgInput)
+        # Crea un oggetto disegno per l'immagine aperta
+        draw = ImageDraw.Draw(im)
+        # Colore rosso per il punto finale
+        colorGoal = (255, 0, 0)
+        # Lista per salvare tutti i frame della gif animata
+        frames = []
+
+        # Se il percorso esiste per il punto di partenza specificato
+        if not self.__movimentPath[startPoint] == "NO WAY!":
+            # Converte i punti del percorso in un formato adatto per il disegno
+            tuple_data = [(x[1], x[0]) for x in self.__movimentPath[startPoint]]
+            # Genera un colore casuale per la linea del percorso
+            color = self.generateColorLine()
+            # Inverte le coordinate dei punti dei segnalini per adattarli al disegno
+            converted_data = [(point[::-1], value) for point, value in breadcrumps]
+
+            # Per ogni punto nel percorso
+            for i in range(len(tuple_data) - 1):
+                # Crea una copia dell'immagine di base
+                im_frame = im.copy()
+                # Crea un nuovo oggetto disegno per la copia dell'immagine
+                draw_frame = ImageDraw.Draw(im_frame)
+                # Disegna la linea del percorso fino al punto corrente
+                draw_frame.line(tuple_data[:i + 1], fill=color)
+                # Disegna il punto finale con il colore rosso
+                draw_frame.point(self.invert_coordinates(self.__goal), fill=colorGoal)
+                # Per ogni punto dei segnalini
+                for j in range(len(converted_data)):
+                    # Disegna il punto con una scala di grigio calcolata in base alla sua importanza
+                    draw_frame.point(converted_data[j][0], self.generateGreyScale(converted_data[j][1]))
+                # Aggiungi il frame corrente alla lista dei frame
+                frames.append(im_frame)
+
+        # Genera la gif animata dalla lista dei frame
+        frames[0].save(pathImgOutput, format='gif', save_all=True, append_images=frames[1:], duration=100, loop=0)
 
     #Nella sezione sotto vengono caricati i dati dal file json che è stato scritto
     #A seguito della ricerca effettuata con l'algoritmo di Dijkstra
