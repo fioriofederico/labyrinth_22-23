@@ -1219,9 +1219,9 @@ class Maze:
     bread_crumbs = None
     maze = np.where(np.array(self.__maze) == 'w', 0, 1)
     for i in range(len(self.__breadcrumbs)):
-      if self.__breadcrumbs[i] > 0 and self.__breadcrumbs < 16:
+      if self.__breadcrumbs[i][2] > 0 and self.__breadcrumbs[i][2] < 16:
         bread_crumbs = [((x[0], x[1]), int(x[2])) for x in self.__breadcrumbs]
-      elif self.__breadcrumbs [i] > 16 and self.__breadcrumbs < 241:
+      elif self.__breadcrumbs[i][2] > 16 and self.__breadcrumbs[i][2] < 241:
         bread_crumbs = [((x[0], x[1]), int(x[2]/16)) for x in self.__breadcrumbs]
     
     for coord, value in bread_crumbs:
