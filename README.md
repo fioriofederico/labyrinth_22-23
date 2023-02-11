@@ -33,6 +33,32 @@ If the user try to run the main.py the system respone:
 Welcome to Maze.py!
 ```
 
+## Information for User
+When you strat with code and running it's fondamental for a correct use.
+The breacrumps accept just a combination of number.
+
+When you use the interface or write a file json say that.
+   on json when you write on "Costi" the parameter is between from 1 to 15
+   same on you decide running with interface
+
+If you put image this point named on code breadcrumps rispect this scale of grey
+
+   - 16 che assegna un costo pari a 1
+  - 32 che assegna un costo pari a 2
+  - 48 che assegna un costo pari a 3
+  - 64 che assegna un costo pari a 4
+  - 80 che assegna un costo pari a 5
+  - 96 che assegna un costo pari a 6
+  - 112 che assegna un costo pari a 7
+  - 128 che assegna un costo pari a 8
+  - 144 che assegna un costo pari a 9
+  - 160 che assegna un costo pari a 10
+  - 176 che assegna un costo pari a 11
+  - 192 che assegna un costo pari a 12
+  - 208 che assegna un costo pari a 13
+  - 124 che assegna un costo pari a 14
+  - 240 che assegna un costo pari a 15
+
 And for this yuo have for example this option for running the code:
 ```console
 #This implementetion response with the menu the possible choice is write on down
@@ -171,7 +197,7 @@ These command run code when operator put path maze on json format
         [
             2,
             2,
-            90
+            12
         ]
     ]
 }
@@ -191,12 +217,12 @@ Software created 1 images with together path on maze and one image for a single 
 Now is possible see a tree of file created in folder
 The file our try is the example on top file is: a Json Input and save this with test.json
 
-Our code create 4 file:
+Our code create 5 file:
  - The firstone image are clean there is just a strat point end point and breadcrumps
  - The output is minimun with one file but if there is a multi start generate one with all path and one for a single path
    - The example in this test have 2 start point for these the code create 3 Output Image
      - One name with all path found
-     - One for a single path start from one point and arrive on goal
+     - One for a single path start from one point and arrive on goal this created in 2 version .tiff and .gif
 
 ### Show a simple output
 
@@ -209,7 +235,11 @@ Our code create 4 file:
 
 ![alt-text](./diagram/1_bis.png "Output with 1 Path")
 
+![alt-text](./diagram/1.gif "Output with 1 Path")
+
 ![alt-text](./diagram/2_bis.png "Output with other Path")
+
+![alt-text](./diagram/2.gif "Output with other Path")
 
 
 
