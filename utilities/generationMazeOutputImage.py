@@ -42,7 +42,9 @@ class GenerationMazeOutputImage:
         r = random.randint(0, 255)
         g = random.randint(0, 255)
         b = random.randint(0, 255)
-        return (r, g, b)
+        #Aggiunta eliminazione scala grey e nero e bianco
+        if r != g or r != b or g != b:
+            return (r, g, b)
 
 
     #Grey Scale restituisce il grigio per il
@@ -153,8 +155,8 @@ class GenerationMazeOutputImage:
                 # Aggiungi il frame corrente alla lista dei frame
                 frames.append(im_frame)
 
-        # Genera la gif animata dalla lista dei frame
-        frames[0].save(pathImgOutput, format='gif', save_all=True, append_images=frames[1:], duration=100, loop=0)
+            # Genera la gif animata dalla lista dei frame
+            frames[0].save(pathImgOutput, format='gif', save_all=True, append_images=frames[1:], duration=100, loop=0)
 
     #Nella sezione sotto vengono caricati i dati dal file json che è stato scritto
     #A seguito della ricerca effettuata con l'algoritmo di Dijkstra
