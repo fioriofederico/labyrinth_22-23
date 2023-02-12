@@ -7,6 +7,17 @@ from utilities.foundPath import FoundPath
 import json
 from utilities.generationMazeOutputImage import GenerationMazeOutputImage
 
+"""
+Classe che permette di prendere in input:
+
+- def GenerateInput(self, height, width, starpoints, endpoints, breadcrumps) --> funzione di creazione maze
+- def ImageInput(self, imagePath) --> funzione di caricamento immagine
+- def JsonInput(self, jsonPath) --> funzione di caricamento json
+
+E restituisce in output l'immagine in formato tiff di tutti i percorsi possibili per ogni punto di start e un'immagine in formato tiff e gif per ogni percorso.
+
+N.B. Nel caso di un solo punto di start restituirà solo l'immagine in formato gif
+"""
 
 class menuOption:
     pass

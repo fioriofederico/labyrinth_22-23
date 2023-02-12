@@ -2,6 +2,15 @@ import json
 from PIL import Image, ImageDraw
 import random
 
+"""
+Classe che immagazzina tutti i percorsi migliori per ogni punto di start e definisce le seguenti funzioni:
+
+- def createImageForAllPointStart(self, pathImgInput, pathImgOutput, breadcrumps) --> funzione che crea l'immagine che con tutti i percorsi
+- def createImageForASpecificStartPoint(self, pathImgInput, pathImgOutput, startPoint, breadcrumps) --> funzione che crea l'immagine per un percorso specifico
+- def createImageGifForASpecificStartPoint (self, pathImgInput, pathImgOutput, startPoint, breadcrumps) --> funzione che crea l'immagine in formato git per un percorso specifico
+
+N.B. I colori dei percorsi vengono generati randomicamente con la funzione def generateColorLine(self), pertanto, cambiano di volta in volta.
+"""
 
 class GenerationMazeOutputImage:
 

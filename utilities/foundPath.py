@@ -6,6 +6,15 @@ import time
 from typing import List, Tuple
 from heapq import heappop, heappush
 
+"""
+Classe che implementa le seguenti funzioni per individuare i percorsi migliori da/dai punto/i di start e stampa un json con gli stessi:
+
+- def deikstra(self) --> funzione che implementa l'algoritmo di Dijkstra per individuare il percorso più breve
+- def maze2graph(self) --> funzione che converte il labirinto in grafo per individuare il percorso.
+- def find_multi_path_astar_return_visited(self, breadcrumps, num_paths=3) --> funzione che trova i 3 percorsi migliori per ogni punto di start
+
+Alla fine i dati raccolti da queste funzioni vengono scritti in un file json
+"""
 
 class FoundPath:
     # Nota fondamentale il primo valore rappresenta la riga il secondo la colonna essendo un array si conta sempre a partite da 0
