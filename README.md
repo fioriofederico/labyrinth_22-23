@@ -337,6 +337,8 @@ It also has been developed a containerized version of the application. To use it
 
 To run the docker container you have 2 option:
 ```console
+# First build the image 
+foo@bar:~$ docker build -t maze .
 #Use directly docker-cli and execute the following command
 #Where $PWD is the abs path to the folder
 foo@bar:~$ docker run -v $PWD/indata:/usr/src/app/indata -v $PWD/output:/usr/src/app/output maze
